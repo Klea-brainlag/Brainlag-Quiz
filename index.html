@@ -912,7 +912,12 @@ function renderResults(dominant, secondary, scores) {
     <button class="btn" onclick="restartQuiz()" style="background:#1a1a1a; border:1px solid #333; color:#888">
       ↩ Recommencer le quiz
     </button>
+   
+    <button class="btn" onclick="showEndScreen()" style="background:transparent; border:1px solid #222; color:#555; margin-top:8px;">
+      → Terminer
+    </button>
   `;
+
 
   document.getElementById('quizSection').style.display = 'none';
   const resultSection = document.getElementById('resultSection');
