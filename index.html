@@ -896,17 +896,17 @@ function renderResults(dominant, secondary, scores) {
     <div class="next-steps">
       <p class="section-label">📥 Prochaine étape</p>
       <p>Tu connais ton mode dominant et ton combo.<br>Maintenant : passe au reboot.</p>
-      <a class="btn-outline" href="https://tonlien.com/reboot" target="_blank">
-        → Télécharger mon Carnet de Reboot
-      </a>
-      <a class="btn-outline" href="https://instagram.com/brainlag" target="_blank">
-        → Rejoindre @brainlag
-      </a>
-      <button class="btn-outline" onclick="shareResult('${p1.name}', '${mix ? mix.title : p1.mode}')">
-        → Partager mon résultat
-      </button>
-    </div>
+     <a class="btn-outline" href="https://www.instagram.com/klea.brainlag/" target="_blank">
+  → Rejoindre @klea.brainlag
+</a>
+<button class="btn-outline" onclick="shareQuiz()">
+  → Partager le quiz à mes proches
+</button>
+<button class="btn-outline" onclick="shareResult('${p1.name}', '${mix ? mix.title : p1.mode}')">
+  → Partager mon résultat
+</button>
 
+</div>
     <hr class="divider">
 
     <button class="btn" onclick="restartQuiz()" style="background:#1a1a1a; border:1px solid #333; color:#888">
