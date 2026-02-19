@@ -1106,19 +1106,20 @@ Découvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
 
 
 function shareQuiz() {
-  const text = `Découvre ton Brainlag dominant 👉 https://klea-brainlag.github.io/Brainlag-Quiz/`;
+  const text = "Découvre ton Brainlag → https://klea-brainlag.github.io/Brainlag-Quiz/";
+
   if (navigator.share) {
     navigator.share({
-      title: 'Ton Brainlag',
+      title: "Ton Brainlag",
       text: text,
-      url: 'https://klea-brainlag.github.io/Brainlag-Quiz/'
+      url: "https://klea-brainlag.github.io/Brainlag-Quiz/"
     });
   } else {
-    navigator.clipboard.writeText(text).then(() =>
-      alert('Lien copié ! 🖤')
-    );
+    navigator.clipboard.writeText("https://klea-brainlag.github.io/Brainlag-Quiz/");
+    alert("Lien du quiz copié.");
   }
 }
+
 
 function restartQuiz() {
   Object.keys(answers).forEach(k => delete answers[k]);
