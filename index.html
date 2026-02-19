@@ -504,7 +504,7 @@
 // ═══════════════════════════════════════════════
 
 const answers = {};
-const TOTAL_Q = 10;
+const TOTAL_Q = 12;
 
 // ═══════════════════════════════════════════════
 // 2. QUESTIONS
@@ -620,7 +620,29 @@ const questions = [
       { label: "\"Si je ressens tout, je ne rate rien d'important.\"", profile: "sensibilite" },
       { label: "\"Si je garde le contrôle, tout ira bien.\"", profile: "puissance" }
     ]
-  }
+  },
+  {
+  text: "Quand quelque chose d’imprévu arrive…",
+  options: [
+    { label: "Tu analyses rapidement pour comprendre ce qui se passe", profile: "analyse" },
+    { label: "Tu anticipes les conséquences possibles", profile: "controle" },
+    { label: "Tu agis vite pour reprendre la main", profile: "performance" },
+    { label: "Tu cherches la bonne manière de faire", profile: "rigueur" },
+    { label: "Tu ressens l’impact émotionnel avant tout", profile: "sensibilite" },
+    { label: "Tu prends le lead pour gérer la situation", profile: "puissance" }
+  ]
+},
+{
+  text: "Quand tu penses à l’avenir proche…",
+  options: [
+    { label: "Tu veux comprendre où tu vas vraiment", profile: "analyse" },
+    { label: "Tu cherches à sécuriser ce qui pourrait mal tourner", profile: "controle" },
+    { label: "Tu te demandes ce que tu vas accomplir", profile: "performance" },
+    { label: "Tu veux que tout soit clair et structuré", profile: "rigueur" },
+    { label: "Tu écoutes ce que tu ressens intérieurement", profile: "sensibilite" },
+    { label: "Tu veux décider et avancer", profile: "puissance" }
+  ]
+}
 ];
 
 // ═══════════════════════════════════════════════
@@ -1066,16 +1088,19 @@ function showEndScreen() {
 // ═══════════════════════════════════════════════
 
 function shareResult(name, combo) {
-  const text = `🧠 Mon Brainlag dominant : ${name}\n🔀 Mon combo : ${combo}\n\nDécouvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
+  const text =
+`Mon Brainlag dominant : ${name}
+${combo ? "Mon mode secondaire / combo : " + combo : ""}
+Découvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
+
   if (navigator.share) {
     navigator.share({
-      title: `Mon Brainlag : ${name}`,
+      title: "Mon Brainlag",
       text: text
     });
   } else {
-    navigator.clipboard.writeText(text).then(() =>
-      alert('Résultat copié ! Tu peux le coller où tu veux. 🖤')
-    );
+    navigator.clipboard.writeText(text);
+    alert("Résultat copié. Tu peux le partager.");
   }
 }
 
