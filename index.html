@@ -924,6 +924,19 @@ function renderResults(dominant, secondary, scores) {
 // ═══════════════════════════════════════════════
 // 7. UTILITAIRES
 // ═══════════════════════════════════════════════
+function shareQuiz() {
+  const url = "https://klea-brainlag.github.io/Brainlag-Quiz/";
+  if (navigator.share) {
+    navigator.share({
+      title: "Découvre ton Brainlag 🧠",
+      text: "Quel est ton mode de protection dominant ? Fais le quiz →",
+      url: url
+    });
+  } else {
+    navigator.clipboard.writeText(url);
+    alert("Lien copié ! Partage-le à tes proches 🎯");
+  }
+}
 
 function shareResult(name, combo) {
   const text = `Mon Brainlag dominant : ${name}\nMon combo : ${combo}\nDécouvre le tien → [ton lien]`;
