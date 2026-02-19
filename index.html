@@ -939,7 +939,7 @@ function shareQuiz() {
 }
 
 function shareResult(name, combo) {
-  const text = `Mon Brainlag dominant : ${name}\nMon combo : ${combo}\nDécouvre le tien → [ton lien]`;
+  const text = `Mon Brainlag dominant : ${name}\nMon combo : ${combo}\nDécouvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
   if (navigator.share) {
     navigator.share({ title: 'Mon Brainlag', text: text });
   } else {
