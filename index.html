@@ -3,486 +3,895 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quel est ton Brainlag ?</title>
+  <title>Ton Brainlag</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
-      background-color: #0a0a0a;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a0a;
       color: #f0f0f0;
-      font-family: 'Helvetica Neue', sans-serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       padding: 20px;
     }
 
-    /* INTRO */
-    #intro {
-      max-width: 500px;
-      width: 100%;
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .quiz-section { display: block; }
+    .result-section { display: none; }
+
+    h1 {
+      font-size: 1.8rem;
       text-align: center;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
     }
 
-    #intro h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 12px;
-    }
-
-    #intro p {
-      font-size: 0.95rem;
+    .subtitle {
+      text-align: center;
       color: #888;
       margin-bottom: 40px;
+      font-size: 0.95rem;
       line-height: 1.6;
     }
 
-    .btn-start {
-      background: #f0f0f0;
-      color: #0a0a0a;
-      border: none;
-      padding: 14px 40px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 1px;
-      transition: opacity 0.2s;
-    }
-
-    .btn-start:hover { opacity: 0.85; }
-
-    /* QUIZ */
-    #quiz {
-      display: none;
-      max-width: 600px;
-      width: 100%;
-    }
-
-    .progress {
-      font-size: 0.75rem;
-      color: #444;
-      letter-spacing: 1px;
-      margin-bottom: 30px;
-    }
-
     .question-block {
-      display: none;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .question-block.active {
-      display: flex;
-    }
-
-    .question-num {
-      font-size: 0.75rem;
-      color: #555;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      margin-bottom: 36px;
     }
 
     .question-text {
-      font-size: 1.3rem;
-      font-weight: 700;
-      line-height: 1.4;
-      margin-bottom: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: #e0e0e0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #222;
+    }
+
+    .question-number {
+      color: #666;
+      font-size: 0.8rem;
+      margin-bottom: 6px;
     }
 
     .options {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
 
     .option-btn {
-      background: transparent;
-      border: 1px solid #333;
-      color: #f0f0f0;
-      padding: 14px 20px;
-      text-align: left;
-      font-size: 0.95rem;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      color: #ccc;
+      padding: 12px 16px;
+      border-radius: 10px;
       cursor: pointer;
+      text-align: left;
+      font-size: 0.92rem;
       transition: all 0.2s;
-      line-height: 1.4;
     }
 
     .option-btn:hover {
-      border-color: #f0f0f0;
-      background: #111;
+      border-color: #555;
+      color: #fff;
+      background: #1a1a1a;
     }
 
-    /* RÉSULTAT */
-    #result {
-      display: none;
-      max-width: 500px;
+    .option-btn.selected {
+      border-color: var(--accent, #6366f1);
+      color: #fff;
+      background: #1a1a2e;
+    }
+
+    .progress-bar {
       width: 100%;
-      text-align: center;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
+      height: 3px;
+      background: #1a1a1a;
+      border-radius: 2px;
+      margin-bottom: 40px;
     }
 
-    #result-img {
-      width: 180px;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 2px solid #333;
-      margin-bottom: 10px;
+    .progress-fill {
+      height: 100%;
+      background: #6366f1;
+      border-radius: 2px;
+      transition: width 0.4s ease;
     }
 
-    #result-name {
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-
-    #result-desc {
-      font-size: 1rem;
-      color: #ccc;
-      line-height: 1.7;
-      max-width: 420px;
-    }
-
-    #result-glitch {
-      font-size: 0.9rem;
-      color: #666;
-      font-style: italic;
-      line-height: 1.6;
-      border-left: 2px solid #333;
-      padding-left: 16px;
-      text-align: left;
-      max-width: 420px;
-    }
-
-    .btn {
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: #6366f1;
+      color: white;
       border: none;
-      padding: 13px 32px;
-      font-size: 0.9rem;
+      border-radius: 12px;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      letter-spacing: 1px;
+      margin-top: 30px;
       transition: opacity 0.2s;
-      width: 100%;
-      max-width: 320px;
     }
 
-    .btn:hover { opacity: 0.8; }
+    .submit-btn:hover { opacity: 0.85; }
+    .submit-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-    .btn-primary {
-      background: #f0f0f0;
-      color: #0a0a0a;
+    /* ── RÉSULTATS ── */
+    .result-section {
+      animation: fadeIn 0.5s ease;
     }
 
-    .btn-secondary {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      color: #888;
-      margin-top: 8px;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* END SCREEN */
-    #end-screen {
-      display: none;
+    .character-img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 20px;
+      border: 3px solid var(--profile-color, #6366f1);
+      box-shadow: 0 0 20px var(--profile-color, #6366f1);
+    }
+
+    .profile-title {
+      font-size: 1.6rem;
+      font-weight: 700;
       text-align: center;
-      padding: 60px 24px;
-      max-width: 480px;
-      margin: 0 auto;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
+      margin-bottom: 6px;
+    }
+
+    .profile-subtitle {
+      text-align: center;
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .tag-primary {
+      background: #1a1a2e;
+      color: #818cf8;
+      border: 1px solid #3730a3;
+    }
+
+    .tag-secondary {
+      background: #0f1f1a;
+      color: #34d399;
+      border: 1px solid #065f46;
+    }
+
+    .tag-mix {
+      background: #1f1a0f;
+      color: #fbbf24;
+      border: 1px solid #92400e;
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 8px;
+      margin-top: 20px;
+    }
+
+    .section-content {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #ccc;
     }
 
     .divider {
       border: none;
-      border-top: 1px solid #222;
-      width: 60px;
-      margin: 16px auto;
+      border-top: 1px solid #1e1e1e;
+      margin: 28px 0;
     }
+
+    .score-bar-wrap {
+      margin: 10px 0 20px;
+    }
+
+    .score-bar {
+      width: 100%;
+      height: 6px;
+      background: #1a1a1a;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.8s ease;
+    }
+
+    .reboot-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .reboot-list li {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .reboot-list li::before {
+      content: "→ ";
+      color: #6366f1;
+      font-weight: 700;
+    }
+
+    .mix-card {
+      background: #111;
+      border: 1px solid #2a2a1a;
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 8px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .btn-share {
+      flex: 1;
+      padding: 13px;
+      background: #1a1a2e;
+      color: #818cf8;
+      border: 1px solid #3730a3;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-restart {
+      flex: 1;
+      padding: 13px;
+      background: #111;
+      color: #666;
+      border: 1px solid #222;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-share:hover { background: #1e1e3f; }
+    .btn-restart:hover { color: #aaa; border-color: #444; }
+
+    .char-img-secondary {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 12px;
+      border: 2px solid #34d399;
+      opacity: 0.85;
+    }
+
   </style>
 </head>
 <body>
+<div class="container">
 
-  <!-- INTRO -->
-  <div id="intro">
-    <h1>Quel est ton Brainlag ?</h1>
-    <p>10 questions pour identifier ton profil.<br>Pas de bonne ou mauvaise réponse.<br>Juste toi, honnêtement.</p>
-    <button class="btn-start" onclick="startQuiz()">Commencer →</button>
+  <!-- ── QUIZ ── -->
+  <div id="quizSection">
+    <h1>🧠 Ton Brainlag</h1>
+    <p class="subtitle">10 questions pour identifier ton mode de protection dominant.<br>Réponds instinctivement.</p>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div id="questionsContainer"></div>
+    <button class="submit-btn" id="submitBtn" disabled onclick="showResult()">Voir mon résultat →</button>
   </div>
 
-  <!-- QUIZ -->
-  <div id="quiz">
-    <p class="progress" id="progress-text">Question 1 / 10</p>
+  <!-- ── RÉSULTATS ── -->
+  <div id="resultSection"></div>
 
-    <!-- Q1 -->
-    <div class="question-block active" id="q1">
-      <span class="question-num">01</span>
-      <p class="question-text">Quand quelque chose ne va pas, ta première réaction c'est…</p>
-      <div class="options">
-        <button class="option-btn" onclick="answer('jiwooh')">Analyser ce qui aurait pu l'éviter.</button>
-        <button class="option-btn" onclick="answer('clara')">Trouver une solution, vite.</button>
-        <button class="option-btn" onclick="answer('luna')">Continuer comme si de rien n'était.</button>
-        <button class="option-btn" onclick="answer('mar')">Le ressentir profondément avant de bouger.</button>
-        <button class="option-btn" onclick="answer('malik')">Réagir. Directement.</button>
-        <button class="option-btn" onclick="answer('eliot')">Observer. Comprendre avant d'agir.</button>
+</div>
+
+<script>
+
+// ═══════════════════════════════════════════════
+// 1. QUESTIONS
+// ═══════════════════════════════════════════════
+
+const questions = [
+  {
+    text: "Face à un problème sans solution claire, votre première réaction est de…",
+    options: [
+      { label: "Sur-réfléchir jusqu'à trouver la logique", profile: "analyse" },
+      { label: "Chercher ce qui pourrait mal tourner", profile: "controle" },
+      { label: "Faire quelque chose, n'importe quoi", profile: "performance" },
+      { label: "Chercher la bonne façon de faire", profile: "rigueur" },
+      { label: "Ressentir l'inconfort de ne pas savoir", profile: "sensibilite" },
+      { label: "Prendre les rênes", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Quand vous devez prendre une décision importante…",
+    options: [
+      { label: "Vous analysez tous les scénarios possibles", profile: "analyse" },
+      { label: "Vous vérifiez plusieurs fois avant de décider", profile: "controle" },
+      { label: "Vous décidez vite pour avancer", profile: "performance" },
+      { label: "Vous cherchez la meilleure option possible", profile: "rigueur" },
+      { label: "Vous suivez votre ressenti profond", profile: "sensibilite" },
+      { label: "Vous décidez seul(e), sans demander", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Dans une équipe, votre rôle naturel est…",
+    options: [
+      { label: "Celui qui analyse et propose des solutions", profile: "analyse" },
+      { label: "Celui qui vérifie et sécurise", profile: "controle" },
+      { label: "Celui qui produit et avance vite", profile: "performance" },
+      { label: "Celui qui maintient les standards", profile: "rigueur" },
+      { label: "Celui qui sent l'atmosphère du groupe", profile: "sensibilite" },
+      { label: "Celui qui impulse et décide", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Quand vous vous sentez dépassé(e), vous…",
+    options: [
+      { label: "Analysez encore plus pour retrouver le contrôle", profile: "analyse" },
+      { label: "Vérifiez et re-vérifiez pour vous rassurer", profile: "controle" },
+      { label: "Accélérez pour ne pas laisser le temps à l'angoisse", profile: "performance" },
+      { label: "Cherchez la bonne procédure à suivre", profile: "rigueur" },
+      { label: "Ressentez tout très fort et avez besoin de l'exprimer", profile: "sensibilite" },
+      { label: "Prenez le contrôle de la situation", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Ce qui vous dérange le plus chez les autres…",
+    options: [
+      { label: "L'irrationnel et l'incohérence", profile: "analyse" },
+      { label: "L'imprévu et le manque de fiabilité", profile: "controle" },
+      { label: "La lenteur et l'inaction", profile: "performance" },
+      { label: "L'approximation et la médiocrité", profile: "rigueur" },
+      { label: "La froideur et le manque d'empathie", profile: "sensibilite" },
+      { label: "La faiblesse et la soumission", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Votre plus grande peur serait…",
+    options: [
+      { label: "Ne pas comprendre ou être incompris(e)", profile: "analyse" },
+      { label: "Perdre le contrôle ou être pris(e) par surprise", profile: "controle" },
+      { label: "Échouer ou ne pas être à la hauteur", profile: "performance" },
+      { label: "Faire une erreur ou être dans l'erreur", profile: "rigueur" },
+      { label: "Être invisible ou incompris(e) dans ce que vous ressentez", profile: "sensibilite" },
+      { label: "Être dominé(e) ou perdre votre autonomie", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Quand quelqu'un vous critique…",
+    options: [
+      { label: "Vous analysez si la critique est logiquement fondée", profile: "analyse" },
+      { label: "Vous vous demandez ce que vous avez raté", profile: "controle" },
+      { label: "Vous voulez corriger rapidement", profile: "performance" },
+      { label: "Vous vous demandez si vous avez vraiment mal fait", profile: "rigueur" },
+      { label: "Vous le ressentez profondément", profile: "sensibilite" },
+      { label: "Vous vous défendez ou contre-attaquez", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Pour vous recharger, vous avez besoin de…",
+    options: [
+      { label: "Temps seul(e) pour réfléchir et lire", profile: "analyse" },
+      { label: "Routine et environnement prévisible", profile: "controle" },
+      { label: "Accomplir quelque chose, même petit", profile: "performance" },
+      { label: "Que tout soit en ordre autour de vous", profile: "rigueur" },
+      { label: "Connexion émotionnelle et beauté", profile: "sensibilite" },
+      { label: "Espace et liberté d'action", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Votre rapport au temps est…",
+    options: [
+      { label: "Le temps, c'est pour réfléchir", profile: "analyse" },
+      { label: "Le temps doit être maîtrisé et planifié", profile: "controle" },
+      { label: "Le temps, c'est de l'action — chaque minute compte", profile: "performance" },
+      { label: "Le temps doit être bien utilisé, sans erreur", profile: "rigueur" },
+      { label: "Le temps suit les émotions et les cycles", profile: "sensibilite" },
+      { label: "Le temps, c'est de l'énergie à diriger", profile: "puissance" }
+    ]
+  },
+  {
+    text: "La phrase qui vous ressemble le plus…",
+    options: [
+      { label: "\"Je comprends mieux quand j'ai le temps d'analyser.\"", profile: "analyse" },
+      { label: "\"Je me sens mieux quand je sais à quoi m'attendre.\"", profile: "controle" },
+      { label: "\"Je me sens vivant(e) quand j'avance.\"", profile: "performance" },
+      { label: "\"Je ne supporte pas de mal faire les choses.\"", profile: "rigueur" },
+      { label: "\"Je ressens les choses très profondément.\"", profile: "sensibilite" },
+      { label: "\"Je n'aime pas qu'on me dise quoi faire.\"", profile: "puissance" }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════
+// 2. PROFILS
+// ═══════════════════════════════════════════════
+
+const profiles = {
+  analyse: {
+    name: "Eliot",
+    mode: "L'Observateur",
+    emoji: "🔵",
+    color: "#6366f1",
+    image: "images/Eliot.png",
+    brainlag: "Ton cerveau tourne en boucle. Il analyse, décortique, cherche la logique — même quand il n'y en a pas. C'est ton système de protection : comprendre pour ne pas être surpris.",
+    hypothese: "\"Si je comprends tout, rien ne peut me blesser ou me dépasser.\"",
+    protection: "Tu prends de la distance. Tu observes avant d'agir. Tu collectes des informations pour te sentir en sécurité dans ta propre tête.",
+    glitch: "Tu dépenses une énergie énorme à penser. Et pendant ce temps, tu n'agis pas. Tu restes dans le mental pour éviter le contact avec ce qui pourrait te submerger.",
+    reboot: [
+      "Pose-toi cette question : 'Est-ce que j'ai besoin de comprendre davantage, ou est-ce que j'ai déjà assez d'infos pour agir ?'",
+      "Fixe-toi une limite mentale : 10 minutes d'analyse max, puis une action concrète — même petite.",
+      "Remarque quand tu utilises 'j'analyse' pour éviter de ressentir quelque chose d'inconfortable.",
+      "Pratique une chose par semaine qui ne se comprend pas — qui se vit juste.",
+      "Offre ton analyse à quelqu'un : partager ce que tu penses sort la connaissance de ta tête et la met en mouvement."
+    ]
+  },
+  controle: {
+    name: "Jiwooh",
+    mode: "L'Architecte de Sécurité",
+    emoji: "⚪",
+    color: "#94a3b8",
+    image: "images/Jiwooh.png",
+    brainlag: "Ton système surveille en permanence. Il anticipe les risques, vérifie les détails, contrôle l'environnement. C'est ta façon de te sentir en sécurité dans un monde imprévisible.",
+    hypothese: "\"Si je contrôle tout, rien de mauvais ne peut arriver.\"",
+    protection: "Tu planifies, tu vérifies, tu anticipes. Tu crées des routines et des systèmes pour que tout soit prévisible.",
+    glitch: "L'imprévu te coûte énormément. Tu peux passer plus de temps à anticiper les problèmes qu'à profiter de ce qui se passe.",
+    reboot: [
+      "Identifie une chose aujourd'hui que tu n'as pas besoin de contrôler.",
+      "Quand tu veux vérifier une 3ème fois — remarque-le. Demande-toi si c'est nécessaire.",
+      "Pratique de laisser un espace non-planifié dans ta semaine.",
+      "Observe ce que tu ressens quand tu lâches le contrôle — juste 5 minutes.",
+      "Rappelle-toi : l'imprévu a aussi été source de bonnes choses dans ta vie."
+    ]
+  },
+  performance: {
+    name: "Luna",
+    mode: "L'Accélératrice",
+    emoji: "🟡",
+    color: "#f59e0b",
+    image: "images/Luna.png",
+    brainlag: "Tu avances. Toujours. L'action est ton antidote à l'angoisse. Tant que tu fais, tu n'as pas le temps de ressentir ce qui te pèse.",
+    hypothese: "\"Si je produis assez, j'aurai ma place. Si je m'arrête, tout s'effondre.\"",
+    protection: "Tu remplis ton agenda. Tu multiplies les projets. Tu es celle sur qui on peut compter — et tu entretiens ça.",
+    glitch: "Tu t'épuises. Et tu ne t'en rends compte que quand le corps lâche. Tu confonds valeur personnelle et productivité.",
+    reboot: [
+      "Prends 10 minutes sans rien faire. Observe ce qui remonte.",
+      "Demande-toi : 'Est-ce que j'agis parce que j'en ai envie, ou parce que j'ai peur de m'arrêter ?'",
+      "Identifie une chose que tu fais juste pour toi — pas pour produire.",
+      "Dis non à une demande cette semaine. Observe ce que tu ressens.",
+      "Remarque quand tu accélères sous pression. Ralentis d'un cran. Intentionnellement."
+    ]
+  },
+  rigueur: {
+    name: "Clara",
+    mode: "La Gardienne",
+    emoji: "🟢",
+    color: "#10b981",
+    image: "images/Clara.png",
+    brainlag: "Tu tiens. Tu maintiens. Tu t'assures que tout est bien fait, dans les règles, sans bavure. C'est ta façon de te sentir en sécurité et légitime.",
+    hypothese: "\"Si je fais bien, personne ne peut me reprocher quoi que ce soit.\"",
+    protection: "Tu appliques des standards élevés. Pour toi et les autres. Tu vérifies, tu corriges, tu affines.",
+    glitch: "Tu peux te paralyser face à l'imperfection — la tienne ou celle des autres. Et tu peux être perçue comme rigide quand tu cherches juste à bien faire.",
+    reboot: [
+      "Identifie une tâche où 'assez bien' suffit vraiment.",
+      "Remarque quand tu te critiques. Demande-toi si tu dirais ça à quelqu'un que tu aimes.",
+      "Laisse quelque chose d'imparfait visible — et reste avec le malaise.",
+      "Pratique de déléguer sans corriger derrière.",
+      "Rappelle-toi : l'erreur est de l'information, pas une condamnation."
+    ]
+  },
+  sensibilite: {
+    name: "Mar",
+    mode: "La Sensorielle",
+    emoji: "🔴",
+    color: "#f43f5e",
+    image: "images/Mars.png",
+    brainlag: "Tu ressens fort. Tout. Les ambiances, les non-dits, les beautés, les injustices. C'est un don — et parfois une surcharge.",
+    hypothese: "\"Si je ressens assez profondément, je trouverai ma place et mon sens.\"",
+    protection: "Tu t'immerges dans l'émotion, la création, la relation. Tu cherches l'authenticité totale.",
+    glitch: "Tu peux te perdre dans l'intensité. Et confondre profondeur et souffrance — comme si souffrir prouvait que tu vis vraiment.",
+    reboot: [
+      "Observe l'émotion sans l'amplifier. Elle passe.",
+      "Crée quelque chose à partir de ce que tu ressens — ça libère sans déborder.",
+      "Avant d'agir sur une émotion forte, donne-toi 5 minutes.",
+      "Distingue : 'Je ressens ça' de 'C'est la réalité'.",
+      "Trouve une personne avec qui tu peux être intense — sans te retenir."
+    ]
+  },
+  puissance: {
+    name: "Malik",
+    mode: "Le Rempart",
+    emoji: "🟠",
+    color: "#f97316",
+    image: "images/Malik.png",
+    brainlag: "Tu te bats. Tu t'imposes. Tu prends de la place — parfois sans t'en rendre compte. C'est ta façon de te protéger d'un monde que tu vis comme menaçant.",
+    hypothese: "\"Si je suis fort(e) et que je dirige, personne ne peut m'atteindre.\"",
+    protection: "Tu prends les devants. Tu décides. Tu montres que tu n'as pas besoin des autres.",
+    glitch: "Tu peux intimider sans le vouloir. Et refuser l'aide dont tu as besoin — parce que demander, c'est montrer une faille.",
+    reboot: [
+      "Remarque un moment cette semaine où tu aurais pu demander de l'aide — et ne l'as pas fait.",
+      "Observe : quand tu passes en mode 'rempart', est-ce de la force ou de la peur déguisée ?",
+      "Pratique de laisser quelqu'un d'autre décider sur une chose non-essentielle.",
+      "Remarque ce que tu ressens quand tu n'as pas le contrôle. Reste avec ça 2 minutes.",
+      "Dis à quelqu'un de confiance une chose dans laquelle tu n'es pas sûr(e) de toi."
+    ]
+  }
+};
+
+// ═══════════════════════════════════════════════
+// 3. COMBOS MIXTES
+// ═══════════════════════════════════════════════
+
+const combos = {
+  "analyse-controle": {
+    title: "🔵⚪ L'Architecte Analytique",
+    desc: "Tu analyses pour contrôler, et tu contrôles pour ne plus avoir à ressentir. Un système ultra-efficace — jusqu'à ce qu'il se retourne contre toi.",
+    concret: "Tu passes des heures à planifier le moindre détail. Tu te sens incapable d'agir sans avoir tout compris. L'imprévu te coûte énormément d'énergie.",
+    glitch: "Ton cerveau ne s'éteint jamais vraiment. La sur-analyse alimente l'anxiété du contrôle, qui alimente la sur-analyse.",
+    reboot: "Commence par une seule action imparfaite, sans tout avoir prévu. L'action crée plus de clarté que l'analyse."
+  },
+  "analyse-performance": {
+    title: "🔵🟡 Le Stratège en Mouvement",
+    desc: "Tu penses vite et tu agis vite. Mais tu cours parfois si vite que tu perds le fil de pourquoi tu cours.",
+    concret: "Tu jonglues entre projets, idées, analyses. Quand tu t'arrêtes, tu te sens inutile ou anxieux(se).",
+    glitch: "Tu utilises l'action pour court-circuiter l'analyse — et l'analyse pour justifier l'action. Résultat : tu es toujours en mouvement, rarement en paix.",
+    reboot: "Pose une question simple : 'Est-ce que j'agis parce que c'est juste, ou parce que m'arrêter me fait peur ?'"
+  },
+  "analyse-rigueur": {
+    title: "🔵🟢 Le Perfectionniste Logique",
+    desc: "Tu veux comprendre ET bien faire. Standards très élevés, peu de tolérance pour l'erreur — la tienne surtout.",
+    concret: "Tu peux rester bloqué(e) longtemps sur une décision parce que tu veux être sûr(e) de faire juste.",
+    glitch: "L'analyse alimente la rigueur, la rigueur ralentit l'action. Tu attends d'être parfait(e) pour commencer.",
+    reboot: "Fixe-toi un seuil : '80% de certitude, c'est assez pour avancer.' Le reste vient en faisant."
+  },
+  "analyse-sensibilite": {
+    title: "🔵🔴 L'Interprète Profond",
+    desc: "Tu analyses ce que tu ressens — et tu ressens ce que tu analyses. Une boucle riche et parfois épuisante.",
+    concret: "Tu décortiques tes émotions au lieu de les vivre. Ou tu te perds dans tes ressentis et cherches à leur donner du sens.",
+    glitch: "Tu peux intellectualiser pour ne pas ressentir — ou ressentir si fort que ça paralyse l'analyse.",
+    reboot: "Pratique de ressentir sans chercher à comprendre. Juste 5 minutes. Sans mot, sans explication."
+  },
+  "analyse-puissance": {
+    title: "🔵🟠 Le Leader Cérébral",
+    desc: "Tu veux comprendre ET diriger. Tu analyses pour prendre de meilleures décisions — et tu n'aimes pas être contredit(e) sans argument solide.",
+    concret: "Tu peux dominer les conversations sans t'en rendre compte — parce que tu as toujours un raisonnement d'avance.",
+    glitch: "Tu confonds avoir raison avec avoir du pouvoir. Ça peut isoler les autres.",
+    reboot: "Pratique d'écouter une idée jusqu'au bout avant de répondre. Laisse-toi surprendre."
+  },
+  "controle-performance": {
+    title: "⚪🟡 La Machine Efficace",
+    desc: "Tu planifies et tu exécutes. Tu es fiable, productif(ve), organisé(e). Et tu t'épuises à maintenir ce rythme.",
+    concret: "Tu as des listes, des systèmes, des routines. Quand quelque chose déraille, tu réaccélères pour rattraper.",
+    glitch: "Tu ne t'arrêtes jamais vraiment. Le repos te semble improductif — donc suspect.",
+    reboot: "Planifie du vide. Littéralement. Un créneau par semaine sans objectif."
+  },
+  "controle-rigueur": {
+    title: "⚪🟢 Le Gardien des Règles",
+    desc: "Tu veux que tout soit fait correctement ET prévisiblement. Tu es la personne sur qui on peut compter — toujours.",
+    concret: "Tu t'imposes des standards très élevés et tu attends autant des autres. Le relâchement te déstabilise.",
+    glitch: "Tu peux devenir rigide sans t'en rendre compte — défendant des règles pour éviter l'incertitude.",
+    reboot: "Identifie une règle que tu appliques par habitude, pas par conviction. Est-ce qu'elle te sert encore ?"
+  },
+  "controle-sensibilite": {
+    title: "⚪🔴 Le Cœur Blindé",
+    desc: "Tu ressens beaucoup — et tu contrôles pour que ça ne se voie pas. Une tension permanente entre l'intérieur et l'extérieur.",
+    concret: "Tu peux sembler calme et organisé(e) alors que tu vis une tempête intérieure.",
+    glitch: "Tu dépenses beaucoup d'énergie à contenir ce que tu ressens. Ça finit par fuir ailleurs.",
+    reboot: "Choisis une personne de confiance. Dis-lui une chose que tu ressens — sans la rationaliser."
+  },
+  "controle-puissance": {
+    title: "⚪🟠 Le Stratège Dominant",
+    desc: "Tu contrôles l'environnement ET les dynamiques de pouvoir. Tu aimes que les choses aillent dans ton sens — et tu t'assures que c'est le cas.",
+    concret: "Tu peux être perçu(e) comme inflexible ou autoritaire alors que tu cherches juste à te sentir en sécurité.",
+    glitch: "Quand tu perds le contrôle d'une situation, tu peux réagir fort — surprenant ceux qui ne voyaient pas la pression en dessous.",
+    reboot: "Observe une situation où tu tiens le contrôle par peur, pas par nécessité. Que se passerait-il si tu lâchais ?"
+  },
+  "performance-rigueur": {
+    title: "🟡🟢 L'Exécutant Exigeant",
+    desc: "Tu avances vite ET tu veux bien faire. Une combinaison ambitieuse — et épuisante.",
+    concret: "Tu te mets une pression énorme : aller vite ET être parfait(e). Les deux s'opposent souvent.",
+    glitch: "Tu t'en veux quand tu vas trop vite et fais des erreurs. Tu t'en veux quand tu ralentis pour bien faire.",
+    reboot: "Définis pour chaque projet : est-ce un sprint (vitesse) ou un ouvrage (qualité) ? Tu ne peux pas tout avoir en même temps."
+  },
+  "performance-sensibilite": {
+    title: "🟡🔴 L'Artiste en Mouvement",
+    desc: "Tu ressens fort et tu transformes ça en action, création, mouvement. Une énergie puissante — qui peut partir dans tous les sens.",
+    concret: "Tu peux lancer 10 projets sur un coup d'émotion et en abandonner 8.",
+    glitch: "Tu utilises l'action pour fuir l'émotion, et l'émotion pour te lancer dans l'action. Sans jamais vraiment t'arrêter.",
+    reboot: "Avant de lancer un nouveau projet : dors dessus. L'élan est toujours là le lendemain si c'est vrai."
+  },
+  "performance-puissance": {
+    title: "🟡🟠 Le Moteur Dominant",
+    desc: "Tu avances vite ET tu prends de la place. Tu es celui/celle qui impulse, décide, entraîne les autres.",
+    concret: "Tu peux écraser sans t'en rendre compte — en allant trop vite, en décidant sans consulter.",
+    glitch: "Tu confonds vitesse et leadership. Et tu peux laisser les autres loin derrière.",
+    reboot: "Ralentis volontairement une fois par semaine pour laisser quelqu'un d'autre mener. Observe ce que ça te coûte."
+  },
+  "rigueur-sensibilite": {
+    title: "🟢🔴 L'Idéaliste Blessé",
+    desc: "Tu veux que le monde soit bien fait ET tu le ressens profondément quand ce n'est pas le cas. Une sensibilité à fleur de peau doublée d'exigence.",
+    concret: "Tu souffres des injustices, des imperfections, de l'indifférence des autres. Tu peux avoir l'impression d'être seul(e) à voir ce qui ne va pas.",
+    glitch: "Tu peux te perdre dans la souffrance de ce qui devrait être — et oublier ce qui est déjà beau.",
+    reboot: "Identifie chaque jour une chose imparfaite qui a quand même de la valeur. Entraîne ton regard."
+  },
+  "rigueur-puissance": {
+    title: "🟢🟠 Le Juge Intransigeant",
+    desc: "Tu as des standards élevés ET tu les défends avec force. Tu n'acceptes pas le médiocre — ni chez toi, ni chez les autres.",
+    concret: "Tu peux entrer en conflit quand tu estimes que les choses sont mal faites ou injustes.",
+    glitch: "Tu peux confondre avoir raison avec bien faire. Et ta façon de défendre tes standards peut blesser.",
+    reboot: "Demande-toi : est-ce que je défends un principe ou est-ce que j'essaie de contrôler ?"
+  },
+  "sensibilite-puissance": {
+    title: "🔴🟠 Le Volcan",
+    desc: "Tu ressens très fort — et tu l'exprimes avec intensité. Tes émotions ont de la puissance, et elles peuvent sortir de façon explosive.",
+    concret: "Tu peux passer de la douceur à la confrontation très vite. Les autres peuvent te trouver imprévisible.",
+    glitch: "Tu confonds intensité émotionnelle et urgence d'agir. Pas tout ce qui se ressent doit être exprimé immédiatement.",
+    reboot: "Avant d'agir sur une émotion forte, donne-toi 5 minutes. Observe si l'urgence est toujours là après."
+  }
+};
+
+// ═══════════════════════════════════════════════
+// 4. ÉTAT
+// ═══════════════════════════════════════════════
+
+const answers = {};
+
+// ═══════════════════════════════════════════════
+// 5. RENDU DU QUIZ
+// ═══════════════════════════════════════════════
+
+function renderQuiz() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+
+  questions.forEach((q, qi) => {
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.innerHTML = `
+      <div class="question-number">Question ${qi + 1} / ${questions.length}</div>
+      <div class="question-text">${q.text}</div>
+      <div class="options" id="opts-${qi}"></div>
+    `;
+
+    const optsDiv = block.querySelector(`#opts-${qi}`);
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = opt.label;
+      btn.onclick = () => selectOption(qi, oi, opt.profile, btn, optsDiv);
+      optsDiv.appendChild(btn);
+    });
+
+    container.appendChild(block);
+  });
+}
+
+function selectOption(qi, oi, profile, btn, optsDiv) {
+  optsDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qi] = profile;
+
+  const progress = (Object.keys(answers).length / questions.length) * 100;
+  document.getElementById('progressFill').style.width = progress + '%';
+
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = Object.keys(answers).length < questions.length;
+}
+
+// ═══════════════════════════════════════════════
+// 6. CALCUL & AFFICHAGE DU RÉSULTAT
+// ═══════════════════════════════════════════════
+
+function showResult() {
+  const scores = {};
+  Object.values(answers).forEach(p => {
+    scores[p] = (scores[p] || 0) + 1;
+  });
+
+  const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const primary = sorted[0][0];
+  const secondary = sorted.length > 1 ? sorted[1][0] : null;
+  const total = questions.length;
+
+  const p1 = profiles[primary];
+  const p2 = secondary ? profiles[secondary] : null;
+
+  const comboKey = secondary
+    ? [primary, secondary].sort().join('-')
+    : null;
+  const mix = comboKey && combos[comboKey] ? combos[comboKey] : null;
+
+  let html = `
+    <h1 style="margin-bottom:30px">Ton Brainlag 🧠</h1>
+
+    <!-- PROFIL PRINCIPAL -->
+    <span class="tag tag-primary">✦ Mode dominant</span>
+
+    <img
+      src="${p1.image}"
+      alt="${p1.name}"
+      class="character-img"
+      style="--profile-color: ${p1.color}"
+      onerror="this.style.display='none'"
+    />
+
+    <div class="profile-title" style="color: ${p1.color}">${p1.emoji} ${p1.name} — ${p1.mode}</div>
+    <p class="profile-subtitle">Score : ${scores[primary]} / ${total} réponses</p>
+
+    <div class="score-bar-wrap">
+      <div class="score-bar">
+        <div class="score-bar-fill" style="width:${(scores[primary]/total)*100}%; background: ${p1.color}"></div>
       </div>
     </div>
 
-    <!-- Q2 -->
-    <div class="question-block" id="q2">
-      <span class="question-num">02</span>
-      <p class="question-text">Ce qui t'épuise le plus dans une journée chargée…</p>
-      <div class="options">
-        <button class="option-btn" onclick="answer('jiwooh')">Les imprévus qui font sauter ton plan.</button>
-        <button class="option-btn" onclick="answer('clara')">Les détails qui ne sont pas à leur place.</button>
-        <button class="option-btn" onclick="answer('luna')">Ne pas avoir été assez vu·e ou reconnu·e.</button>
-        <button class="option-btn" onclick="answer('mar')">Devoir faire semblant d'aller bien.</button>
-        <button class="option-btn" onclick="answer('malik')">Les gens qui ne vont pas droit au but.</button>
-        <button class="option-btn" onclick="answer('eliot')">Trop d'interactions, pas assez de silence.</button>
-      </div>
-    </div>
-
-    <!-- Q3 -->
-    <div class="question-block" id="q3">
-      <span class="question-num">03</span>
-      <p class="question-text">Dans un groupe, tu es souvent celui/celle qui…</p>
-      <div class="options">
-        <button class="option-btn" onclick="answer('jiwooh')">Pose les questions que personne n'a pensé à poser.</button>
-        <button class="option-btn" onclick="answer('clara')">S'assure que tout le monde avance dans le bon sens.</button>
-        <button class="option-btn" onclick="answer('luna')">Donne de l'énergie et fédère.</button>
-        <button class="option-btn" onclick="answer('mar')">Sent les tensions avant qu'elles éclatent.</button>
-        <button class="option-btn" onclick="answer('malik')">Dit ce que tout le monde pense tout bas.</button>
-        <button class="option-btn" onclick="answer('eliot')">Écoute et synthétise sans trop parler.</button>
-      </div>
-    </div>
-
-    <!-- Q4 -->
-    <div class="question-block" id="q4">
-      <span class="question-num">04</span>
-      <p class="question-text">Ta plus grande peur secrète…</p>
-      <div class="options">
-        <button class="option-btn" onclick="answer('jiwooh')">Être pris·e au dépourvu sans filet.</button>
-        <button class="option-btn" onclick="answer('clara')">Que tout parte en désordre à cause de toi.</button>
-        <button class="option-btn" onclick="answer('luna')">Passer inaperçu·e. Ne pas compter.</button>
-        <button class="option-btn" onclick="answer('mar')">Être ordinaire. Ne rien ressentir de vrai.</button>
-        <button class="option-btn" onclick="answer('malik')">Être dominé·e ou manipulé·e.</button>
-        <button class="option-btn" onclick="answer('eliot')">Être envahi·e. Perdre ton espace intérieur.</button>
-      </div>
-    </div>
-
-    <!-- Q5 -->
-    <div class="question-block" id="q5">
-      <span class="question-num">05</span>
-      <p class="question-text">Quand tu stresses, ton corps te le dit comment ?</p>
-      <div class="options">
-        <button class="option-btn" onclick="answer('jiwooh')">Mâchoire serrée, épaules remontées.</button>
-        <button class="option-btn" onclick="answer('clara')">Une liste mentale qui tourne en boucle.</button>
-        <button class="option-btn" onclick="answer('luna')">Une envie de bouger, de faire, de remplir.</button>
-        <button class="option-btn" onclick="answer('mar')">Une vague qui monte et qu'on ne peut pas nommer.</button>
-        <button class="option-btn" onclick="answer('malik')">Une tension dans la poitrine, prêt·e à exploser.</button>
-        <button class="option-btn" onclick="answer('eliot')">Un besoin urgent d'être seul·e, de me déconnecter.</button>
-      </div>
-    </div>
-
-    <!-- Q6 -->
-    <div class="question-block" id="q6">
-      <span class="question-num">06</span>
-      <p class="question-text">Ce que les gens disent souvent de toi…</p>
-      <div class="options">
-        <button class="option-btn" onclick="answer('jiwooh')">"Tu réfléchis trop."</button>
-        <button class="option-btn" onclick="answer('clara')">"Tu es trop exigeant·e."</button>
-        <button class="option-btn" onclick="answer('luna')">"Tu en fais trop."</button>
-        <button class="option-btn" onclick="answer('mar')">"Tu es trop intense."</button>
-        <button class="option-btn" onclick="answer('malik')">"Tu es trop direct·e."</button>
-        <button class="option-btn" onclick="answer('eliot')">"Tu es trop dans ta tête."</button>
-      </div>
-    </div>
-
-    <!-- Q7 -->
-    <div class="question-block" id="q7">
-      <span class="question-num">07</span>
-      <p class="question-text">Ton rapport à l'échec…</p>
-      <div class="options">
-        <button class="option-btn" onclick="answer('jiwooh')">Je l'anticipe tellement que j'oublie d'avancer.</button>
-        <button class="option-btn" onclick="answer('clara')">Je me reproche longtemps ce qui aurait pu être mieux.</button>
-        <button class="option-btn" onclick="answer('luna')">Je rebondis vite. Trop vite parfois.</button>
-        <button class="option-btn" onclick="answer('mar')">Je le vis comme une blessure profonde.</button>
-        <button class="option-btn" onclick="answer('malik')">Je transforme la douleur en énergie de combat.</button>
-        <button class="option-btn" onclick="answer('eliot')">Je l'analyse jusqu'à en comprendre chaque détail.</button>
-      </div>
-    </div>
-
-    <!-- Q8 -->
-    <div class="question-block" id="q8">
-      <span class="question-num">08</span>
-      <p class="question-text">Ce dont tu as le plus besoin pour te sentir bien…</p>
-      <div class="options">
-        <button class="option-btn" onclick="answer('jiwooh')">De la prévisibilité. Savoir à quoi m'attendre.</button>
-        <button class="option-btn" onclick="answer('clara')">De l'ordre. Que les choses soient à leur place.</button>
-        <button class="option-btn" onclick="answer('luna')">D'être vu·e et reconnu·e pour ce que je fais.</button>
-        <button class="option-btn" onclick="answer('mar')">D'être compris·e dans ce que je ressens vraiment.</button>
-        <button class="option-btn" onclick="answer('malik')">De l'espace pour agir sans être freiné·e.</button>
-        <button class="option-btn" onclick="answer('eliot')">Du temps seul·e pour me recharger.</button>
-      </div>
-    </div>
-
-    <!-- Q9 -->
-    <div class="question-block" id="q9">
-      <span class="question-num">09</span>
-      <p class="question-text">La phrase qui te ressemble le plus en ce moment…</p>
-      <div class="options">
-        <button class="option-btn" onclick="answer('jiwooh')">"J'ai besoin de comprendre avant de me lancer."</button>
-        <button class="option-btn" onclick="answer('clara')">"Si c'est fait, autant que ce soit bien fait."</button>
-        <button class="option-btn" onclick="answer('luna')">"Je m'arrêterai quand j'aurai prouvé ce que je vaux."</button>
-        <button class="option-btn" onclick="answer('mar')">"Je ressens des choses que je n'arrive pas à expliquer."</button>
-        <button class="option-btn" onclick="answer('malik')">"Je ne laisse pas passer ce qui est faux."</button>
-        <button class="option-btn" onclick="answer('eliot')">"J'observe. Je ne suis pas encore prêt·e."</button>
-      </div>
-    </div>
-
-    <!-- Q10 -->
-    <div class="question-block" id="q10">
-      <span class="question-num">10</span>
-      <p class="question-text">Ce que tu cherches vraiment en faisant ce quiz…</p>
-      <div class="options">
-        <button class="option-btn" onclick="answer('jiwooh')">Mieux me préparer à ce que je vis.</button>
-        <button class="option-btn" onclick="answer('clara')">Comprendre pourquoi je suis si dur·e avec moi-même.</button>
-        <button class="option-btn" onclick="answer('luna')">Savoir si ce que je fais a du sens.</button>
-        <button class="option-btn" onclick="answer('mar')">Me sentir moins seul·e dans ce que je ressens.</button>
-        <button class="option-btn" onclick="answer('malik')">Comprendre d'où vient cette tension que je porte.</button>
-        <button class="option-btn" onclick="answer('eliot')">Mettre des mots sur quelque chose que je n'arrive pas à nommer.</button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- RÉSULTAT -->
-  <div id="result">
-    <p style="font-size:0.75rem; letter-spacing:2px; color:#555; text-transform:uppercase;">Ton profil</p>
-    <img id="result-img" src="" alt="Personnage">
-    <h2 id="result-name"></h2>
-    <p id="result-desc"></p>
-    <p id="result-glitch"></p>
     <hr class="divider">
-    <button class="btn btn-primary" onclick="showEndScreen()">→ Continuer</button>
-    <button class="btn btn-secondary" onclick="resetQuiz()">↩ Recommencer</button>
-  </div>
 
-  <!-- END SCREEN -->
-  <div id="end-screen">
-    <p style="font-size:13px; letter-spacing:2px; color:#666; text-transform:uppercase;">Fin du quiz</p>
-    <p style="font-size:22px; font-weight:300; color:#e0e0e0; line-height:1.6;">
-      Merci d'avoir pris ce moment pour toi.
-    </p>
-    <p style="font-size:18px; color:#888; font-style:italic; line-height:1.6;">
-      Ce n'est pas rien de se regarder en face. 🤍
-    </p>
+    <p class="section-label">🔴 Ton Brainlag</p>
+    <p class="section-content">${p1.brainlag}</p>
+
+    <p class="section-label">💭 L'hypothèse cachée</p>
+    <p class="section-content">${p1.hypothese}</p>
+
+    <p class="section-label">🛡️ Ton mode protection</p>
+    <p class="section-content">${p1.protection}</p>
+
+    <p class="section-label">⚡ Le Glitch</p>
+    <p class="section-content">${p1.glitch}</p>
+
+    <p class="section-label">🔧 Ton Reboot — par où commencer</p>
+    <ul class="reboot-list">
+      ${p1.reboot.map(r => `<li>${r}</li>`).join('')}
+    </ul>
+  `;
+
+  if (p2) {
+    html += `
     <hr class="divider">
-    <button class="btn btn-secondary" onclick="resetQuiz()">↩ Recommencer le quiz</button>
-  </div>
 
-  <script>
-    let currentQ = 1;
-    const totalQ = 10;
-    let scores = {
-      jiwooh: 0,
-      clara: 0,
-      luna: 0,
-      mar: 0,
-      malik: 0,
-      eliot: 0
-    };
+    <!-- PROFIL SECONDAIRE -->
+    <span class="tag tag-secondary">✦ Mode secondaire</span>
 
-    const profiles = {
-      jiwooh: {
-        name: "Jiwooh — L'Anticipatrice",
-        img: "images/Jiwooh.png",
-        desc: "Tu penses à tout. Tu scannes, tu prévois, tu analyses pour te sentir en sécurité. Ta vigilance est une force — mais elle t'épuise.",
-        glitch: "Glitch : tu anticipes tellement les problèmes que tu oublies parfois de vivre ce qui est là."
-      },
-      clara: {
-        name: "Clara — La Gardienne",
-        img: "images/Clara.png",
-        desc: "Tu tiens. Tu veilles sur l'ordre, sur les autres, sur toi-même. Ta rigueur est précieuse — mais elle a un coût.",
-        glitch: "Glitch : tu te fixes parfois sur un détail jusqu'à perdre de vue l'ensemble."
-      },
-      luna: {
-        name: "Luna — L'Accélératrice",
-        img: "images/Luna.png",
-        desc: "Tu avances. Tu remplis, tu construis, tu ne t'arrêtes pas. Ton énergie est contagieuse — mais tu cours parfois pour ne pas tomber.",
-        glitch: "Glitch : tu rebondis si vite que tu n'as jamais le temps de vraiment ressentir ce qui s'est passé."
-      },
-      mar: {
-        name: "Mar — La Sensorielle",
-        img: "images/Mars.png",
-        desc: "Tu ressens fort. Tu captes ce que les autres ne voient pas, tu vis en intensité. Ta profondeur est rare — mais elle peut t'isoler.",
-        glitch: "Glitch : tu te noies parfois dans l'intensité de ce que tu vis."
-      },
-      malik: {
-        name: "Malik — Le Rempart",
-        img: "images/Malik.png",
-        desc: "Tu tiens debout. Tu protèges, tu t'opposes, tu ne laisses pas passer ce qui est faux. Ta force est réelle — mais elle coûte.",
-        glitch: "Glitch : tu réagis avant de réfléchir. La défense est devenue un réflexe."
-      },
-      eliot: {
-        name: "Eliot — L'Observateur",
-        img: "images/Eliot.png",
-        desc: "Tu regardes. Tu analyses, tu décortiques, tu cherches le sens avant d'agir. Ta clarté est précieuse — mais parfois tu restes spectateur de ta propre vie.",
-        glitch: "Glitch : comprendre est devenu une façon d'éviter de ressentir."
-      }
-    };
+    <img
+      src="${p2.image}"
+      alt="${p2.name}"
+      class="char-img-secondary"
+      onerror="this.style.display='none'"
+    />
 
-    function startQuiz() {
-      document.getElementById('intro').style.display = 'none';
-      document.getElementById('quiz').style.display = 'block';
-      document.getElementById('q1').classList.add('active');
-    }
+    <div class="profile-title" style="font-size:1.3rem; color: ${p2.color}">${p2.emoji} ${p2.name} — ${p2.mode}</div>
+    <p class="profile-subtitle">Score : ${scores[secondary]} / ${total} réponses</p>
 
-    function answer(profil) {
-      scores[profil]++;
-      if (currentQ < totalQ) {
-        document.getElementById('q' + currentQ).classList.remove('active');
-        currentQ++;
-        document.getElementById('q' + currentQ).classList.add('active');
-        document.getElementById('progress-text').textContent = 'Question ' + currentQ + ' / ' + totalQ;
-      } else {
-        showResult();
-      }
-    }
+    <div class="score-bar-wrap">
+      <div class="score-bar">
+        <div class="score-bar-fill" style="width:${(scores[secondary]/total)*100}%; background: linear-gradient(90deg, #34d399, #6ee7b7)"></div>
+      </div>
+    </div>
 
-    function showResult() {
-      document.getElementById('quiz').style.display = 'none';
-      const winner = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
-      const p = profiles[winner];
-      document.getElementById('result-img').src = p.img;
-      document.getElementById('result-name').textContent = p.name;
-      document.getElementById('result-desc').textContent = p.desc;
-      document.getElementById('result-glitch').textContent = p.glitch;
-      const res = document.getElementById('result');
-      res.style.display = 'flex';
-    }
+    <hr class="divider">
 
-    function showEndScreen() {
-      document.getElementById('result').style.display = 'none';
-      const end = document.getElementById('end-screen');
-      end.style.display = 'flex';
-    }
+    <p class="section-label">🔴 Ton Brainlag secondaire</p>
+    <p class="section-content">${p2.brainlag}</p>
 
-    function resetQuiz() {
-      Object.keys(scores).forEach(k => scores[k] = 0);
-      currentQ = 1;
-      document.querySelectorAll('.question-block').forEach(b => b.classList.remove('active'));
-      document.getElementById('progress-text').textContent = 'Question 1 / 10';
-      document.getElementById('result').style.display = 'none';
-      document.getElementById('end-screen').style.display = 'none';
-      document.getElementById('quiz').style.display = 'block';
-      document.getElementById('q1').classList.add('active');
-    }
-  </script>
+    <p class="section-label">⚙️ Ton mode protection secondaire</p>
+    <p class="section-content">${p2.protection}</p>
+    `;
+  }
 
+  if (mix) {
+    html += `
+    <hr class="divider">
+
+    <!-- COMBO MIXTE -->
+    <span class="tag tag-mix">🧬 Ton combo unique</span>
+    <div class="mix-card">
+      <div class="profile-title" style="font-size:1.3rem">${mix.title}</div>
+
+      <p class="section-label" style="margin-top:16px">Ce que ça crée</p>
+      <p class="section-content">${mix.desc}</p>
+
+      <p class="section-label">Concrètement</p>
+      <p class="section-content">${mix.concret}</p>
+
+      <p class="section-label">⚠️ Le glitch combiné</p>
+      <p class="section-content">${mix.glitch}</p>
+
+      <p class="section-label">🔧 Par où commencer</p>
+      <p class="section-content">${mix.reboot}</p>
+    </div>
+    `;
+  }
+
+  html += `
+    <hr class="divider">
+
+    <div class="action-buttons">
+      <button class="btn-share" onclick="shareResult('${p1.name}', '${mix ? mix.title : p1.mode}')">
+        ↗ Partager mon résultat
+      </button>
+      <button class="btn-restart" onclick="restartQuiz()">
+        ↺ Recommencer
+      </button>
+    </div>
+  `;
+
+  document.getElementById('quizSection').style.display = 'none';
+  const resultSection = document.getElementById('resultSection');
+  resultSection.style.display = 'block';
+  resultSection.innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════════════
+// 7. UTILITAIRES
+// ═══════════════════════════════════════════════
+
+function shareResult(name, combo) {
+  const text = `Mon Brainlag dominant : ${name}\nMon combo : ${combo}\nDécouvre le tien → [ton lien]`;
+  if (navigator.share) {
+    navigator.share({ title: 'Mon Brainlag', text: text });
+  } else {
+    navigator.clipboard.writeText(text).then(() => alert('Résultat copié ! Tu peux le coller où tu veux.'));
+  }
+}
+
+function restartQuiz() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.getElementById('quizSection').style.display = 'block';
+  document.getElementById('resultSection').style.display = 'none';
+  document.getElementById('progressFill').style.width = '0%';
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════════════
+// 8. INIT
+// ═══════════════════════════════════════════════
+
+renderQuiz();
+</script>
 </body>
 </html>
