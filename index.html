@@ -19,26 +19,25 @@
       padding: 20px;
     }
 
-    h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
-    .subtitle {
-      font-size: 0.95rem;
-      color: #888;
-      margin-bottom: 40px;
-      text-align: center;
-    }
-
     /* INTRO */
     #intro {
       max-width: 500px;
       width: 100%;
       text-align: center;
+    }
+
+    #intro h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    #intro p {
+      font-size: 0.95rem;
+      color: #888;
+      margin-bottom: 40px;
+      line-height: 1.6;
     }
 
     .btn-start {
@@ -50,7 +49,6 @@
       font-weight: 700;
       cursor: pointer;
       letter-spacing: 1px;
-      margin-top: 20px;
       transition: opacity 0.2s;
     }
 
@@ -61,6 +59,13 @@
       display: none;
       max-width: 600px;
       width: 100%;
+    }
+
+    .progress {
+      font-size: 0.75rem;
+      color: #444;
+      letter-spacing: 1px;
+      margin-bottom: 30px;
     }
 
     .question-block {
@@ -110,13 +115,6 @@
       background: #111;
     }
 
-    .progress {
-      font-size: 0.75rem;
-      color: #444;
-      margin-bottom: 30px;
-      letter-spacing: 1px;
-    }
-
     /* RÉSULTAT */
     #result {
       display: none;
@@ -128,305 +126,363 @@
       gap: 20px;
     }
 
-    #result img {
-      width: 200px;
-      height: 200px;
+    #result-img {
+      width: 180px;
+      height: 180px;
       object-fit: cover;
-      filter: grayscale(20%);
+      border-radius: 50%;
+      border: 2px solid #333;
+      margin-bottom: 10px;
     }
 
     #result-name {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 800;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
     }
 
     #result-desc {
-      font-size: 0.95rem;
-      color: #aaa;
+      font-size: 1rem;
+      color: #ccc;
       line-height: 1.7;
-      max-width: 400px;
+      max-width: 420px;
     }
 
     #result-glitch {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: #666;
       font-style: italic;
+      line-height: 1.6;
+      border-left: 2px solid #333;
+      padding-left: 16px;
+      text-align: left;
+      max-width: 420px;
     }
 
-    .btn-retry {
-      background: transparent;
-      border: 1px solid #444;
-      color: #f0f0f0;
-      padding: 12px 30px;
+    .btn {
+      border: none;
+      padding: 13px 32px;
       font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
       letter-spacing: 1px;
-      margin-top: 10px;
-      transition: all 0.2s;
+      transition: opacity 0.2s;
+      width: 100%;
+      max-width: 320px;
     }
 
-    .btn-retry:hover {
-      border-color: #f0f0f0;
+    .btn:hover { opacity: 0.8; }
+
+    .btn-primary {
+      background: #f0f0f0;
+      color: #0a0a0a;
     }
 
-    .glitch-line {
-      font-size: 0.7rem;
-      color: #333;
-      letter-spacing: 3px;
-      margin-top: 40px;
+    .btn-secondary {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #888;
+      margin-top: 8px;
+    }
+
+    /* END SCREEN */
+    #end-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 24px;
+      max-width: 480px;
+      margin: 0 auto;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #222;
+      width: 60px;
+      margin: 16px auto;
     }
   </style>
 </head>
 <body>
 
-<!-- INTRO -->
-<div id="intro">
-  <h1>Quel est ton Brainlag ?</h1>
-  <p class="subtitle">6 profils. 10 questions. Un seul système qui tourne en toi.</p>
-  <button class="btn-start" onclick="startQuiz()">LANCER LE DIAGNOSTIC</button>
-</div>
-
-<!-- QUIZ -->
-<div id="quiz">
-  <div class="progress" id="progress-text">Question 1 / 10</div>
-
-  <!-- Q1 -->
-  <div class="question-block active" id="q1">
-    <span class="question-num">01</span>
-    <p class="question-text">Une réunion surprise est ajoutée à ton agenda dans 10 minutes. Ta première réaction ?</p>
-    <div class="options">
-      <button class="option-btn" onclick="answer('jiwooh')">Je commence à anticiper tous les scénarios possibles.</button>
-      <button class="option-btn" onclick="answer('clara')">Je vérifie que tout est en ordre avant d'y aller.</button>
-      <button class="option-btn" onclick="answer('luna')">Je me dis que je vais gérer, je passe à autre chose.</button>
-      <button class="option-btn" onclick="answer('mar')">Je ressens une vague d'inconfort que je ne sais pas nommer.</button>
-      <button class="option-btn" onclick="answer('malik')">Je me prépare à défendre mon point de vue si besoin.</button>
-      <button class="option-btn" onclick="answer('eliot')">Je me demande à quoi ça sert vraiment.</button>
-    </div>
+  <!-- INTRO -->
+  <div id="intro">
+    <h1>Quel est ton Brainlag ?</h1>
+    <p>10 questions pour identifier ton profil.<br>Pas de bonne ou mauvaise réponse.<br>Juste toi, honnêtement.</p>
+    <button class="btn-start" onclick="startQuiz()">Commencer →</button>
   </div>
 
-  <!-- Q2 -->
-  <div class="question-block" id="q2">
-    <span class="question-num">02</span>
-    <p class="question-text">Quand quelque chose ne se passe pas comme prévu, tu as tendance à...</p>
-    <div class="options">
-      <button class="option-btn" onclick="answer('jiwooh')">Refaire le plan depuis le début pour retrouver le contrôle.</button>
-      <button class="option-btn" onclick="answer('clara')">Corriger immédiatement pour que ça soit parfait.</button>
-      <button class="option-btn" onclick="answer('luna')">Passer à la vitesse supérieure pour rattraper.</button>
-      <button class="option-btn" onclick="answer('mar')">Ressentir tout très fort avant de pouvoir réagir.</button>
-      <button class="option-btn" onclick="answer('malik')">Identifier qui ou quoi est responsable.</button>
-      <button class="option-btn" onclick="answer('eliot')">Te retirer et observer depuis l'extérieur.</button>
+  <!-- QUIZ -->
+  <div id="quiz">
+    <p class="progress" id="progress-text">Question 1 / 10</p>
+
+    <!-- Q1 -->
+    <div class="question-block active" id="q1">
+      <span class="question-num">01</span>
+      <p class="question-text">Quand quelque chose ne va pas, ta première réaction c'est…</p>
+      <div class="options">
+        <button class="option-btn" onclick="answer('jiwooh')">Analyser ce qui aurait pu l'éviter.</button>
+        <button class="option-btn" onclick="answer('clara')">Trouver une solution, vite.</button>
+        <button class="option-btn" onclick="answer('luna')">Continuer comme si de rien n'était.</button>
+        <button class="option-btn" onclick="answer('mar')">Le ressentir profondément avant de bouger.</button>
+        <button class="option-btn" onclick="answer('malik')">Réagir. Directement.</button>
+        <button class="option-btn" onclick="answer('eliot')">Observer. Comprendre avant d'agir.</button>
+      </div>
     </div>
+
+    <!-- Q2 -->
+    <div class="question-block" id="q2">
+      <span class="question-num">02</span>
+      <p class="question-text">Ce qui t'épuise le plus dans une journée chargée…</p>
+      <div class="options">
+        <button class="option-btn" onclick="answer('jiwooh')">Les imprévus qui font sauter ton plan.</button>
+        <button class="option-btn" onclick="answer('clara')">Les détails qui ne sont pas à leur place.</button>
+        <button class="option-btn" onclick="answer('luna')">Ne pas avoir été assez vu·e ou reconnu·e.</button>
+        <button class="option-btn" onclick="answer('mar')">Devoir faire semblant d'aller bien.</button>
+        <button class="option-btn" onclick="answer('malik')">Les gens qui ne vont pas droit au but.</button>
+        <button class="option-btn" onclick="answer('eliot')">Trop d'interactions, pas assez de silence.</button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block" id="q3">
+      <span class="question-num">03</span>
+      <p class="question-text">Dans un groupe, tu es souvent celui/celle qui…</p>
+      <div class="options">
+        <button class="option-btn" onclick="answer('jiwooh')">Pose les questions que personne n'a pensé à poser.</button>
+        <button class="option-btn" onclick="answer('clara')">S'assure que tout le monde avance dans le bon sens.</button>
+        <button class="option-btn" onclick="answer('luna')">Donne de l'énergie et fédère.</button>
+        <button class="option-btn" onclick="answer('mar')">Sent les tensions avant qu'elles éclatent.</button>
+        <button class="option-btn" onclick="answer('malik')">Dit ce que tout le monde pense tout bas.</button>
+        <button class="option-btn" onclick="answer('eliot')">Écoute et synthétise sans trop parler.</button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block" id="q4">
+      <span class="question-num">04</span>
+      <p class="question-text">Ta plus grande peur secrète…</p>
+      <div class="options">
+        <button class="option-btn" onclick="answer('jiwooh')">Être pris·e au dépourvu sans filet.</button>
+        <button class="option-btn" onclick="answer('clara')">Que tout parte en désordre à cause de toi.</button>
+        <button class="option-btn" onclick="answer('luna')">Passer inaperçu·e. Ne pas compter.</button>
+        <button class="option-btn" onclick="answer('mar')">Être ordinaire. Ne rien ressentir de vrai.</button>
+        <button class="option-btn" onclick="answer('malik')">Être dominé·e ou manipulé·e.</button>
+        <button class="option-btn" onclick="answer('eliot')">Être envahi·e. Perdre ton espace intérieur.</button>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-block" id="q5">
+      <span class="question-num">05</span>
+      <p class="question-text">Quand tu stresses, ton corps te le dit comment ?</p>
+      <div class="options">
+        <button class="option-btn" onclick="answer('jiwooh')">Mâchoire serrée, épaules remontées.</button>
+        <button class="option-btn" onclick="answer('clara')">Une liste mentale qui tourne en boucle.</button>
+        <button class="option-btn" onclick="answer('luna')">Une envie de bouger, de faire, de remplir.</button>
+        <button class="option-btn" onclick="answer('mar')">Une vague qui monte et qu'on ne peut pas nommer.</button>
+        <button class="option-btn" onclick="answer('malik')">Une tension dans la poitrine, prêt·e à exploser.</button>
+        <button class="option-btn" onclick="answer('eliot')">Un besoin urgent d'être seul·e, de me déconnecter.</button>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-block" id="q6">
+      <span class="question-num">06</span>
+      <p class="question-text">Ce que les gens disent souvent de toi…</p>
+      <div class="options">
+        <button class="option-btn" onclick="answer('jiwooh')">"Tu réfléchis trop."</button>
+        <button class="option-btn" onclick="answer('clara')">"Tu es trop exigeant·e."</button>
+        <button class="option-btn" onclick="answer('luna')">"Tu en fais trop."</button>
+        <button class="option-btn" onclick="answer('mar')">"Tu es trop intense."</button>
+        <button class="option-btn" onclick="answer('malik')">"Tu es trop direct·e."</button>
+        <button class="option-btn" onclick="answer('eliot')">"Tu es trop dans ta tête."</button>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-block" id="q7">
+      <span class="question-num">07</span>
+      <p class="question-text">Ton rapport à l'échec…</p>
+      <div class="options">
+        <button class="option-btn" onclick="answer('jiwooh')">Je l'anticipe tellement que j'oublie d'avancer.</button>
+        <button class="option-btn" onclick="answer('clara')">Je me reproche longtemps ce qui aurait pu être mieux.</button>
+        <button class="option-btn" onclick="answer('luna')">Je rebondis vite. Trop vite parfois.</button>
+        <button class="option-btn" onclick="answer('mar')">Je le vis comme une blessure profonde.</button>
+        <button class="option-btn" onclick="answer('malik')">Je transforme la douleur en énergie de combat.</button>
+        <button class="option-btn" onclick="answer('eliot')">Je l'analyse jusqu'à en comprendre chaque détail.</button>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-block" id="q8">
+      <span class="question-num">08</span>
+      <p class="question-text">Ce dont tu as le plus besoin pour te sentir bien…</p>
+      <div class="options">
+        <button class="option-btn" onclick="answer('jiwooh')">De la prévisibilité. Savoir à quoi m'attendre.</button>
+        <button class="option-btn" onclick="answer('clara')">De l'ordre. Que les choses soient à leur place.</button>
+        <button class="option-btn" onclick="answer('luna')">D'être vu·e et reconnu·e pour ce que je fais.</button>
+        <button class="option-btn" onclick="answer('mar')">D'être compris·e dans ce que je ressens vraiment.</button>
+        <button class="option-btn" onclick="answer('malik')">De l'espace pour agir sans être freiné·e.</button>
+        <button class="option-btn" onclick="answer('eliot')">Du temps seul·e pour me recharger.</button>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-block" id="q9">
+      <span class="question-num">09</span>
+      <p class="question-text">La phrase qui te ressemble le plus en ce moment…</p>
+      <div class="options">
+        <button class="option-btn" onclick="answer('jiwooh')">"J'ai besoin de comprendre avant de me lancer."</button>
+        <button class="option-btn" onclick="answer('clara')">"Si c'est fait, autant que ce soit bien fait."</button>
+        <button class="option-btn" onclick="answer('luna')">"Je m'arrêterai quand j'aurai prouvé ce que je vaux."</button>
+        <button class="option-btn" onclick="answer('mar')">"Je ressens des choses que je n'arrive pas à expliquer."</button>
+        <button class="option-btn" onclick="answer('malik')">"Je ne laisse pas passer ce qui est faux."</button>
+        <button class="option-btn" onclick="answer('eliot')">"J'observe. Je ne suis pas encore prêt·e."</button>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question-block" id="q10">
+      <span class="question-num">10</span>
+      <p class="question-text">Ce que tu cherches vraiment en faisant ce quiz…</p>
+      <div class="options">
+        <button class="option-btn" onclick="answer('jiwooh')">Mieux me préparer à ce que je vis.</button>
+        <button class="option-btn" onclick="answer('clara')">Comprendre pourquoi je suis si dur·e avec moi-même.</button>
+        <button class="option-btn" onclick="answer('luna')">Savoir si ce que je fais a du sens.</button>
+        <button class="option-btn" onclick="answer('mar')">Me sentir moins seul·e dans ce que je ressens.</button>
+        <button class="option-btn" onclick="answer('malik')">Comprendre d'où vient cette tension que je porte.</button>
+        <button class="option-btn" onclick="answer('eliot')">Mettre des mots sur quelque chose que je n'arrive pas à nommer.</button>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Q3 -->
-  <div class="question-block" id="q3">
-    <span class="question-num">03</span>
-    <p class="question-text">Ce que les autres remarquent le plus chez toi :</p>
-    <div class="options">
-      <button class="option-btn" onclick="answer('jiwooh')">Ma capacité à prévoir les problèmes avant qu'ils arrivent.</button>
-      <button class="option-btn" onclick="answer('clara')">Mon organisation et mon soin du détail.</button>
-      <button class="option-btn" onclick="answer('luna')">Mon énergie et mon côté toujours en mouvement.</button>
-      <button class="option-btn" onclick="answer('mar')">Ma profondeur et mon intensité.</button>
-      <button class="option-btn" onclick="answer('malik')">Ma présence et mon assurance.</button>
-      <button class="option-btn" onclick="answer('eliot')">Mon calme et ma distance.</button>
-    </div>
+  <!-- RÉSULTAT -->
+  <div id="result">
+    <p style="font-size:0.75rem; letter-spacing:2px; color:#555; text-transform:uppercase;">Ton profil</p>
+    <img id="result-img" src="" alt="Personnage">
+    <h2 id="result-name"></h2>
+    <p id="result-desc"></p>
+    <p id="result-glitch"></p>
+    <hr class="divider">
+    <button class="btn btn-primary" onclick="showEndScreen()">→ Continuer</button>
+    <button class="btn btn-secondary" onclick="resetQuiz()">↩ Recommencer</button>
   </div>
 
-  <!-- Q4 -->
-  <div class="question-block" id="q4">
-    <span class="question-num">04</span>
-    <p class="question-text">Ton téléphone est silencieux depuis 2h. Tu ressens...</p>
-    <div class="options">
-      <button class="option-btn" onclick="answer('jiwooh')">Une légère angoisse — et si j'avais raté quelque chose d'important ?</button>
-      <button class="option-btn" onclick="answer('clara')">Un besoin de vérifier que tout est bien rangé, messages inclus.</button>
-      <button class="option-btn" onclick="answer('luna')">Rien. T'étais trop occupé·e pour remarquer.</button>
-      <button class="option-btn" onclick="answer('mar')">Un sentiment étrange, comme être invisible.</button>
-      <button class="option-btn" onclick="answer('malik')">Du soulagement. La paix, enfin.</button>
-      <button class="option-btn" onclick="answer('eliot')">Une curiosité détachée sur pourquoi personne n'a écrit.</button>
-    </div>
+  <!-- END SCREEN -->
+  <div id="end-screen">
+    <p style="font-size:13px; letter-spacing:2px; color:#666; text-transform:uppercase;">Fin du quiz</p>
+    <p style="font-size:22px; font-weight:300; color:#e0e0e0; line-height:1.6;">
+      Merci d'avoir pris ce moment pour toi.
+    </p>
+    <p style="font-size:18px; color:#888; font-style:italic; line-height:1.6;">
+      Ce n'est pas rien de se regarder en face. 🤍
+    </p>
+    <hr class="divider">
+    <button class="btn btn-secondary" onclick="resetQuiz()">↩ Recommencer le quiz</button>
   </div>
 
-  <!-- Q5 -->
-  <div class="question-block" id="q5">
-    <span class="question-num">05</span>
-    <p class="question-text">En soirée avec des inconnus, tu es plutôt...</p>
-    <div class="options">
-      <button class="option-btn" onclick="answer('jiwooh')">Celui·celle qui observe et analyse le groupe discrètement.</button>
-      <button class="option-btn" onclick="answer('clara')">Celui·celle qui s'assure que tout le monde est à l'aise.</button>
-      <button class="option-btn" onclick="answer('luna')">Celui·celle qu'on remarque sans vraiment savoir pourquoi.</button>
-      <button class="option-btn" onclick="answer('mar')">Celui·celle dans le coin, avec une conversation intense avec une seule personne.</button>
-      <button class="option-btn" onclick="answer('malik')">Celui·celle qui prend naturellement de la place.</button>
-      <button class="option-btn" onclick="answer('eliot')">Celui·celle qui se demande quand ça va finir.</button>
-    </div>
-  </div>
+  <script>
+    let currentQ = 1;
+    const totalQ = 10;
+    let scores = {
+      jiwooh: 0,
+      clara: 0,
+      luna: 0,
+      mar: 0,
+      malik: 0,
+      eliot: 0
+    };
 
-  <!-- Q6 -->
-  <div class="question-block" id="q6">
-    <span class="question-num">06</span>
-    <p class="question-text">Ce qui t'épuise le plus :</p>
-    <div class="options">
-      <button class="option-btn" onclick="answer('jiwooh')">L'incertitude et l'imprévisible.</button>
-      <button class="option-btn" onclick="answer('clara')">Le désordre et l'approximation.</button>
-      <button class="option-btn" onclick="answer('luna')">L'immobilité et le vide.</button>
-      <button class="option-btn" onclick="answer('mar')">Ne pas être compris·e vraiment.</button>
-      <button class="option-btn" onclick="answer('malik')">L'injustice et la faiblesse des autres.</button>
-      <button class="option-btn" onclick="answer('eliot')">L'agitation inutile et le bruit social.</button>
-    </div>
-  </div>
+    const profiles = {
+      jiwooh: {
+        name: "Jiwooh — L'Anticipatrice",
+        img: "images/Jiwooh.png",
+        desc: "Tu penses à tout. Tu scannes, tu prévois, tu analyses pour te sentir en sécurité. Ta vigilance est une force — mais elle t'épuise.",
+        glitch: "Glitch : tu anticipes tellement les problèmes que tu oublies parfois de vivre ce qui est là."
+      },
+      clara: {
+        name: "Clara — La Gardienne",
+        img: "images/Clara.png",
+        desc: "Tu tiens. Tu veilles sur l'ordre, sur les autres, sur toi-même. Ta rigueur est précieuse — mais elle a un coût.",
+        glitch: "Glitch : tu te fixes parfois sur un détail jusqu'à perdre de vue l'ensemble."
+      },
+      luna: {
+        name: "Luna — L'Accélératrice",
+        img: "images/Luna.png",
+        desc: "Tu avances. Tu remplis, tu construis, tu ne t'arrêtes pas. Ton énergie est contagieuse — mais tu cours parfois pour ne pas tomber.",
+        glitch: "Glitch : tu rebondis si vite que tu n'as jamais le temps de vraiment ressentir ce qui s'est passé."
+      },
+      mar: {
+        name: "Mar — La Sensorielle",
+        img: "images/Mars.png",
+        desc: "Tu ressens fort. Tu captes ce que les autres ne voient pas, tu vis en intensité. Ta profondeur est rare — mais elle peut t'isoler.",
+        glitch: "Glitch : tu te noies parfois dans l'intensité de ce que tu vis."
+      },
+      malik: {
+        name: "Malik — Le Rempart",
+        img: "images/Malik.png",
+        desc: "Tu tiens debout. Tu protèges, tu t'opposes, tu ne laisses pas passer ce qui est faux. Ta force est réelle — mais elle coûte.",
+        glitch: "Glitch : tu réagis avant de réfléchir. La défense est devenue un réflexe."
+      },
+      eliot: {
+        name: "Eliot — L'Observateur",
+        img: "images/Eliot.png",
+        desc: "Tu regardes. Tu analyses, tu décortiques, tu cherches le sens avant d'agir. Ta clarté est précieuse — mais parfois tu restes spectateur de ta propre vie.",
+        glitch: "Glitch : comprendre est devenu une façon d'éviter de ressentir."
+      }
+    };
 
-  <!-- Q7 -->
-  <div class="question-block" id="q7">
-    <span class="question-num">07</span>
-    <p class="question-text">Quand tu n'arrives pas à avancer sur quelque chose, c'est souvent parce que...</p>
-    <div class="options">
-      <button class="option-btn" onclick="answer('jiwooh')">J'ai trop de scénarios possibles en tête.</button>
-      <button class="option-btn" onclick="answer('clara')">Ce n'est pas encore assez bien pour être montré.</button>
-      <button class="option-btn" onclick="answer('luna')">Je m'éparpille sur trop de choses à la fois.</button>
-      <button class="option-btn" onclick="answer('mar')">Je n'arrive pas à traduire ce que je ressens.</button>
-      <button class="option-btn" onclick="answer('malik')">Quelque chose ou quelqu'un bloque le chemin.</button>
-      <button class="option-btn" onclick="answer('eliot')">Je ne vois pas encore le sens profond de l'action.</button>
-    </div>
-  </div>
-
-  <!-- Q8 -->
-  <div class="question-block" id="q8">
-    <span class="question-num">08</span>
-    <p class="question-text">La phrase qui te ressemble le plus :</p>
-    <div class="options">
-      <button class="option-btn" onclick="answer('jiwooh')">"Je préfère savoir à quoi m'attendre."</button>
-      <button class="option-btn" onclick="answer('clara')">"Si c'est fait, autant que ce soit bien fait."</button>
-      <button class="option-btn" onclick="answer('luna')">"Je m'ennuie si je m'arrête."</button>
-      <button class="option-btn" onclick="answer('mar')">"Je ressens les choses différemment des autres."</button>
-      <button class="option-btn" onclick="answer('malik')">"Je ne laisse pas passer ce qui est faux."</button>
-      <button class="option-btn" onclick="answer('eliot')">"J'ai besoin de comprendre avant d'agir."</button>
-    </div>
-  </div>
-
-  <!-- Q9 -->
-  <div class="question-block" id="q9">
-    <span class="question-num">09</span>
-    <p class="question-text">Ton plus grand glitch (ton bug récurrent) :</p>
-    <div class="options">
-      <button class="option-btn" onclick="answer('jiwooh')">Je m'inquiète pour des choses qui n'arrivent jamais.</button>
-      <button class="option-btn" onclick="answer('clara')">Je reporte parce que ce n'est jamais parfait.</button>
-      <button class="option-btn" onclick="answer('luna')">Je fuis dans l'action pour ne pas sentir.</button>
-      <button class="option-btn" onclick="answer('mar')">Je dramatise ou je m'isole quand ça déborde.</button>
-      <button class="option-btn" onclick="answer('malik')">Je réagis fort avant de réfléchir.</button>
-      <button class="option-btn" onclick="answer('eliot')">Je reste spectateur·rice de ma propre vie.</button>
-    </div>
-  </div>
-
-  <!-- Q10 -->
-  <div class="question-block" id="q10">
-    <span class="question-num">10</span>
-    <p class="question-text">Ce dont tu as le plus besoin (même si tu ne te l'accordes pas) :</p>
-    <div class="options">
-      <button class="option-btn" onclick="answer('jiwooh')">La permission de ne pas tout contrôler.</button>
-      <button class="option-btn" onclick="answer('clara')">La permission d'être imparfait·e.</button>
-      <button class="option-btn" onclick="answer('luna')">La permission de m'arrêter.</button>
-      <button class="option-btn" onclick="answer('mar')">La permission d'être ordinaire parfois.</button>
-      <button class="option-btn" onclick="answer('malik')">La permission de baisser la garde.</button>
-      <button class="option-btn" onclick="answer('eliot')">La permission de ressentir sans analyser.</button>
-    </div>
-  </div>
-
-</div>
-
-<!-- RÉSULTAT -->
-<div id="result">
-  <p class="question-num">TON BRAINLAG</p>
-  <img id="result-img" src="" alt="Personnage">
-  <div id="result-name"></div>
-  <div id="result-desc"></div>
-  <div id="result-glitch"></div>
-  <button class="btn-retry" onclick="resetQuiz()">↺ RECOMMENCER</button>
-  <p class="glitch-line">BRAINLAG — MODE ACTIVÉ</p>
-</div>
-
-<script>
-  const scores = { jiwooh: 0, clara: 0, luna: 0, mar: 0, malik: 0, eliot: 0 };
-  let currentQ = 1;
-  const totalQ = 10;
-
-  const profiles = {
-    jiwooh: {
-      name: "Jiwooh — L'Anticipatrice",
-      img: "images/Jiwooh.png",
-      desc: "Tu penses à tout. Tu scannes, tu prévois, tu cartographies les risques avant même qu'ils existent. C'est ton super-pouvoir — et ton bug principal.",
-      glitch: "Glitch : tu surestimes les dangers et tu sous-estimes ta capacité à t'adapter."
-    },
-    clara: {
-      name: "Clara — La Gardienne",
-      img: "images/Clara.png",
-      desc: "Tu tiens. Tu organises, tu contrôles, tu veilles à ce que rien ne déborde. Ta rigueur protège — mais elle épuise aussi.",
-      glitch: "Glitch : tu repousses jusqu'à ce que ce soit parfait. Parfois, tu ne commences jamais."
-    },
-    luna: {
-      name: "Luna — L'Accélératrice",
-      img: "images/Luna.png",
-      desc: "Tu avances. Tu remplis, tu bouges, tu propulses. T'arrêter, c'est risquer de tomber — alors tu ne t'arrêtes pas.",
-      glitch: "Glitch : l'action est devenue une fuite. Tu cours, mais vers quoi ?"
-    },
-    mar: {
-      name: "Mar — La Sensorielle",
-      img: "images/Mars.png",
-      desc: "Tu ressens fort. Tu captes ce que les autres ne voient pas. Ta profondeur est rare — mais elle peut t'isoler.",
-      glitch: "Glitch : tu te noies parfois dans l'intensité de ce que tu vis."
-    },
-    malik: {
-      name: "Malik — Le Rempart",
-      img: "images/Malik.png",
-      desc: "Tu tiens debout. Tu protèges, tu t'opposes, tu ne laisses pas passer ce qui est faux. Ta force est réelle — mais elle coûte.",
-      glitch: "Glitch : tu réagis avant de réfléchir. La défense est devenue un réflexe."
-    },
-    eliot: {
-      name: "Eliot — L'Observateur",
-      img: "images/Eliot.png",
-      desc: "Tu regardes. Tu analyses, tu décortiques, tu cherches le sens avant d'agir. Ta clarté est précieuse — mais parfois tu restes spectateur de ta propre vie.",
-      glitch: "Glitch : comprendre est devenu une façon d'éviter de ressentir."
+    function startQuiz() {
+      document.getElementById('intro').style.display = 'none';
+      document.getElementById('quiz').style.display = 'block';
+      document.getElementById('q1').classList.add('active');
     }
-  };
 
-  function startQuiz() {
-    document.getElementById('intro').style.display = 'none';
-    document.getElementById('quiz').style.display = 'block';
-  }
-
-  function answer(profil) {
-    scores[profil]++;
-    if (currentQ < totalQ) {
-      document.getElementById('q' + currentQ).classList.remove('active');
-      currentQ++;
-      document.getElementById('q' + currentQ).classList.add('active');
-      document.getElementById('progress-text').textContent = 'Question ' + currentQ + ' / ' + totalQ;
-    } else {
-      showResult();
+    function answer(profil) {
+      scores[profil]++;
+      if (currentQ < totalQ) {
+        document.getElementById('q' + currentQ).classList.remove('active');
+        currentQ++;
+        document.getElementById('q' + currentQ).classList.add('active');
+        document.getElementById('progress-text').textContent = 'Question ' + currentQ + ' / ' + totalQ;
+      } else {
+        showResult();
+      }
     }
-  }
 
-  function showResult() {
-    document.getElementById('quiz').style.display = 'none';
-    const winner = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
-    const p = profiles[winner];
-    document.getElementById('result-img').src = p.img;
-    document.getElementById('result-name').textContent = p.name;
-    document.getElementById('result-desc').textContent = p.desc;
-    document.getElementById('result-glitch').textContent = p.glitch;
-    const res = document.getElementById('result');
-    res.style.display = 'flex';
-  }
+    function showResult() {
+      document.getElementById('quiz').style.display = 'none';
+      const winner = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+      const p = profiles[winner];
+      document.getElementById('result-img').src = p.img;
+      document.getElementById('result-name').textContent = p.name;
+      document.getElementById('result-desc').textContent = p.desc;
+      document.getElementById('result-glitch').textContent = p.glitch;
+      const res = document.getElementById('result');
+      res.style.display = 'flex';
+    }
 
-  function resetQuiz() {
-    Object.keys(scores).forEach(k => scores[k] = 0);
-    currentQ = 1;
-    document.querySelectorAll('.question-block').forEach(b => b.classList.remove('active'));
-    document.getElementById('q1').classList.add('active');
-    document.getElementById('progress-text').textContent = 'Question 1 / 10';
-    document.getElementById('result').style.display = 'none';
-    document.getElementById('quiz').style.display = 'block';
-  }
-</script>
+    function showEndScreen() {
+      document.getElementById('result').style.display = 'none';
+      const end = document.getElementById('end-screen');
+      end.style.display = 'flex';
+    }
+
+    function resetQuiz() {
+      Object.keys(scores).forEach(k => scores[k] = 0);
+      currentQ = 1;
+      document.querySelectorAll('.question-block').forEach(b => b.classList.remove('active'));
+      document.getElementById('progress-text').textContent = 'Question 1 / 10';
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('end-screen').style.display = 'none';
+      document.getElementById('quiz').style.display = 'block';
+      document.getElementById('q1').classList.add('active');
+    }
+  </script>
 
 </body>
 </html>
