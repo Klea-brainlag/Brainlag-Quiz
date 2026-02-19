@@ -1066,12 +1066,11 @@ function showEndScreen() {
 // ═══════════════════════════════════════════════
 
 function shareResult(name, combo) {
-  const text = `Mon Brainlag dominant : ${name}\nMon combo : ${combo}\nDécouvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
+  const text = `🧠 Mon Brainlag dominant : ${name}\n🔀 Mon combo : ${combo}\n\nDécouvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
   if (navigator.share) {
     navigator.share({
-      title: 'Mon Brainlag',
-      text: text,
-      url: 'https://klea-brainlag.github.io/Brainlag-Quiz/'
+      title: `Mon Brainlag : ${name}`,
+      text: text
     });
   } else {
     navigator.clipboard.writeText(text).then(() =>
@@ -1079,6 +1078,7 @@ function shareResult(name, combo) {
     );
   }
 }
+
 
 function shareQuiz() {
   const text = `Découvre ton Brainlag dominant 👉 https://klea-brainlag.github.io/Brainlag-Quiz/`;
