@@ -942,6 +942,11 @@ function shareQuiz() {
     alert("Lien copié ! Partage-le à tes proches 🎯");
   }
 }
+function showEndScreen() {
+  document.getElementById('resultSection').style.display = 'none';
+  document.getElementById('end-screen').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 function shareResult(name, combo) {
   const text = `Mon Brainlag dominant : ${name}\nMon combo : ${combo}\nDécouvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
@@ -966,6 +971,20 @@ function restartQuiz() {
 // ═══════════════════════════════════════════════
 
 renderQuiz();
-</script>
-</body>
-</html>
+</script>   
+  <div id="end-screen" style="display:none; text-align:center; padding:60px 24px; max-width:480px; margin:0 auto;">
+      <p style="font-size:13px; letter-spacing:2px; color:#666; text-transform:uppercase; margin-bottom:32px;">Fin du quiz</p>
+      <p style="font-size:22px; font-weight:300; color:#e0e0e0; line-height:1.6; margin-bottom:16px;">
+        Merci d'avoir pris ce moment pour toi.
+      </p>
+      <p style="font-size:18px; color:#888; font-style:italic; line-height:1.6; margin-bottom:48px;">
+        Ce n'est pas rien de se regarder en face. 🤍
+      </p>
+      <button class="btn" onclick="restartQuiz()" style="background:#1a1a1a; border:1px solid #333; color:#888;">
+        ↩ Recommencer le quiz
+      </button>
+    </div>
+
+  </body>
+</html>   
+
