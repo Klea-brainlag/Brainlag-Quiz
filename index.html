@@ -1062,39 +1062,43 @@ function shareResult() {
            " | Mode : " + window.currentMode;
   }
 
-  const finalText = text + 
+  const finalText = text +
     " → Découvre le tien : https://klea-brainlag.github.io/Brainlag-Quiz/";
 
-  // Desktop : toujours copier
-  if (!navigator.share) {
+  // Toujours copier sur desktop
+  if (!navigator.share || window.innerWidth > 900) {
     navigator.clipboard.writeText(finalText)
       .then(() => alert("Résultat copié :\n\n" + finalText))
       .catch(() => alert(finalText));
     return;
   }
 
-  // Mobile : partage natif
+  // Mobile : partage natif sans champ url séparé
   navigator.share({
     title: "Mon Brainlag",
     text: finalText
   }).catch(() => {});
 }
 
+
+
 function shareQuiz() {
-  const text = "Découvre ton Brainlag → https://klea-brainlag.github.io/Brainlag-Quiz/";
 
-  if (navigator.share) {
-    navigator.share({
-      title: "Ton Brainlag",
-      text: text,
-      url: "https://klea-brainlag.github.io/Brainlag-Quiz/"
-    });
-  } else {
-    navigator.clipboard.writeText("https://klea-brainlag.github.io/Brainlag-Quiz/");
-    alert("Lien du quiz copié.");
+  const finalText =
+    "Découvre ton Brainlag → https://klea-brainlag.github.io/Brainlag-Quiz/";
+
+  if (!navigator.share || window.innerWidth > 900) {
+    navigator.clipboard.writeText(finalText)
+      .then(() => alert("Lien copié !"))
+      .catch(() => alert(finalText));
+    return;
   }
-}
 
+  navigator.share({
+    title: "Ton Brainlag",
+    text: finalText
+  }).catch(() => {});
+}
 function restartQuiz() {
   Object.keys(answers).forEach(k => delete answers[k]);
 
