@@ -126,14 +126,23 @@
     .profile-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
     .profile-subtitle { color: #888; font-size: 0.9rem; }
 
-    .section-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #666;
-      margin-bottom: 8px;
-      margin-top: 16px;
-    }
+   .section-label {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #cfcfcf;
+  font-weight: 600;
+  opacity: 0.85;
+}
+    .section-label.glitch {
+  color: #fbbf24; /* jaune warning */
+  opacity: 1;
+}
+
+.section-label.bascule {
+  color: #7c6af7; /* violet signature */
+  opacity: 1;
+}
     .section-content { color: #ddd; line-height: 1.7; font-size: 0.95rem; }
 
     .steps { list-style: none; padding: 0; }
@@ -857,10 +866,10 @@ function showResults() {
       <p class="section-label">Comment tu te protèges</p>
       <p class="section-content">${p1.protection}</p>
 
-      <p class="section-label">⚠️ Le glitch</p>
+     <p class="section-label glitch">⚠ LE GLITCH</p>
       <p class="section-content">${p1.glitch}</p>
 
-   <p class="section-label">🔧 Première bascule</p>
+   <p class="section-label bascule">🔧 PREMIÈRE BASCULE</p>
 <ul class="steps">
   ${p1.reboot.slice(0,2).map(r => `<li>${r}</li>`).join('')}
 </ul>
