@@ -828,15 +828,9 @@ function showResults() {
   const comboKey = [key1, key2].sort().join('-');
   const mix = (score2 >= 3 && combos[comboKey]) ? combos[comboKey] : null;
 
-  let shareText;
-
-if (mix) {
-  shareText = `${p1.name} — ${mix.title}`;
-} else {
-  shareText = `${p1.name} — ${p1.mode}`;
-}
-
-window.currentShareText = shareText;
+  window.currentDominant = p1.name;
+window.currentMode = p1.mode;
+window.currentCombo = mix ? mix.title : null;
 
   const shadow = computeShadow(); // null ou { key,val,text }
   const shadowNuanceForCombo = (shadow && mix) ? comboShadowNuances[shadow.key] : null;
@@ -1058,26 +1052,34 @@ function showEndScreen() {
 ═══════════════════════════════════════════════ */
 function shareResult() {
 
-  console.log("SHARE TEXT =", window.currentShareText);
+  let text = "";
 
-  const finalText =
-`Mon Brainlag :
-${window.currentShareText}
-
-Découvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
-
-  if (navigator.share) {
-    navigator.share({
-      title: "Mon Brainlag",
-      text: finalText,
-      url: window.location.href
-    }).catch(() => {});
+  if (window.currentCombo) {
+    text = "Mon Brainlag dominant : " + window.currentDominant +
+           " | Mode secondaire : " + window.currentCombo;
   } else {
-    navigator.clipboard.writeText(finalText)
-      .then(() => alert("Résultat copié !"))
-      .catch(() => alert(finalText));
+    text = "Mon Brainlag dominant : " + window.currentDominant +
+           " | Mode : " + window.currentMode;
   }
+
+  const finalText = text + 
+    " → Découvre le tien : https://klea-brainlag.github.io/Brainlag-Quiz/";
+
+  // Desktop : toujours copier
+  if (!navigator.share) {
+    navigator.clipboard.writeText(finalText)
+      .then(() => alert("Résultat copié :\n\n" + finalText))
+      .catch(() => alert(finalText));
+    return;
+  }
+
+  // Mobile : partage natif
+  navigator.share({
+    title: "Mon Brainlag",
+    text: finalText
+  }).catch(() => {});
 }
+
 function shareQuiz() {
   const text = "Découvre ton Brainlag → https://klea-brainlag.github.io/Brainlag-Quiz/";
 
