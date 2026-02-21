@@ -852,11 +852,19 @@ function showResults() {
       <p class="section-label">⚠️ Le glitch</p>
       <p class="section-content">${p1.glitch}</p>
 
-      <p class="section-label">🔧 Reboot — Par où commencer</p>
-      <ul class="steps">
-        ${p1.reboot.map(r => `<li>${r}</li>`).join('')}
-      </ul>
-    </div>
+   <p class="section-label">🔧 Première bascule</p>
+<ul class="steps">
+  ${p1.reboot.slice(0,2).map(r => `<li>${r}</li>`).join('')}
+</ul>
+
+<p class="section-label">🧠 À observer cette semaine</p>
+<ul class="steps">
+  ${p1.reboot.slice(2).map(r => `<li>${r}</li>`).join('')}
+</ul>
+
+<p class="section-content" style="margin-top:14px; color:#aaa; font-size:0.85rem;">
+  Le protocole complet de transformation est disponible dans le Guide Reboot.
+</p>
 
     <hr class="divider">
   `;
