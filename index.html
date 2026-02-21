@@ -1047,20 +1047,35 @@ function showEndScreen() {
    9) UTILITAIRES
 ═══════════════════════════════════════════════ */
 
-function shareResult(name, combo) {
-  const text =
-`Mon Brainlag dominant : ${name}
-${combo ? "Mon mode secondaire / combo : " + combo : ""}
+function shareResult(text) {
+
+  const finalText =
+`Mon Brainlag :
+${text}
+
 Découvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
 
-  if (navigator.share) {
-    navigator.share({ title: "Mon Brainlag", text: text });
-  } else {
-    navigator.clipboard.writeText(text);
-    alert("Résultat copié. Tu peux le partager.");
+  // Si partage natif disponible (mobile surtout)
+  if (navigator.share && window.innerWidth < 900) {
+    navigator.share({
+      title: "Mon Brainlag",
+      text: finalText,
+      url: window.location.href
+    }).catch(err => {
+      console.log("Partage annulé :", err);
+    });
+  } 
+  // Sinon fallback stable
+  else {
+    navigator.clipboard.writeText(finalText)
+      .then(() => {
+        alert("Résultat copié dans le presse-papier !");
+      })
+      .catch(() => {
+        alert("Impossible de copier automatiquement. Sélectionne et copie manuellement.");
+      });
   }
 }
-
 function shareQuiz() {
   const text = "Découvre ton Brainlag → https://klea-brainlag.github.io/Brainlag-Quiz/";
 
