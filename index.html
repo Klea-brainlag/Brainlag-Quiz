@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ton Brainlag</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #0a0a0a;
@@ -17,17 +13,8 @@
       min-height: 100vh;
       padding: 20px;
     }
-    .container {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
-    h1 {
-      font-size: 1.8rem;
-      text-align: center;
-      margin-bottom: 10px;
-      letter-spacing: 1px;
-    }
+    .container { max-width: 680px; margin: 0 auto; padding: 40px 20px; }
+    h1 { font-size: 1.8rem; text-align: center; margin-bottom: 10px; letter-spacing: 1px; }
     .subtitle {
       text-align: center;
       color: #888;
@@ -35,14 +22,8 @@
       font-size: 0.95rem;
       line-height: 1.6;
     }
-    .question-block {
-      margin-bottom: 36px;
-    }
-    .question-number {
-      color: #666;
-      font-size: 0.8rem;
-      margin-bottom: 6px;
-    }
+    .question-block { margin-bottom: 36px; }
+    .question-number { color: #666; font-size: 0.8rem; margin-bottom: 6px; }
     .question-text {
       font-size: 1rem;
       font-weight: 600;
@@ -51,11 +32,7 @@
       padding-bottom: 8px;
       border-bottom: 1px solid #222;
     }
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .options { display: flex; flex-direction: column; gap: 8px; }
     .option-btn {
       background: #111;
       border: 1px solid #2a2a2a;
@@ -67,16 +44,8 @@
       font-size: 0.92rem;
       transition: all 0.2s;
     }
-    .option-btn:hover {
-      border-color: #555;
-      color: #fff;
-      background: #1a1a1a;
-    }
-    .option-btn.selected {
-      border-color: #7c6af7;
-      color: #fff;
-      background: #1a1a2e;
-    }
+    .option-btn:hover { border-color: #555; color: #fff; background: #1a1a1a; }
+    .option-btn.selected { border-color: #7c6af7; color: #fff; background: #1a1a2e; }
     .progress-bar {
       width: 100%;
       height: 3px;
@@ -95,22 +64,17 @@
       width: 100%;
       padding: 16px;
       background: linear-gradient(135deg, #7c6af7, #c084fc);
+      color: white;
       border: none;
       border-radius: 12px;
-      color: #fff;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: 30px;
       transition: opacity 0.2s;
     }
-    .submit-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-    .submit-btn:not(:disabled):hover {
-      opacity: 0.9;
-    }
+    .submit-btn:hover { opacity: 0.85; }
+    .submit-btn:disabled { opacity: 0.3; cursor: not-allowed; }
     .error-msg {
       color: #f87171;
       font-size: 0.85rem;
@@ -118,273 +82,242 @@
       margin-top: 12px;
       display: none;
     }
-    /* RÉSULTATS */
-    .result-container {
-      display: none;
-    }
-    .profile-card {
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 16px;
-      padding: 24px;
-      margin: 20px 0;
-    }
-    .profile-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-    .profile-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 2px solid #7c6af7;
-      object-fit: cover;
-    }
-    .profile-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-    .profile-subtitle {
-      color: #888;
-      font-size: 0.85rem;
-      margin-top: 4px;
-    }
-    .section-label {
-      font-size: 0.72rem;
-      color: #555;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-top: 18px;
-      margin-bottom: 6px;
-    }
-    .section-content {
-      font-size: 0.92rem;
-      color: #ccc;
-      line-height: 1.7;
-    }
-    .steps {
-      padding-left: 18px;
-    }
-    .steps li {
-      font-size: 0.92rem;
-      color: #ccc;
-      line-height: 1.8;
-    }
+
+    /* ── RÉSULTATS ── */
+    .divider { border: none; border-top: 1px solid #2a2a2a; margin: 28px 0; }
     .tag {
       display: inline-block;
       padding: 4px 12px;
       border-radius: 20px;
       font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
-    }
-    .tag-dominant {
-      background: #1a1a2e;
-      color: #7c6af7;
-      border: 1px solid #7c6af7;
-    }
-    .tag-secondary {
-      background: #1a1a1a;
-      color: #888;
-      border: 1px solid #333;
-    }
-    .tag-combo {
-      background: #1a2e1a;
-      color: #4ade80;
-      border: 1px solid #4ade80;
-    }
-    .divider {
-      border: none;
-      border-top: 1px solid #1a1a1a;
-      margin: 32px 0;
-    }
-    .score-bars {
-      margin-top: 12px;
-    }
-    .score-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .score-label {
-      font-size: 0.78rem;
-      color: #666;
-      width: 90px;
-      flex-shrink: 0;
-    }
-    .score-bar {
-      flex: 1;
-      height: 6px;
-      background: #1a1a1a;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .score-bar-fill {
-      height: 100%;
-      border-radius: 3px;
-      transition: width 0.6s ease;
-    }
-    .score-val {
-      font-size: 0.75rem;
-      color: #555;
-      width: 20px;
-      text-align: right;
-    }
-    /* Combo mixte */
-    .combo-card {
-      background: #0d1a0d;
-      border: 1px solid #1a3a1a;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 16px 0;
-    }
-    .combo-title {
-      font-size: 1rem;
       font-weight: 700;
-      color: #4ade80;
-      margin-bottom: 8px;
-    }
-    .combo-desc {
-      font-size: 0.88rem;
-      color: #aaa;
-      line-height: 1.6;
-    }
-    /* Shadow block */
-    .shadow-block {
-      margin-top: 32px;
-      padding: 16px 20px;
-      border-left: 2px solid #333;
-      background: #0d0d0d;
-      border-radius: 8px;
-    }
-    .shadow-label {
-      font-size: 0.75rem;
-      color: #555;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .shadow-text {
-      font-size: 0.88rem;
-      color: #888;
-      line-height: 1.7;
-      font-style: italic;
-    }
-    /* Fin */
-    .end-block {
-      text-align: center;
-      padding: 32px 0 16px;
-    }
-    .end-title {
-      font-size: 1.1rem;
-      color: #aaa;
       margin-bottom: 12px;
     }
-    .end-text {
-      font-size: 0.9rem;
-      color: #666;
-      line-height: 1.8;
-      max-width: 480px;
-      margin: 0 auto 20px;
+    .tag-dominant { background: #1a1530; color: #c084fc; border: 1px solid #7c6af7; }
+    .tag-secondary { background: #0f1f1a; color: #6ee7b7; border: 1px solid #34d399; }
+    .tag-mix { background: #1a1200; color: #fbbf24; border: 1px solid #f59e0b; }
+
+    .profile-card {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
     }
-    .end-signature {
-      font-size: 0.85rem;
-      color: #444;
-      font-style: italic;
+    .profile-header { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #2a2a2a;
+      flex-shrink: 0;
+    }
+    .profile-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+    .profile-subtitle { color: #888; font-size: 0.9rem; }
+
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #666;
+      margin-bottom: 8px;
       margin-top: 16px;
     }
-    .end-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 24px;
+    .section-content { color: #ddd; line-height: 1.7; font-size: 0.95rem; }
+
+    .steps { list-style: none; padding: 0; }
+    .steps li {
+      padding: 10px 0 10px 28px;
+      position: relative;
+      color: #ccc;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      border-bottom: 1px solid #1a1a1a;
     }
-    .end-btn {
+    .steps li::before { content: "→"; position: absolute; left: 0; color: #7c6af7; }
+
+    .mix-card {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .score-bar-wrap { margin-bottom: 12px; }
+    .score-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .score-bar { height: 6px; background: #1a1a1a; border-radius: 3px; }
+    .score-bar-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+
+    /* ── ACTION BUTTONS ── */
+    .action-buttons { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+    .btn-action {
       display: block;
       width: 100%;
-      padding: 14px;
+      padding: 14px 20px;
       border-radius: 12px;
       font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
       text-align: center;
       text-decoration: none;
+      transition: all 0.2s;
       border: none;
-      transition: opacity 0.2s;
     }
-    .end-btn:hover { opacity: 0.85; }
-    .end-btn-primary {
-      background: linear-gradient(135deg, #7c6af7, #c084fc);
-      color: #fff;
+    .btn-share { background: linear-gradient(135deg, #7c6af7, #c084fc); color: white; }
+    .btn-share:hover { opacity: 0.85; }
+    .btn-instagram { background: transparent; border: 1px solid #c084fc !important; color: #c084fc; }
+    .btn-instagram:hover { background: #1a1530; }
+    .btn-restart { background: #1a1a1a; border: 1px solid #333 !important; color: #888; }
+    .btn-restart:hover { background: #222; color: #aaa; }
+
+    /* ── END SCREEN ── */
+    #endScreen { display: none; text-align: center; padding: 60px 24px; }
+    .end-klea-msg {
+      background: linear-gradient(135deg, #1a1530, #0f1a1f);
+      border: 1px solid #2a2a3a;
+      border-radius: 20px;
+      padding: 36px 28px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
     }
-    .end-btn-instagram {
-      background: #1a1a1a;
-      color: #ccc;
-      border: 1px solid #333;
+    .end-klea-msg::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #7c6af7, #c084fc, #34d399);
     }
-    .end-btn-restart {
-      background: transparent;
-      color: #555;
-      border: 1px solid #222;
-      font-size: 0.85rem;
+    .end-label { font-size: 11px; letter-spacing: 3px; color: #555; text-transform: uppercase; margin-bottom: 20px; }
+    .end-title { font-size: 1.4rem; font-weight: 300; color: #e0e0e0; line-height: 1.7; margin-bottom: 16px; }
+    .end-title strong {
+      background: linear-gradient(135deg, #c084fc, #7c6af7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
     }
+    .end-subtitle { font-size: 1rem; color: #666; font-style: italic; line-height: 1.6; margin-bottom: 24px; }
+    .end-signature { font-size: 0.85rem; color: #7c6af7; letter-spacing: 1px; }
+    .end-actions { display: flex; flex-direction: column; gap: 12px; }
+    .end-btn {
+      display: block;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+    .end-btn-primary { background: linear-gradient(135deg, #7c6af7, #c084fc); color: white; }
+    .end-btn-primary:hover { opacity: 0.85; }
+    .end-btn-instagram { background: transparent; border: 1px solid #c084fc !important; color: #c084fc; }
+    .end-btn-instagram:hover { background: #1a1530; }
+    .end-btn-restart { background: #111; border: 1px solid #2a2a2a !important; color: #666; }
+    .end-btn-restart:hover { background: #1a1a1a; color: #888; }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <!-- QUIZ -->
+
+    <!-- ── QUIZ SECTION ── -->
     <div id="quizSection">
-      <h1>🧬 Ton Brainlag</h1>
+      <h1>Ton Brainlag</h1>
       <p class="subtitle">
-        Pas un test de personnalité.<br>
-        Une carte de ton système sous pression.
+        Ce quiz n’est pas un diagnostic.<br>
+        C’est un miroir.<br>
+        Réponds spontanément, sans chercher la “bonne” réponse.
       </p>
+
       <div class="progress-bar">
-        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+        <div class="progress-fill" id="progressFill"></div>
       </div>
+
       <div id="questionsContainer"></div>
-      <button class="submit-btn" id="submitBtn" disabled onclick="showResults()">
-        Voir mon brainlag →
+
+      <button class="submit-btn" id="submitBtn" onclick="showResults()" disabled>
+        Voir mon résultat →
       </button>
       <p class="error-msg" id="errorMsg">Réponds à toutes les questions pour continuer.</p>
     </div>
 
-    <!-- RÉSULTATS -->
-    <div id="resultSection" class="result-container">
-      <div id="resultContent"></div>
-      <div class="end-block">
-        <p class="end-title">Ce n'est pas un défaut de fabrication.</p>
-        <p class="end-text">
-          C'est un pattern — une façon dont ton système a appris à tenir.<br><br>
+    <!-- ── RESULT SECTION ── -->
+    <div id="resultSection" style="display:none"></div>
+
+    <!-- ── END SCREEN ── -->
+    <div id="endScreen">
+
+      <div class="end-klea-msg">
+        <p class="end-label">— Klea —</p>
+
+        <p class="end-title">
+          Merci d'avoir pris<br>
+          ce moment <strong>pour toi.</strong>
+        </p>
+
+        <p class="end-subtitle">
+          Ce n'est pas rien de se regarder en face.<br>
+          Ça demande du courage. 🤍
+        </p>
+
+        <p class="section-content" style="color:#aaa; font-size:0.9rem; line-height:1.8; margin-bottom:20px;">
+          Ce que tu viens de découvrir n'est pas une case.<br>
+          C'est une piste. Un point de départ.<br><br>
+          Ton brainlag n'est pas ton identité —<br>
+          c'est la façon dont ton système a appris à tenir.<br><br>
           Et ce qui s'apprend peut se transformer.
         </p>
+
         <p class="end-signature">— Klea</p>
       </div>
+
       <div class="end-actions">
-        <button class="end-btn end-btn-primary" onclick="shareQuiz()">
-          ↗ Partager le quiz
-        </button>
-        <a class="end-btn end-btn-instagram" href="https://www.instagram.com/klea.brainlag/" target="_blank">
-          → Rejoindre @klea.brainlag
-        </a>
-        <button class="end-btn end-btn-restart" onclick="restartQuiz()">
-          ↺ Recommencer le quiz
-        </button>
+        <button class="end-btn end-btn-primary" onclick="shareQuiz()">↗ Partager le quiz</button>
+        <a class="end-btn end-btn-instagram" href="https://www.instagram.com/klea.brainlag/" target="_blank">→ Rejoindre @klea.brainlag</a>
+        <button class="end-btn end-btn-restart" onclick="restartQuiz()">↺ Recommencer le quiz</button>
       </div>
+
     </div>
   </div>
 
 <script>
+/* ═══════════════════════════════════════════════
+   1) ÉTAT
+═══════════════════════════════════════════════ */
 
-// ═══════════════════════════════════════════════
-// 0. UTILITAIRE — MÉLANGE FISHER-YATES
-// ═══════════════════════════════════════════════
+const answers = {};           // on stocke maintenant l’objet "option" (pas juste le profile)
+const TOTAL_Q = 12;
 
-function shuffle(array) {
+// Shuffle stable pendant la session
+let shuffledQuestions = [];
+
+// Dynamiques invisibles (7/9/2)
+let shadowScores = {
+  enthousiasme: 0, // 7
+  harmonie: 0,     // 9
+  relation: 0      // 2
+};
+
+/* ═══════════════════════════════════════════════
+   2) OUTILS
+═══════════════════════════════════════════════ */
+
+function shuffleArray(array) {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -393,60 +326,115 @@ function shuffle(array) {
   return arr;
 }
 
-// ═══════════════════════════════════════════════
-// 1. CONSTANTES
-// ═══════════════════════════════════════════════
+function computeShadow() {
+  const sorted = Object.entries(shadowScores).sort((a,b) => b[1] - a[1]);
+  const [key, val] = sorted[0];
 
-const TOTAL_Q = 12;
-let answers = {};
+  const labels = {
+    enthousiasme: "une tendance à fuir l’inconfort par la stimulation (changer, relancer, accélérer)",
+    harmonie: "un besoin fort de préserver l’harmonie (éviter le conflit, lisser, s’adapter)",
+    relation: "une inclination à te tourner vers les autres pour te sentir utile / aimé(e)"
+  };
 
-// ═══════════════════════════════════════════════
-// 2. QUESTIONS + SHADOWS
-// ═══════════════════════════════════════════════
+  // Seuil : à partir de 2 occurrences, on considère “significatif”
+  if (val >= 2) {
+    return { key, val, text: labels[key] };
+  }
+  return null;
+}
+
+/* ═══════════════════════════════════════════════
+   3) QUESTIONS
+   (Textes identiques. On ajoute juste "shadow" sur certaines options.)
+═══════════════════════════════════════════════ */
 
 const questions = [
   {
-    text: "Quand quelque chose ne va pas, ta première réaction c'est…",
+    text: "Quand tu dois prendre une décision importante…",
     options: [
-      { label: "Chercher pourquoi — décortiquer ce qui s'est passé", profile: "analyse" },
-      { label: "Trouver une solution avant que ça empire", profile: "controle" },
-      { label: "Continuer à avancer pour ne pas rester bloqué(e)", profile: "performance", shadow: "enthousiasme" },
-      { label: "Te demander si tu aurais pu faire mieux", profile: "rigueur" },
-      { label: "Ressentir d'abord — comprendre ensuite", profile: "sensibilite" },
-      { label: "Prendre les rênes et gérer", profile: "puissance" }
+      { label: "Tu analyses tous les angles possibles avant d'agir", profile: "analyse" },
+      { label: "Tu prépares plusieurs scénarios pour être prêt(e)", profile: "controle", shadow: "harmonie" },
+      { label: "Tu te demandes ce que ça va apporter à ton image", profile: "performance", shadow: "enthousiasme" },
+      { label: "Tu vérifies que tout est parfaitement en ordre", profile: "rigueur" },
+      { label: "Tu ressens si c'est juste ou non, viscéralement", profile: "sensibilite" },
+      { label: "Tu prends le lead et tu avances", profile: "puissance" }
     ]
   },
   {
-    text: "Ce qui t'épuise le plus sans que tu l'admettes vraiment…",
+    text: "Quand tu es stressé(e), ton réflexe automatique c'est…",
     options: [
-      { label: "Faire semblant que tout va bien alors que tu rumines", profile: "analyse" },
-      { label: "Devoir tout gérer parce que personne ne le fera comme toi", profile: "controle" },
-      { label: "T'arrêter — vraiment t'arrêter", profile: "performance", shadow: "enthousiasme" },
-      { label: "Ne jamais être satisfait(e) de ce que tu produis", profile: "rigueur" },
-      { label: "Porter les émotions des autres en plus des tiennes", profile: "sensibilite", shadow: "lien" },
-      { label: "Devoir justifier chaque décision que tu prends", profile: "puissance" }
+      { label: "Réfléchir encore plus pour trouver la solution", profile: "analyse" },
+      { label: "Tout anticiper pour éviter les surprises", profile: "controle" },
+      { label: "Travailler plus pour ne pas être en retard", profile: "performance" },
+      { label: "Tout vérifier et corriger ce qui cloche", profile: "rigueur" },
+      { label: "Absorber l'ambiance émotionnelle autour de toi", profile: "sensibilite", shadow: "relation" },
+      { label: "Prendre le contrôle de la situation", profile: "puissance" }
     ]
   },
   {
-    text: "Dans un groupe, tu es souvent celui/celle qui…",
+    text: "Ce qui t'épuise le plus en ce moment…",
     options: [
-      { label: "Observe avant de parler", profile: "analyse" },
-      { label: "Anticipe les problèmes que les autres n'ont pas vus", profile: "controle" },
-      { label: "Lance la dynamique et entraîne les autres", profile: "performance", shadow: "enthousiasme" },
-      { label: "Remarque ce qui pourrait être mieux fait", profile: "rigueur" },
-      { label: "Sent quand quelqu'un ne va pas — même sans qu'il parle", profile: "sensibilite" },
-      { label: "Prend naturellement la parole et oriente le groupe", profile: "puissance" }
+      { label: "Ne pas comprendre pourquoi les choses ne marchent pas", profile: "analyse" },
+      { label: "L'impression que tout peut déraper à tout moment", profile: "controle" },
+      { label: "Faire beaucoup sans être vraiment reconnu(e)", profile: "performance" },
+      { label: "Les détails qui ne sont jamais tout à fait bons", profile: "rigueur" },
+      { label: "Ressentir trop — les autres, l'atmosphère, tout", profile: "sensibilite" },
+      { label: "Devoir constamment justifier tes décisions", profile: "puissance" }
     ]
   },
   {
-    text: "La phrase qui te ressemble le plus en ce moment…",
+    text: "Une tension monte au travail ou dans un groupe. Tu…",
     options: [
-      { label: "\"Si je comprends tout, rien ne peut me surprendre.\"", profile: "analyse" },
-      { label: "\"Si j'anticipe tout, rien ne peut mal tourner.\"", profile: "controle" },
-      { label: "\"Si je fais assez, je mérite ma place.\"", profile: "performance" },
-      { label: "\"Si c'est parfait, je suis en sécurité.\"", profile: "rigueur" },
-      { label: "\"Si je ressens tout, je ne rate rien d'important.\"", profile: "sensibilite" },
-      { label: "\"Si je garde le contrôle, personne ne peut m'atteindre.\"", profile: "puissance" }
+      { label: "Analyses ce qui a causé la tension", profile: "analyse" },
+      { label: "Surveilles tout pour éviter l'escalade", profile: "controle", shadow: "harmonie" },
+      { label: "Augmentes ta productivité pour montrer ta valeur", profile: "performance" },
+      { label: "Corriges ce qui ne va pas avec précision", profile: "rigueur" },
+      { label: "Ressens fortement l'atmosphère du groupe", profile: "sensibilite", shadow: "relation" },
+      { label: "Prends le leadership pour calmer ou trancher", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Quelqu'un te critique. Ta première réaction…",
+    options: [
+      { label: "Tu repasses la scène dans ta tête en boucle", profile: "analyse" },
+      { label: "Tu cherches ce qui a déclenché cette réaction", profile: "controle" },
+      { label: "Tu veux prouver le contraire par les actes", profile: "performance" },
+      { label: "Tu te reproches de ne pas avoir fait mieux", profile: "rigueur" },
+      { label: "Tu le vis intensément, ça reste longtemps", profile: "sensibilite" },
+      { label: "Tu réagis directement, sans filtre", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Quand tu te sens dépassé(e)…",
+    options: [
+      { label: "Tu entres dans le mental, tu analyses encore plus", profile: "analyse" },
+      { label: "Tu tentes de tout reprendre en main", profile: "controle" },
+      { label: "Tu accélères pour rattraper le retard", profile: "performance", shadow: "enthousiasme" },
+      { label: "Tu deviens plus rigide, plus exigeant(e)", profile: "rigueur" },
+      { label: "Tu te sens submergé(e) par les émotions", profile: "sensibilite" },
+      { label: "Tu durcis ta posture et tu imposes ta vision", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Ce que tu fais pour te sentir en sécurité…",
+    options: [
+      { label: "Comprendre — tout, tout le temps", profile: "analyse" },
+      { label: "Anticiper et prévoir les risques", profile: "controle" },
+      { label: "Prouver ta valeur par ce que tu accomplis", profile: "performance" },
+      { label: "Maintenir l'ordre et la qualité autour de toi", profile: "rigueur" },
+      { label: "Rester connecté(e) à ce que tu ressens vraiment", profile: "sensibilite", shadow: "relation" },
+      { label: "Garder le contrôle de ce qui t'entoure", profile: "puissance" }
+    ]
+  },
+  {
+    text: "Ce que les autres remarquent souvent chez toi…",
+    options: [
+      { label: "Ta capacité à analyser des situations complexes", profile: "analyse" },
+      { label: "Ton souci du détail et ton anticipation", profile: "controle" },
+      { label: "Ton énergie et ta capacité à produire", profile: "performance" },
+      { label: "Ton exigence envers toi-même et les autres", profile: "rigueur" },
+      { label: "Ta sensibilité et ta profondeur émotionnelle", profile: "sensibilite" },
+      { label: "Ton assurance et ton impact naturel", profile: "puissance" }
     ]
   },
   {
@@ -456,195 +444,163 @@ const questions = [
       { label: "Lâcher prise sur ce que tu ne contrôles pas", profile: "controle", shadow: "harmonie" },
       { label: "Exister sans avoir à tout le temps prouver", profile: "performance" },
       { label: "Accepter l'imperfection sans te punir", profile: "rigueur" },
-      { label: "Moins absorber les émotions des autres", profile: "sensibilite", shadow: "lien" },
-      { label: "Montrer une limite sans perdre ta force", profile: "puissance", shadow: "harmonie" }
+      { label: "Moins absorber les émotions des autres", profile: "sensibilite" },
+      { label: "Montrer une limite sans perdre ta force", profile: "puissance" }
     ]
   },
   {
-    text: "Ce que les autres remarquent souvent chez toi…",
+    text: "La phrase qui te ressemble le plus en ce moment…",
     options: [
-      { label: "Ta capacité à analyser des situations complexes", profile: "analyse" },
-      { label: "Ton souci du détail et ton anticipation", profile: "controle" },
-      { label: "Ton énergie et ta capacité à produire", profile: "performance", shadow: "enthousiasme" },
-      { label: "Ton exigence envers toi-même et les autres", profile: "rigueur" },
-      { label: "Ta sensibilité et ta profondeur émotionnelle", profile: "sensibilite" },
-      { label: "Ton assurance et ton impact naturel", profile: "puissance" }
+      { label: "\"Si je comprends tout, rien ne peut me surprendre.\"", profile: "analyse" },
+      { label: "\"Si j'anticipe tout, rien ne peut mal tourner.\"", profile: "controle" },
+      { label: "\"Si je fais assez, je mérite ma place.\"", profile: "performance" },
+      { label: "\"Si c'est parfait, je suis en sécurité.\"", profile: "rigueur" },
+      { label: "\"Si je ressens tout, je ne rate rien d'important.\"", profile: "sensibilite", shadow: "relation" },
+      { label: "\"Si je garde le contrôle, tout ira bien.\"", profile: "puissance" }
     ]
   },
   {
-    text: "Quand tu dois attendre sans pouvoir agir, tu…",
+    text: "Quand quelque chose d’imprévu arrive…",
     options: [
-      { label: "Cherches à comprendre pourquoi la situation est bloquée", profile: "analyse" },
-      { label: "Prépares plusieurs scénarios au cas où", profile: "controle" },
-      { label: "Trouves autre chose à faire immédiatement", profile: "performance", shadow: "enthousiasme" },
-      { label: "Ressasses ce que tu aurais pu mieux faire avant", profile: "rigueur" },
-      { label: "Ressens l'inconfort dans ton corps avant tout", profile: "sensibilite" },
-      { label: "As du mal à accepter de ne pas avoir la main", profile: "puissance" }
+      { label: "Tu analyses rapidement pour comprendre ce qui se passe", profile: "analyse" },
+      { label: "Tu anticipes les conséquences possibles", profile: "controle" },
+      { label: "Tu agis vite pour reprendre la main", profile: "performance", shadow: "enthousiasme" },
+      { label: "Tu cherches la bonne manière de faire", profile: "rigueur" },
+      { label: "Tu ressens l’impact émotionnel avant tout", profile: "sensibilite" },
+      { label: "Tu prends le lead pour gérer la situation", profile: "puissance" }
     ]
   },
   {
-    text: "Ce qui te fait le plus peur dans l'échec…",
+    text: "Quand tu penses à l’avenir proche…",
     options: [
-      { label: "Ne pas comprendre ce qui s'est vraiment passé", profile: "analyse" },
-      { label: "Avoir raté quelque chose que tu aurais dû prévoir", profile: "controle" },
-      { label: "Que les autres pensent que tu n'es pas capable", profile: "performance" },
-      { label: "Avoir fait quelque chose de mal ou d'insuffisant", profile: "rigueur" },
-      { label: "Te couper de ce que tu ressens vraiment", profile: "sensibilite" },
-      { label: "Perdre le respect ou la confiance des autres", profile: "puissance" }
-    ]
-  },
-  {
-    text: "Dans une conversation difficile, tu as tendance à…",
-    options: [
-      { label: "Analyser chaque mot avant de répondre", profile: "analyse" },
-      { label: "Vouloir que ça se règle vite et bien", profile: "controle", shadow: "harmonie" },
-      { label: "Passer à autre chose dès que c'est résolu", profile: "performance", shadow: "enthousiasme" },
-      { label: "Rejouer la conversation dans ta tête après", profile: "rigueur" },
-      { label: "Sentir l'émotion de l'autre plus que la tienne", profile: "sensibilite", shadow: "lien" },
-      { label: "Dire ce que tu penses même si ça dérange", profile: "puissance" }
-    ]
-  },
-  {
-    text: "Ton rapport au repos…",
-    options: [
-      { label: "Tu penses encore même quand tu essaies de décompresser", profile: "analyse" },
-      { label: "Tu te détends seulement quand tout est en ordre", profile: "controle" },
-      { label: "Tu te sens coupable quand tu ne fais rien", profile: "performance" },
-      { label: "Tu remarques toujours ce qui n'est pas parfait même en pause", profile: "rigueur" },
-      { label: "Tu as besoin de silence et de solitude pour recharger", profile: "sensibilite" },
-      { label: "Tu interprètes le repos comme une faiblesse", profile: "puissance" }
-    ]
-  },
-  {
-    text: "Ce qui te donne de l'énergie, au fond…",
-    options: [
-      { label: "Comprendre quelque chose que tu ne comprenais pas avant", profile: "analyse" },
-      { label: "Sentir que tu maîtrises ce qui t'entoure", profile: "controle" },
-      { label: "Accomplir, avancer, produire quelque chose de concret", profile: "performance" },
-      { label: "Faire quelque chose de vraiment bien — pas juste correct", profile: "rigueur" },
-      { label: "Une connexion vraie avec quelqu'un", profile: "sensibilite", shadow: "lien" },
-      { label: "Avoir un impact visible sur ce qui t'entoure", profile: "puissance" }
-    ]
-  },
-  {
-    text: "Si ton système intérieur avait un message d'erreur, ce serait…",
-    options: [
-      { label: "⚠ Données insuffisantes — analyse en cours", profile: "analyse" },
-      { label: "⚠ Variable incontrôlée détectée — risque élevé", profile: "controle" },
-      { label: "⚠ Performance en dessous du seuil requis", profile: "performance" },
-      { label: "⚠ Erreur de conformité — correction nécessaire", profile: "rigueur" },
-      { label: "⚠ Surcharge émotionnelle — saturation imminente", profile: "sensibilite" },
-      { label: "⚠ Autorité non reconnue — système en alerte", profile: "puissance" }
+      { label: "Tu veux comprendre où tu vas vraiment", profile: "analyse" },
+      { label: "Tu cherches à sécuriser ce qui pourrait mal tourner", profile: "controle" },
+      { label: "Tu te demandes ce que tu vas accomplir", profile: "performance", shadow: "enthousiasme" },
+      { label: "Tu veux que tout soit clair et structuré", profile: "rigueur" },
+      { label: "Tu écoutes ce que tu ressens intérieurement", profile: "sensibilite" },
+      { label: "Tu veux décider et avancer", profile: "puissance" }
     ]
   }
 ];
 
-// ═══════════════════════════════════════════════
-// 3. PROFILS
-// ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   4) PROFILS
+═══════════════════════════════════════════════ */
 
 const profiles = {
   analyse: {
-    name: "Eliot — L'Analyste",
+    name: "Eliot",
+    mode: "L'Observateur",
     emoji: "🔵",
-    color: "#60a5fa",
-    mode: "Mode : Comprendre pour survivre",
-    brainlag: "Ton cerveau tourne en permanence. Il cherche à tout décoder avant d'agir — parce qu'agir sans comprendre, c'est dangereux.",
-    hypothese: "\"Si j'analyse assez, je serai enfin en sécurité.\"",
-    protection: "Tu observes, tu théorises, tu restes en retrait. L'analyse est ton bouclier contre l'imprévu.",
-    glitch: "Tu peux passer des heures à comprendre une situation sans jamais agir dessus. La réflexion devient une façon d'éviter.",
+    color: "#6366f1",
+    img: "images/Eliot.png",
+    brainlag: "Ton cerveau tourne en boucle. Il analyse, décortique, cherche la logique — même quand il n'y en a pas. C'est ton système de protection : comprendre pour ne pas être surpris.",
+    hypothese: "\"Si je comprends tout, rien ne peut me blesser ou me dépasser.\"",
+    protection: "Tu prends de la distance. Tu observes avant d'agir. Tu collectes des informations pour te sentir en sécurité dans ta propre tête.",
+    glitch: "Tu dépenses une énergie énorme à penser. Et pendant ce temps, tu n'agis pas. Tu restes dans le mental pour éviter le contact avec ce qui pourrait te submerger.",
     reboot: [
-      "Fixe-toi une limite : 10 minutes pour analyser, puis une action — même petite.",
-      "Remarque quand tu penses à la place de ressentir.",
-      "Pose la question : 'Est-ce que j'ai besoin de plus d'informations, ou j'ai peur ?'"
-    ],
-    img: "images/eliot.png"
+      "Pose-toi cette question : 'Est-ce que j'ai besoin de comprendre davantage, ou est-ce que j'ai déjà assez d'infos pour agir ?'",
+      "Fixe-toi une limite mentale : 10 minutes d'analyse max, puis une action concrète — même petite.",
+      "Remarque quand tu utilises 'j'analyse' pour éviter de ressentir quelque chose d'inconfortable.",
+      "Pratique une chose par semaine qui ne se comprend pas — qui se vit juste.",
+      "Offre ton analyse à quelqu'un : partager ce que tu penses sort la connaissance de ta tête et la met en mouvement."
+    ]
   },
   controle: {
-    name: "Ji-Wooh — Le Vigilant",
-    emoji: "🟣",
-    color: "#a78bfa",
-    mode: "Mode : Anticiper pour ne pas être surpris",
-    brainlag: "Tu scannes constamment l'environnement pour détecter ce qui pourrait mal tourner. Le calme te rend méfiant.",
-    hypothese: "\"Si j'anticipe tout, je ne serai jamais pris au dépourvu.\"",
-    protection: "Tu planifies, tu vérifies, tu prépares des plans B. Le contrôle est ta façon de gérer l'anxiété.",
-    glitch: "Tu peux épuiser ton entourage — et toi-même — avec une vigilance qui ne s'éteint jamais vraiment.",
+    name: "Jiwooh",
+    mode: "L'Architecte de Sécurité",
+    emoji: "⚪",
+    color: "#94a3b8",
+    img: "images/Jiwooh.png",
+    brainlag: "Ton système surveille en permanence. Il anticipe les risques, vérifie les détails, construit des plans B pour les plans B. C'est ton armure : si tout est prévu, rien ne peut te surprendre.",
+    hypothese: "\"Si j'anticipe tout, je peux éviter que quelque chose de grave arrive.\"",
+    protection: "Tu planifies, tu vérifies, tu organises. Tu es celui ou celle sur qui on peut compter — parce que tu n'as pas le droit de rater.",
+    glitch: "Le contrôle est épuisant. Et il ne protège pas vraiment — il repousse juste l'anxiété. Plus tu contrôles, plus tu as peur de perdre le contrôle.",
     reboot: [
-      "Identifie une chose que tu contrôles inutilement aujourd'hui. Lâche-la délibérément.",
-      "Remarque la différence entre préparation utile et rumination préventive.",
-      "Demande-toi : 'Quel est le pire réel — pas imaginé — qui pourrait arriver ?'"
-    ],
-    img: "images/jiwooh.png"
+      "Identifie une chose aujourd'hui que tu pourrais laisser aller sans catastrophe.",
+      "Demande-toi : 'Est-ce que je planifie parce que c'est nécessaire, ou parce que ça me rassure ?'",
+      "Pratique de déléguer une tâche — même petite — sans vérifier le résultat.",
+      "Remarque ce que tu ressens quand tu n'as pas le contrôle. Reste avec ça 2 minutes.",
+      "Dis à quelqu'un de confiance une chose dans laquelle tu n'es pas sûr(e) de toi."
+    ]
   },
   performance: {
-    name: "Luna — La Performeuse",
+    name: "Luna",
+    mode: "La Moteur en Feu",
     emoji: "🟡",
-    color: "#fbbf24",
-    mode: "Mode : Faire pour exister",
-    brainlag: "Tu te prouves ta valeur à travers ce que tu accomplis. L'arrêt ressemble à une chute.",
-    hypothese: "\"Si je produis assez, j'aurai le droit d'être là.\"",
-    protection: "Tu remplis ton agenda, tu livres, tu avances. Le mouvement t'empêche de ressentir ce qu'il y a en dessous.",
-    glitch: "Tu peux courir longtemps — mais tu ne sais pas vraiment vers quoi. Et quand tu t'arrêtes, le vide apparaît.",
+    color: "#f59e0b",
+    img: "images/Luna.png",
+    brainlag: "Tu avances, tu produis, tu accomplis. Ton moteur tourne fort. Mais quelque part, tu cours après quelque chose que tu n'arrives pas à attraper : la preuve que tu es assez.",
+    hypothese: "\"Si je fais assez, j'aurai enfin ma place.\"",
+    protection: "Tu te valorises à travers ce que tu produis. Tu deviens indispensable. Tu montres ce que tu vaux — parce que sans ça, tu ne sais pas trop ce qui reste.",
+    glitch: "L'agitation remplace le repos. Tu peux poster 10 stories pour 3 likes et te sentir vide. Le cerveau associe 'réussite' à 'vide' parce qu'il n'est jamais rassasié.",
     reboot: [
-      "Prends 5 minutes aujourd'hui sans produire ni consommer. Juste être.",
-      "Pose-toi la question : 'Est-ce que je fais ça parce que je le veux — ou parce que j'ai peur de m'arrêter ?'",
-      "Note une chose que tu as accomplie cette semaine — sans la minimiser."
-    ],
-    img: "images/luna.png"
+      "Demande-toi : 'Qu'est-ce que je cherche vraiment quand je performe ?' (amour, sécurité, preuve d'existence)",
+      "Passe 24h sans regarder tes stats, parler de tes réussites ou comparer ton travail.",
+      "Fais quelque chose juste pour toi — que personne ne verra jamais.",
+      "Quand l'agitation monte, pose les pieds au sol et dis : 'Je suis déjà là.'",
+      "Liste 5 choses qui te font te sentir visible sans performance."
+    ]
   },
   rigueur: {
-    name: "Clara — La Perfectionniste",
-    emoji: "🟠",
-    color: "#fb923c",
-    mode: "Mode : Être irréprochable pour être en sécurité",
-    brainlag: "Tu te tiens à une exigence constante — envers toi et souvent envers les autres. L'erreur est une menace, pas une information.",
-    hypothese: "\"Si c'est parfait, personne ne peut me critiquer.\"",
-    protection: "Tu corriges, tu affines, tu recommences. La perfection est ton armure.",
-    glitch: "Tu peux bloquer sur un détail alors que l'ensemble est déjà très bien. Et tu te juges avant que les autres aient le temps de le faire.",
+    name: "Clara",
+    mode: "L'Exigeante Silencieuse",
+    emoji: "🟢",
+    color: "#10b981",
+    img: "images/Clara.png",
+    brainlag: "Tu vises l'excellence — pas par orgueil, mais parce que tu crois que si c'est parfait, tu seras enfin en sécurité. Le problème : parfait n'arrive jamais.",
+    hypothese: "\"Si c'est parfait, je ne peux pas être attaqué(e) ou rejeté(e).\"",
+    protection: "Tu vérifies, tu corriges, tu recommences. Tu retiens ce qui n'est 'pas encore prêt'. Tu es ton propre critique le plus sévère.",
+    glitch: "La perfection devient un frein. Tu veux être vu(e) — mais seulement si c'est excellent. Résultat : tu n'es souvent pas vu(e) du tout.",
     reboot: [
-      "Identifie quelque chose de 'suffisamment bon' aujourd'hui. Laisse-le tel quel.",
-      "Remarque ta voix intérieure critique — sans t'y identifier.",
-      "Demande-toi : 'Est-ce que je cherche la qualité, ou est-ce que j'évite d'être jugé(e) ?'"
-    ],
-    img: "images/clara.png"
+      "Partage quelque chose à 80% de 'parfait'. Observe la réaction réelle.",
+      "Demande-toi : 'Est-ce que je corrige pour améliorer, ou pour éviter d'être jugé(e) ?'",
+      "Fixe-toi une règle : une fois relu deux fois, c'est envoyé.",
+      "Remarque quand ton exigence s'applique aux autres — et ce que ça coûte à la relation.",
+      "Autorise-toi une chose imparfaite par jour. Intentionnellement."
+    ]
   },
   sensibilite: {
-    name: "Mar — Le Sensitif",
-    emoji: "🩵",
-    color: "#22d3ee",
-    mode: "Mode : Ressentir pour rester connecté(e)",
-    brainlag: "Tu captes tout — les ambiances, les tensions, les non-dits. C'est un radar précieux qui peut aussi devenir une surcharge.",
-    hypothese: "\"Si je ressens tout, je ne raterai rien d'essentiel.\"",
-    protection: "Tu t'imprègnes de l'émotion ambiante. Tu absorbes pour connecter — parfois jusqu'à te perdre dedans.",
-    glitch: "Tu peux finir par ne plus savoir ce qui est à toi et ce qui appartient aux autres. Ou t'isoler pour ne plus être submergé(e).",
+    name: "Mar",
+    mode: "L'Éponge Émotionnelle",
+    emoji: "🔴",
+    color: "#ef4444",
+    img: "images/Mars.png",
+    brainlag: "Tu ressens tout — les tiens, ceux des autres, l'ambiance d'une pièce. C'est un don réel. Mais quand tu absorbes tout, tu ne sais plus ce qui vient de toi et ce qui vient des autres.",
+    hypothese: "\"Si je ressens tout, je ne rate rien d'important et je protège ceux que j'aime.\"",
+    protection: "Tu captes les signaux faibles. Tu t'adaptes. Tu prends soin. Tu deviens souvent le réceptacle émotionnel du groupe.",
+    glitch: "Tu te vides. Tu portes ce qui n'est pas à toi. Et quand tu essaies de ne plus ressentir, tu te coupes de toi-même.",
     reboot: [
-      "Après une interaction intense, pose-toi : 'Est-ce que cette émotion est la mienne ?'",
-      "Crée une frontière physique symbolique — une marche, une douche, un moment de silence.",
-      "Note chaque jour une émotion qui t'appartient vraiment."
-    ],
-    img: "images/mar.png"
+      "Avant de réagir émotionnellement, demande-toi : 'Est-ce que cette émotion m'appartient ?'",
+      "Pratique un rituel de 'décharge' après les interactions intenses (marche, douche, silence).",
+      "Autorise-toi à ne pas répondre à chaque signal émotionnel autour de toi.",
+      "Remarque ce que tu ressens quand personne ne te demande rien.",
+      "Crée un espace qui n'appartient qu'à toi — une heure, une pièce, une activité."
+    ]
   },
   puissance: {
-    name: "Malik — L'Intense",
-    emoji: "🔴",
-    color: "#f87171",
-    mode: "Mode : S'imposer pour ne pas être dominé(e)",
-    brainlag: "Tu prends de la place — souvent pour t'assurer que personne d'autre ne prenne la tienne. L'intensité est ta protection.",
-    hypothese: "\"Si je suis fort(e), personne ne pourra m'atteindre.\"",
-    protection: "Tu affirmes, tu décides, tu avances. La force est ton bouclier contre la vulnérabilité.",
-    glitch: "L'intensité peut blesser sans que tu le veuilles. Et la force constante masque parfois un épuisement que tu n'autorises pas.",
+    name: "Malik",
+    mode: "Le Rempart",
+    emoji: "🟠",
+    color: "#f97316",
+    img: "images/Malik.png",
+    brainlag: "Tu avances fort. Tu tiens les autres. Tu décides, tu protèges, tu gardes le cap. Mais sous la force, il y a souvent une peur que tu ne montres à personne : celle de ne pas être à la hauteur.",
+    hypothese: "\"Si je reste fort(e), personne ne sera blessé — et je n'aurai pas à montrer mes limites.\"",
+    protection: "Tu prends de la place pour que les autres n'aient pas à gérer. Tu es le rempart. Tu absorbes les chocs.",
+    glitch: "Tu peux confondre 'être fort' et 'être invulnérable'. Et l'invulnérabilité coupe la connexion avec les autres — et avec toi.",
     reboot: [
-      "Identifie un moment aujourd'hui où tu pourrais laisser quelqu'un d'autre mener — sans que ce soit une défaite.",
-      "Remarque quand ton intensité monte : qu'est-ce qu'elle protège ?",
-      "Avant d'agir sous une émotion forte, attends 10 minutes. Puis décide."
-    ],
-    img: "images/malik.png"
+      "Remarque un moment où tu aurais pu demander de l'aide — et ne l'as pas fait.",
+      "Observe : quand tu passes en mode 'rempart', est-ce de la force ou de la peur déguisée ?",
+      "Pratique de laisser quelqu'un d'autre décider sur une chose non-essentielle.",
+      "Remarque ce que tu ressens quand tu n'as pas le contrôle. Reste avec ça 2 minutes.",
+      "Dis à quelqu'un de confiance une chose dans laquelle tu n'es pas sûr(e) de toi."
+    ]
   }
 };
 
-// ═══════════════════════════════════════════════
-// 4. COMBOS MIXTES
-// ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   5) COMBOS
+═══════════════════════════════════════════════ */
 
 const combos = {
   "analyse-controle": {
@@ -670,118 +626,111 @@ const combos = {
   },
   "analyse-sensibilite": {
     title: "Le Penseur Sensible",
-    desc: "Tu ressens profondément ET tu dois tout comprendre. Tête et cœur en tension permanente.",
-    concret: "Tu analyses tes propres émotions au lieu de les traverser.",
-    glitch: "L'analyse peut devenir une façon d'éviter de vraiment ressentir.",
-    reboot: "Laisse une émotion exister 3 minutes sans chercher à l'expliquer."
+    desc: "Tu ressens profondément ET tu analyses tout ce que tu ressens.",
+    concret: "Tu décortiques tes émotions au lieu de les vivre. Tu comprends beaucoup mais ressens parfois peu.",
+    glitch: "L'analyse devient un bouclier contre l'émotion brute.",
+    reboot: "Laisse une émotion traverser sans l'expliquer. Juste la vivre."
   },
   "analyse-puissance": {
     title: "Le Stratège Dominant",
-    desc: "Tu comprends les dynamiques ET tu veux les maîtriser.",
-    concret: "Tu lis les situations mieux que la plupart — et tu utilises ça pour garder la main.",
-    glitch: "Tu peux manipuler sans t'en rendre compte, en utilisant l'analyse comme levier.",
-    reboot: "Partage une analyse sans en tirer un avantage. Juste pour connecter."
+    desc: "Tu analyses pour mieux diriger. Tu comprends pour garder le dessus.",
+    concret: "Tu es redoutable dans la prise de décision — mais tu peux sous-estimer l'humain dans l'équation.",
+    glitch: "Tu peux utiliser l'analyse pour justifier des décisions déjà prises.",
+    reboot: "Demande l'avis de quelqu'un avant d'avoir formé ta propre opinion."
   },
   "controle-performance": {
-    title: "La Machine Efficace",
-    desc: "Tu planifies ET tu produis. Ton système tourne à plein régime.",
-    concret: "Tu es fiable, organisé(e), productif(ve) — et tu n'as pas le droit de faillir.",
-    glitch: "Quand quelque chose échappe à ton plan, tout peut s'effondrer d'un coup.",
-    reboot: "Crée volontairement un plan imparfait et suis-le quand même."
+    title: "La Machine Organisée",
+    desc: "Tu planifies ET tu produis. Tu es souvent celui ou celle qui fait tourner les choses.",
+    concret: "Tu crées des systèmes efficaces pour performer. Tu es fiable, rigoureux(se), constant(e).",
+    glitch: "Tu peux devenir esclave de ton propre système. La flexibilité disparaît.",
+    reboot: "Sabote volontairement un planning — et observe que rien ne s'effondre."
   },
   "controle-rigueur": {
-    title: "L'Architecte Rigide",
-    desc: "Tu contrôles ET tu exiges la perfection. Rien ne doit dépasser.",
-    concret: "Ton environnement, ton travail, tes relations — tout doit être à sa place.",
-    glitch: "Tu peux étouffer ce qui t'entoure avec des standards impossibles à tenir.",
-    reboot: "Choisis un espace ou un projet et autorise-toi à le laisser 'assez bien'."
+    title: "L'Architecte du Détail",
+    desc: "Tu contrôles ET tu exiges la perfection. Rien n'échappe à ton regard.",
+    concret: "Tu es celui ou celle à qui on confie les projets complexes. Tu livres — toujours.",
+    glitch: "L'exigence envers les autres peut créer des tensions et de l'isolement.",
+    reboot: "Laisse quelqu'un livrer quelque chose d'imparfait sans intervenir."
   },
   "controle-sensibilite": {
     title: "Le Gardien Émotionnel",
-    desc: "Tu veux contrôler ET tu es très sensible à l'ambiance autour de toi.",
-    concret: "Tu anticipes les besoins des autres pour maintenir l'équilibre — avant même qu'ils parlent.",
-    glitch: "Tu peux t'épuiser à gérer des émotions qui ne t'appartiennent pas.",
-    reboot: "Demande-toi : 'Est-ce que j'anticipe pour eux, ou pour éviter mon propre inconfort ?'"
+    desc: "Tu anticipes les risques ET tu ressens les émotions du groupe.",
+    concret: "Tu veilles sur les autres — souvent avant même qu'ils sachent qu'ils ont besoin d'aide.",
+    glitch: "Tu portes les émotions des autres comme des données à gérer.",
+    reboot: "Laisse quelqu'un traverser une difficulté sans intervenir. Observe."
   },
   "controle-puissance": {
-    title: "Le Chef de Guerre",
-    desc: "Tu contrôles ET tu t'imposes. L'autorité est ton terrain naturel.",
-    concret: "Tu sais ce que tu veux, comment y arriver — et tu t'assures que ça se passe comme prévu.",
-    glitch: "Tu peux écraser sans le vouloir — parce que ton niveau d'exigence dépasse ce que les autres peuvent tenir.",
-    reboot: "Délègue quelque chose d'important cette semaine. Sans vérifier derrière."
+    title: "Le Leader Blindé",
+    desc: "Tu contrôles ET tu imposes. Tu es le pilier — mais parfois le mur.",
+    concret: "Tu stabilises les situations de crise. Les autres te font confiance instinctivement.",
+    glitch: "Tu peux confondre sécurité et domination. La connexion en pâtit.",
+    reboot: "Partage une incertitude avec ton équipe ou tes proches."
   },
   "performance-rigueur": {
-    title: "L'Ambitieux Impitoyable",
-    desc: "Tu veux produire ET que ce soit parfait. Double pression, tout le temps.",
-    concret: "Tu livres beaucoup — mais tu n'es jamais vraiment satisfait(e) du résultat.",
-    glitch: "Le combo performance + rigueur peut mener à l'épuisement silencieux.",
-    reboot: "Célèbre une réalisation cette semaine — sans la nuancer avec un 'mais'."
+    title: "L'Excellence sous Pression",
+    desc: "Tu veux performer ET que ce soit parfait. Une combinaison puissante — et épuisante.",
+    concret: "Tu peux retarder des projets parce qu'ils ne sont 'pas encore prêts'.",
+    glitch: "La perfection devient un frein à la performance. Tu veux être vu(e) — mais seulement si c'est excellent.",
+    reboot: "Partage quelque chose à 80% de 'parfait'. Observe la réaction réelle."
   },
   "performance-sensibilite": {
-    title: "L'Empathique Débordé",
-    desc: "Tu produis beaucoup ET tu ressens beaucoup. Tu donnes sur tous les fronts.",
-    concret: "Tu es présent(e) pour les autres, tu livres au travail — et tu te demandes pourquoi tu es épuisé(e).",
-    glitch: "Tu peux t'oublier complètement dans la somme de tout ce que tu donnes.",
-    reboot: "Identifie une chose que tu fais uniquement pour toi cette semaine."
+    title: "L'Artiste en Scène",
+    desc: "Tu ressens profondément ET tu as besoin d'être vu(e).",
+    concret: "Ton travail est chargé de sens et d'émotion. Tu peux être très créatif(ve) — mais aussi très fragile face au regard des autres.",
+    glitch: "Tu exposes ton monde intérieur à travers ta performance — et la moindre critique touche directement qui tu es.",
+    reboot: "Crée quelque chose juste pour toi, que personne ne verra. Observe la liberté que ça procure."
   },
   "performance-puissance": {
-    title: "Le Leader Brûlant",
-    desc: "Tu produis ET tu t'imposes. Ton impact est fort — et constant.",
-    concret: "Tu avances vite, tu entraînes les autres — parfois sans remarquer ceux qui décrochent.",
-    glitch: "L'intensité émotionnelle peut prendre la forme de la force — et blesser.",
-    reboot: "Avant d'agir sous une émotion forte, attends 10 minutes. Puis décide."
+    title: "Le Leader Visible",
+    desc: "Tu performes ET tu imposes. Tu veux être vu(e) comme fort(e) et compétent(e).",
+    concret: "Tu prends de la place naturellement. Tu avances, tu décides, tu montres.",
+    glitch: "Tu peux confondre 'être fort' et 'être invulnérable'. L'invulnérabilité coupe la connexion.",
+    reboot: "Partage une difficulté réelle avec quelqu'un. Observe que la force ne disparaît pas quand tu montres une limite."
   },
   "rigueur-sensibilite": {
-    title: "Le Juge Compatissant",
-    desc: "Tu t'exiges beaucoup ET tu ressens profondément. Tu te juges avec la même intensité que tu compassionnes.",
-    concret: "Tu es souvent plus doux(ce) avec les autres qu'avec toi-même.",
-    glitch: "L'autocritique peut devenir une boucle que la sensibilité amplifie.",
-    reboot: "Parle-toi comme tu parlerais à quelqu'un que tu aimes vraiment."
+    title: "L'Empathique Exigeant",
+    desc: "Tu ressens les autres profondément ET tu t'exiges beaucoup.",
+    concret: "Tu peux être dur(e) envers toi-même tout en prenant soin des autres avec douceur.",
+    glitch: "Tu appliques deux poids deux mesures — indulgent(e) avec les autres, impitoyable avec toi.",
+    reboot: "Parle-toi comme tu parlerais à quelqu'un que tu aimes."
   },
   "rigueur-puissance": {
-    title: "L'Exigeant Absolu",
-    desc: "Tu t'imposes des standards ET tu veux un impact fort. Rien n'est jamais assez.",
-    concret: "Tu te bats pour que les choses soient bien faites — et tu attends la même chose des autres.",
-    glitch: "Tu peux isoler ceux qui ne tiennent pas tes standards — sans le vouloir.",
-    reboot: "Identifie quelqu'un qui fait de son mieux différemment. Remarque-le vraiment."
+    title: "Le Juge Intérieur",
+    desc: "Tu t'exiges ET tu imposes. Ton standard est élevé — pour toi et pour les autres.",
+    concret: "Tu élèves le niveau partout où tu passes. Mais tu peux épuiser ceux qui t'entourent.",
+    glitch: "Tu peux percevoir comme faiblesse ce qui est en réalité de l'humanité.",
+    reboot: "Célèbre un effort — pas un résultat. Le tien ou celui de quelqu'un d'autre."
   },
   "sensibilite-puissance": {
-    title: "L'Intensif Vulnérable",
-    desc: "Tu ressens fort ET tu t'imposes fort. Deux intensités en tension permanente.",
+    title: "Le Volcanique",
+    desc: "Tu ressens intensément ET tu réagis fort. Tes émotions ont du poids et de l'impact.",
     concret: "Tu peux être profondément touchant(e) et inspirant(e) — ou dévastateur(trice) sans le vouloir.",
     glitch: "L'intensité émotionnelle peut prendre la forme de la force — et blesser.",
     reboot: "Avant d'agir sous une émotion forte, attends 10 minutes. Puis décide."
   }
 };
 
-// ═══════════════════════════════════════════════
-// 5. TEXTES MODULATEURS (SHADOWS 2 / 7 / 9)
-// ═══════════════════════════════════════════════
-
-const shadowTexts = {
-  harmonie: {
-    label: "Tendance de fond : recherche de paix",
-    text: "Ton système cherche aussi à préserver l'harmonie — parfois au prix de tes propres besoins. Tu absorbes les tensions des autres pour que tout reste stable."
-  },
-  enthousiasme: {
-    label: "Tendance de fond : fuite vers le mouvement",
-    text: "En toile de fond, ton système évite l'inconfort en se jetant dans le prochain projet, la prochaine idée. Le mouvement comme anesthésie."
-  },
-  lien: {
-    label: "Tendance de fond : besoin d'être indispensable",
-    text: "Sous la surface, une partie de toi calcule comment rester précieux·se pour les autres. Aider, anticiper leurs besoins — pour ne jamais être laissé·e de côté."
-  }
+// Nuances “shadow” à injecter dans les combos si significatif
+const comboShadowNuances = {
+  enthousiasme: "Nuance : tu peux chercher à relancer / accélérer pour ne pas rester dans l’inconfort. Le vrai reboot, ici, c’est de tolérer un peu de lenteur sans perdre ta flamme.",
+  harmonie: "Nuance : tu peux lisser, t’adapter, éviter le conflit — même quand tu aurais besoin de dire non. Le reboot : tester une micro-friction saine, sans te justifier.",
+  relation: "Nuance : tu peux porter émotionnellement les autres ou te rendre indispensable. Le reboot : t’autoriser à exister sans aider, sans réparer."
 };
 
-// ═══════════════════════════════════════════════
-// 6. RENDU DU QUIZ
-// ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   6) RENDU DU QUIZ (shuffle stable session)
+═══════════════════════════════════════════════ */
 
 function renderQuiz() {
   const container = document.getElementById('questionsContainer');
   container.innerHTML = '';
 
-  questions.forEach((q, i) => {
+  // Mélange questions 1 seule fois par session
+  if (shuffledQuestions.length === 0) {
+    shuffledQuestions = shuffleArray(questions);
+  }
+
+  shuffledQuestions.forEach((q, i) => {
     const block = document.createElement('div');
     block.className = 'question-block';
     block.innerHTML = `
@@ -792,9 +741,13 @@ function renderQuiz() {
     container.appendChild(block);
 
     const optsDiv = block.querySelector(`#opts-${i}`);
-    // ← Mélange des options ici
-    const shuffled = shuffle(q.options);
-    shuffled.forEach(opt => {
+
+    // Mélange réponses 1 seule fois par question (stable session)
+    if (!q.shuffledOptions) {
+      q.shuffledOptions = shuffleArray(q.options);
+    }
+
+    q.shuffledOptions.forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'option-btn';
       btn.textContent = opt.label;
@@ -809,8 +762,10 @@ function renderQuiz() {
 function selectOption(qIndex, opt, btn, optsDiv) {
   optsDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
-  // On stocke l'objet entier (profile + shadow éventuel)
+
+  // On stocke l’objet complet
   answers[qIndex] = opt;
+
   updateProgress();
   checkSubmit();
 }
@@ -826,31 +781,22 @@ function checkSubmit() {
   document.getElementById('submitBtn').disabled = answered < TOTAL_Q;
 }
 
-// ═══════════════════════════════════════════════
-// 7. CALCUL ET AFFICHAGE DES RÉSULTATS
-// ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   7) RÉSULTATS
+═══════════════════════════════════════════════ */
 
 function showResults() {
   if (Object.keys(answers).length < TOTAL_Q) {
-    document.getElementById('errorMsg').style.display = 'block';
+    const err = document.getElementById('errorMsg');
+    err.style.display = 'block';
     return;
   }
 
-  // Scores principaux
-  const scores = {
-    analyse: 0, controle: 0, performance: 0,
-    rigueur: 0, sensibilite: 0, puissance: 0
-  };
-
-  // Scores shadows
-  const shadowScores = {
-    harmonie: 0,
-    enthousiasme: 0,
-    lien: 0
-  };
+  const scores = { analyse: 0, controle: 0, performance: 0, rigueur: 0, sensibilite: 0, puissance: 0 };
+  shadowScores = { enthousiasme: 0, harmonie: 0, relation: 0 };
 
   Object.values(answers).forEach(opt => {
-    if (opt.profile) scores[opt.profile]++;
+    scores[opt.profile]++;
     if (opt.shadow) shadowScores[opt.shadow]++;
   });
 
@@ -862,28 +808,23 @@ function showResults() {
   const p1 = profiles[key1];
   const p2 = profiles[key2];
 
-  // Combo mixte ?
   const comboKey = [key1, key2].sort().join('-');
   const mix = (score2 >= 3 && combos[comboKey]) ? combos[comboKey] : null;
 
-  // Shadow dominant ?
-  const shadowSorted = Object.entries(shadowScores).sort((a, b) => b[1] - a[1]);
-  const shadowDominant = shadowSorted[0];
-  const hasShadow = shadowDominant[1] >= 2;
-  const shadowKey = hasShadow ? shadowDominant[0] : null;
+  const shadow = computeShadow(); // null ou { key,val,text }
+  const shadowNuanceForCombo = (shadow && mix) ? comboShadowNuances[shadow.key] : null;
 
-  // Construction du HTML
   let html = `
     <p class="section-content" style="color:#aaa; font-size:0.9rem; line-height:1.6; margin-bottom:24px;">
-      Dans Brainlag, on parle parfois de "bug".<br>
+      Dans Brainlag, on parle parfois de “bug”.<br>
       Pas parce que quelque chose ne va pas,<br>
       mais parce que ton système se déclenche tout seul.
     </p>
 
     <span class="tag tag-dominant">🧬 Ton brainlag dominant</span>
-    <h2>${p1.name}</h2>
-    <p>${p1.brainlag}</p>
+  `;
 
+  html += `
     <div class="profile-card" style="border-color: ${p1.color}22;">
       <div class="profile-header">
         <img
@@ -908,7 +849,7 @@ function showResults() {
       <p class="section-label">Comment tu te protèges</p>
       <p class="section-content">${p1.protection}</p>
 
-      <p class="section-label">⚠ Le glitch</p>
+      <p class="section-label">⚠️ Le glitch</p>
       <p class="section-content">${p1.glitch}</p>
 
       <p class="section-label">🔧 Reboot — Par où commencer</p>
@@ -920,7 +861,6 @@ function showResults() {
     <hr class="divider">
   `;
 
-  // Profil secondaire
   if (score2 >= 2) {
     html += `
       <span class="tag tag-secondary">🌀 Ton mode secondaire</span>
@@ -934,111 +874,157 @@ function showResults() {
             onerror="this.style.display='none'"
           >
           <div>
-            <div class="profile-title" style="color:${p2.color}">${p2.emoji} ${p2.name}</div>
+            <div class="profile-title" style="color:${p2.color}; font-size:1.2rem">${p2.emoji} ${p2.name}</div>
             <div class="profile-subtitle">${p2.mode}</div>
           </div>
         </div>
-        <p class="section-label">Le brainlag</p>
         <p class="section-content">${p2.brainlag}</p>
-        <p class="section-label">⚠ Le glitch</p>
-        <p class="section-content">${p2.glitch}</p>
       </div>
       <hr class="divider">
     `;
   }
 
-  // Combo mixte
   if (mix) {
     html += `
-      <span class="tag tag-combo">⚡ Combo détecté</span>
-      <div class="combo-card">
-        <div class="combo-title">${mix.title}</div>
-        <p class="combo-desc">${mix.desc}</p>
-        <p class="section-label" style="margin-top:12px;">Concrètement</p>
-        <p class="combo-desc">${mix.concret}</p>
-        <p class="section-label" style="margin-top:12px;">⚠ Le glitch</p>
-        <p class="combo-desc">${mix.glitch}</p>
-        <p class="section-label" style="margin-top:12px;">🔧 Reboot</p>
-        <p class="combo-desc">${mix.reboot}</p>
+      <span class="tag tag-mix">🧬 Ton combo unique</span>
+      <div class="mix-card">
+        <div class="profile-title" style="font-size:1.3rem">${mix.title}</div>
+
+        <p class="section-label" style="margin-top:16px">Ce que ça crée</p>
+        <p class="section-content">${mix.desc}</p>
+
+        <p class="section-label">Concrètement</p>
+        <p class="section-content">${mix.concret}</p>
+
+        <p class="section-label">⚠️ Le glitch combiné</p>
+        <p class="section-content">${mix.glitch}</p>
+
+        <p class="section-label">🔧 Par où commencer</p>
+        <p class="section-content">${mix.reboot}</p>
+
+        ${shadowNuanceForCombo ? `
+          <p class="section-label">🧩 Nuance (dynamique transversale)</p>
+          <p class="section-content" style="color:#cfcfcf">${shadowNuanceForCombo}</p>
+        ` : ''}
       </div>
       <hr class="divider">
     `;
   }
 
-  // Modulateur shadow (invisible, affiché seulement si seuil atteint)
-  if (shadowKey && shadowTexts[shadowKey]) {
-    const shadow = shadowTexts[shadowKey];
-    html += `
-      <div class="shadow-block">
-        <p class="shadow-label">◈ ${shadow.label}</p>
-        <p class="shadow-text">${shadow.text}</p>
-      </div>
-      <hr class="divider">
-    `;
-  }
-
-  // Barres de score
+  // Tableau des scores
   html += `
-    <p class="section-label">Répartition de ton système</p>
-    <div class="score-bars">
-  `;
-  sorted.forEach(([key, val]) => {
-    const p = profiles[key];
-    html += `
-      <div class="score-row">
-        <span class="score-label">${p.emoji} ${key}</span>
-        <div class="score-bar">
-          <div class="score-bar-fill" style="width:${(val / total) * 100}%; background:${p.color}"></div>
+    <p class="section-label">📊 Ton tableau de bord</p>
+    ${Object.entries(scores).sort((a, b) => b[1] - a[1]).map(([key, val]) => `
+      <div class="score-bar-wrap">
+        <div class="score-bar-label">
+          <span>${profiles[key].emoji} ${profiles[key].name}</span>
+          <span>${val} / ${total}</span>
         </div>
-        <span class="score-val">${val}</span>
+        <div class="score-bar">
+          <div class="score-bar-fill" style="width:${(val / total) * 100}%; background:${profiles[key].color}"></div>
+        </div>
       </div>
-    `;
-  });
-  html += `</div>`;
+    `).join('')}
+  `;
 
-  // Affichage
+  // Paragraphe discret shadow (7/9/2) – si significatif
+  if (shadow) {
+    html += `
+      <hr class="divider">
+      <p class="section-label">🔎 Dynamique secondaire</p>
+      <p class="section-content">
+        Ton système montre aussi ${shadow.text}.
+      </p>
+    `;
+  }
+
+  html += `
+    <hr class="divider">
+
+    <div class="action-buttons">
+      <button class="btn-action btn-share" onclick="shareResult('${p1.name}', '${mix ? mix.title : p1.mode}')">
+        ↗ Partager mon résultat
+      </button>
+      <a class="btn-action btn-instagram" href="https://www.instagram.com/klea.brainlag/" target="_blank">
+        → Rejoindre @klea.brainlag
+      </a>
+      <button class="btn-action btn-restart" onclick="showEndScreen()">
+        → Terminer
+      </button>
+    </div>
+  `;
+
   document.getElementById('quizSection').style.display = 'none';
   const resultSection = document.getElementById('resultSection');
   resultSection.style.display = 'block';
-  document.getElementById('resultContent').innerHTML = html;
-  window.scrollTo(0, 0);
+  resultSection.innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ═══════════════════════════════════════════════
-// 8. ACTIONS FINALES
-// ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   8) END SCREEN
+═══════════════════════════════════════════════ */
+
+function showEndScreen() {
+  document.getElementById('resultSection').style.display = 'none';
+  document.getElementById('endScreen').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════════════════════════════════
+   9) UTILITAIRES
+═══════════════════════════════════════════════ */
+
+function shareResult(name, combo) {
+  const text =
+`Mon Brainlag dominant : ${name}
+${combo ? "Mon mode secondaire / combo : " + combo : ""}
+Découvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
+
+  if (navigator.share) {
+    navigator.share({ title: "Mon Brainlag", text: text });
+  } else {
+    navigator.clipboard.writeText(text);
+    alert("Résultat copié. Tu peux le partager.");
+  }
+}
 
 function shareQuiz() {
-  const url = window.location.href;
+  const text = "Découvre ton Brainlag → https://klea-brainlag.github.io/Brainlag-Quiz/";
+
   if (navigator.share) {
     navigator.share({
-      title: 'Ton Brainlag',
-      text: 'Découvre ton profil de décalage cérébral',
-      url: url
+      title: "Ton Brainlag",
+      text: text,
+      url: "https://klea-brainlag.github.io/Brainlag-Quiz/"
     });
   } else {
-    navigator.clipboard.writeText(url).then(() => {
-      alert('Lien copié !');
-    });
+    navigator.clipboard.writeText("https://klea-brainlag.github.io/Brainlag-Quiz/");
+    alert("Lien du quiz copié.");
   }
 }
 
 function restartQuiz() {
-  answers = {};
+  Object.keys(answers).forEach(k => delete answers[k]);
+
+  // Reset shuffle session
+  shuffledQuestions = [];
+  questions.forEach(q => { delete q.shuffledOptions; });
+
+  document.getElementById('endScreen').style.display = 'none';
   document.getElementById('resultSection').style.display = 'none';
   document.getElementById('quizSection').style.display = 'block';
-  document.getElementById('submitBtn').disabled = true;
-  document.getElementById('errorMsg').style.display = 'none';
+  document.getElementById('progressFill').style.width = '0%';
+
   renderQuiz();
-  window.scrollTo(0, 0);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ═══════════════════════════════════════════════
-// 9. INIT
-// ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   10) INIT
+═══════════════════════════════════════════════ */
 
 renderQuiz();
-
 </script>
 </body>
 </html>
