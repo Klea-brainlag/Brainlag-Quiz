@@ -828,6 +828,16 @@ function showResults() {
   const comboKey = [key1, key2].sort().join('-');
   const mix = (score2 >= 3 && combos[comboKey]) ? combos[comboKey] : null;
 
+  let shareText;
+
+if (mix) {
+  shareText = `${p1.name} — ${mix.title}`;
+} else {
+  shareText = `${p1.name} — ${p1.mode}`;
+}
+
+window.currentShareText = shareText;
+
   const shadow = computeShadow(); // null ou { key,val,text }
   const shadowNuanceForCombo = (shadow && mix) ? comboShadowNuances[shadow.key] : null;
 
@@ -1014,7 +1024,7 @@ html += `
     <hr class="divider">
 
     <div class="action-buttons">
-      <button class="btn-action btn-share" onclick="shareResult('${mix ? mix.title : p1.name + " — " + p1.mode}')">  
+      <button class="btn-action btn-share" onclick="shareResult()">  
         ↗ Partager mon résultat
       </button>
       <a class="btn-action btn-instagram" href="https://www.instagram.com/klea.brainlag/" target="_blank">
@@ -1047,33 +1057,24 @@ function showEndScreen() {
    9) UTILITAIRES
 ═══════════════════════════════════════════════ */
 
-function shareResult(text) {
+function shareResult() {
 
   const finalText =
 `Mon Brainlag :
-${text}
+${window.currentShareText}
 
 Découvre le tien → https://klea-brainlag.github.io/Brainlag-Quiz/`;
 
-  // Si partage natif disponible (mobile surtout)
-  if (navigator.share && window.innerWidth < 900) {
+  if (navigator.share) {
     navigator.share({
       title: "Mon Brainlag",
       text: finalText,
       url: window.location.href
-    }).catch(err => {
-      console.log("Partage annulé :", err);
-    });
-  } 
-  // Sinon fallback stable
-  else {
+    }).catch(() => {});
+  } else {
     navigator.clipboard.writeText(finalText)
-      .then(() => {
-        alert("Résultat copié dans le presse-papier !");
-      })
-      .catch(() => {
-        alert("Impossible de copier automatiquement. Sélectionne et copie manuellement.");
-      });
+      .then(() => alert("Résultat copié !"))
+      .catch(() => alert(finalText));
   }
 }
 function shareQuiz() {
