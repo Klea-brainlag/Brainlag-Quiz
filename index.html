@@ -829,9 +829,9 @@ function showResults() {
   const mix = (score2 >= 3 && combos[comboKey]) ? combos[comboKey] : null;
 
   window.currentDominant = p1.name;
-window.currentMode = p1.mode;
+window.currentSecondary = score2 >= 1 ? p2.name : null;
 window.currentCombo = mix ? mix.title : null;
-
+  
   const shadow = computeShadow(); // null ou { key,val,text }
   const shadowNuanceForCombo = (shadow && mix) ? comboShadowNuances[shadow.key] : null;
 
@@ -1052,35 +1052,34 @@ function showEndScreen() {
 ═══════════════════════════════════════════════ */
 function shareResult() {
 
-  let text = "";
+  let text = "Mon Brainlag : ";
 
-  if (window.currentCombo) {
-    text = "Mon Brainlag dominant : " + window.currentDominant +
-           " | Mode secondaire : " + window.currentCombo;
-  } else {
-    text = "Mon Brainlag dominant : " + window.currentDominant +
-           " | Mode : " + window.currentMode;
+  text += window.currentDominant;
+
+  if (window.currentSecondary) {
+    text += " | Mode secondaire : " + window.currentSecondary;
   }
 
-  const finalText = text +
-    " → Découvre le tien : https://klea-brainlag.github.io/Brainlag-Quiz/";
+  if (window.currentCombo) {
+    text += " | Combo : " + window.currentCombo;
+  }
 
-  // Toujours copier sur desktop
+  text += " → Découvre le tien : https://klea-brainlag.github.io/Brainlag-Quiz/";
+
+  // Desktop : copier
   if (!navigator.share || window.innerWidth > 900) {
-    navigator.clipboard.writeText(finalText)
-      .then(() => alert("Résultat copié :\n\n" + finalText))
-      .catch(() => alert(finalText));
+    navigator.clipboard.writeText(text)
+      .then(() => alert("Résultat copié :\n\n" + text))
+      .catch(() => alert(text));
     return;
   }
 
-  // Mobile : partage natif sans champ url séparé
+  // Mobile : partage natif
   navigator.share({
     title: "Mon Brainlag",
-    text: finalText
+    text: text
   }).catch(() => {});
 }
-
-
 
 function shareQuiz() {
 
