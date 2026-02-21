@@ -927,15 +927,41 @@ function showResults() {
     `).join('')}
   `;
 
-  // Paragraphe discret shadow (7/9/2) – si significatif
-  if (shadow) {
-    html += `
-      <hr class="divider">
-      <p class="section-label">🔎 Dynamique secondaire</p>
-      <p class="section-content">
-        Ton système montre aussi ${shadow.text}.
-      </p>
-    `;
+// Paragraphe discret shadow (si significatif)
+if (shadow) {
+  html += `
+    <hr class="divider">
+    <p class="section-label">🔎 Dynamique secondaire</p>
+    <p class="section-content">
+      Ton système montre aussi ${shadow.text}.
+    </p>
+  `;
+}
+
+// Mini dynamiques 7 / 9 / 2 (toujours visibles, en discret)
+html += `
+  <div style="margin-top:20px; opacity:0.6;">
+    <p style="font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#555; margin-bottom:10px;">
+      Dynamiques transversales
+    </p>
+
+    ${[
+      { key: "enthousiasme", label: "✨ Enthousiasme", color: "#fbbf24" },
+      { key: "harmonie", label: "⚖️ Harmonie", color: "#60a5fa" },
+      { key: "relation", label: "🤝 Relation", color: "#f472b6" }
+    ].map(d => `
+      <div style="margin-bottom:8px;">
+        <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#777; margin-bottom:2px;">
+          <span>${d.label}</span>
+          <span>${shadowScores[d.key]}</span>
+        </div>
+        <div style="height:4px; background:#1a1a1a; border-radius:2px;">
+          <div style="height:100%; width:${(shadowScores[d.key] / TOTAL_Q) * 100}%; background:${d.color}; border-radius:2px;"></div>
+        </div>
+      </div>
+    `).join('')}
+  </div>
+`;
   }
 
   html += `
