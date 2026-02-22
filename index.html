@@ -504,116 +504,116 @@ const questions = [
    4) PROFILS
 ═══════════════════════════════════════════════ */
 
-const profiles = {
-  analyse: {
-    name: "Eliot",
-    mode: "L'observateur",
-    emoji: "🔵",
-    color: "#6366f1",
-    img: "images/Eliot.png",
-    brainlag: "Ton cerveau tourne en boucle. Il analyse, décortique, cherche la logique — même quand il n'y en a pas. C'est ton système de protection : comprendre pour ne pas être surpris.",
-    hypothese: "\"Si je comprends tout, rien ne peut me blesser ou me dépasser.\"",
-    protection: "Tu prends de la distance. Tu observes avant d'agir. Tu collectes des informations pour te sentir en sécurité dans ta propre tête.",
-    glitch: "Tu dépenses une énergie énorme à penser. Et pendant ce temps, tu n'agis pas. Tu restes dans le mental pour éviter le contact avec ce qui pourrait te submerger.",
-    reboot: [
-      "Pose-toi cette question : 'Est-ce que j'ai besoin de comprendre davantage, ou est-ce que j'ai déjà assez d'infos pour agir ?'",
-      "Fixe-toi une limite mentale : 10 minutes d'analyse max, puis une action concrète — même petite.",
-      "Remarque quand tu utilises 'j'analyse' pour éviter de ressentir quelque chose d'inconfortable.",
-      "Pratique une chose par semaine qui ne se comprend pas — qui se vit juste.",
-      "Offre ton analyse à quelqu'un : partager ce que tu penses sort la connaissance de ta tête et la met en mouvement."
-    ]
-  },
-  controle: {
-    name: "Jiwooh",
-    mode: "L'architecte de sécurité",
-    emoji: "⚪",
-    color: "#94a3b8",
-    img: "images/Jiwooh.png",
-    brainlag: "Ton système surveille en permanence. Il anticipe les risques, vérifie les détails, construit des plans B pour les plans B. C'est ton armure : si tout est prévu, rien ne peut te surprendre.",
-    hypothese: "\"Si j'anticipe tout, je peux éviter que quelque chose de grave arrive.\"",
-    protection: "Tu planifies, tu vérifies, tu organises. Tu es celui ou celle sur qui on peut compter — parce que tu n'as pas le droit de rater.",
-    glitch: "Le contrôle est épuisant. Et il ne protège pas vraiment — il repousse juste l'anxiété. Plus tu contrôles, plus tu as peur de perdre le contrôle.",
-    reboot: [
-      "Identifie une chose aujourd'hui que tu pourrais laisser aller sans catastrophe.",
-      "Demande-toi : 'Est-ce que je planifie parce que c'est nécessaire, ou parce que ça me rassure ?'",
-      "Pratique de déléguer une tâche — même petite — sans vérifier le résultat.",
-      "Remarque ce que tu ressens quand tu n'as pas le contrôle. Reste avec ça 2 minutes.",
-      "Dis à quelqu'un de confiance une chose dans laquelle tu n'es pas sûr(e) de toi."
-    ]
-  },
-  performance: {
-    name: "Luna",
-    mode: "Le moteur en feu",
-    emoji: "🟡",
-    color: "#f59e0b",
-    img: "images/Luna.png",
-    brainlag: "Tu avances, tu produis, tu accomplis. Ton moteur tourne fort. Mais quelque part, tu cours après quelque chose que tu n'arrives pas à attraper : la preuve que tu es assez.",
-    hypothese: "\"Si je fais assez, j'aurai enfin ma place.\"",
-    protection: "Tu te valorises à travers ce que tu produis. Tu deviens indispensable. Tu montres ce que tu vaux — parce que sans ça, tu ne sais pas trop ce qui reste.",
-    glitch: "L'agitation remplace le repos. Tu peux poster 10 stories pour 3 likes et te sentir vide. Le cerveau associe 'réussite' à 'vide' parce qu'il n'est jamais rassasié.",
-    reboot: [
-      "Demande-toi : 'Qu'est-ce que je cherche vraiment quand je performe ?' (amour, sécurité, preuve d'existence)",
-      "Passe 24h sans regarder tes stats, parler de tes réussites ou comparer ton travail.",
-      "Fais quelque chose juste pour toi — que personne ne verra jamais.",
-      "Quand l'agitation monte, pose les pieds au sol et dis : 'Je suis déjà là.'",
-      "Liste 5 choses qui te font te sentir visible sans performance."
-    ]
-  },
-  rigueur: {
-    name: "Clara",
-    mode: "L'exigeante silencieuse",
-    emoji: "🟢",
-    color: "#10b981",
-    img: "images/Clara.png",
-    brainlag: "Tu vises l'excellence — pas par orgueil, mais parce que tu crois que si c'est parfait, tu seras enfin en sécurité. Le problème : parfait n'arrive jamais.",
-    hypothese: "\"Si c'est parfait, je ne peux pas être attaqué(e) ou rejeté(e).\"",
-    protection: "Tu vérifies, tu corriges, tu recommences. Tu retiens ce qui n'est 'pas encore prêt'. Tu es ton propre critique le plus sévère.",
-    glitch: "La perfection devient un frein. Tu veux être vu(e) — mais seulement si c'est excellent. Résultat : tu n'es souvent pas vu(e) du tout.",
-    reboot: [
-      "Partage quelque chose à 80% de 'parfait'. Observe la réaction réelle.",
-      "Demande-toi : 'Est-ce que je corrige pour améliorer, ou pour éviter d'être jugé(e) ?'",
-      "Fixe-toi une règle : une fois relu deux fois, c'est envoyé.",
-      "Remarque quand ton exigence s'applique aux autres — et ce que ça coûte à la relation.",
-      "Autorise-toi une chose imparfaite par jour. Intentionnellement."
-    ]
-  },
-  sensibilite: {
-    name: "Mar",
-    mode: "L'éponge émotionnelle",
-    emoji: "🔴",
-    color: "#ef4444",
-    img: "images/Mar.png",
-    brainlag: "Tu ressens tout — les tiens, ceux des autres, l'ambiance d'une pièce. C'est un don réel. Mais quand tu absorbes tout, tu ne sais plus ce qui vient de toi et ce qui vient des autres.",
-    hypothese: "\"Si je ressens tout, je ne rate rien d'important et je protège ceux que j'aime.\"",
-    protection: "Tu captes les signaux faibles. Tu t'adaptes. Tu prends soin. Tu deviens souvent le réceptacle émotionnel du groupe.",
-    glitch: "Tu te vides. Tu portes ce qui n'est pas à toi. Et quand tu essaies de ne plus ressentir, tu te coupes de toi-même.",
-    reboot: [
-      "Avant de réagir émotionnellement, demande-toi : 'Est-ce que cette émotion m'appartient ?'",
-      "Pratique un rituel de 'décharge' après les interactions intenses (marche, douche, silence).",
-      "Autorise-toi à ne pas répondre à chaque signal émotionnel autour de toi.",
-      "Remarque ce que tu ressens quand personne ne te demande rien.",
-      "Crée un espace qui n'appartient qu'à toi — une heure, une pièce, une activité."
-    ]
-  },
-  puissance: {
-    name: "Malik",
-    mode: "Le rempart",
-    emoji: "🟠",
-    color: "#f97316",
-    img: "images/Malik.png",
-    brainlag: "Tu avances fort. Tu tiens les autres. Tu décides, tu protèges, tu gardes le cap. Mais sous la force, il y a souvent une peur que tu ne montres à personne : celle de ne pas être à la hauteur.",
-    hypothese: "\"Si je reste fort(e), personne ne sera blessé — et je n'aurai pas à montrer mes limites.\"",
-    protection: "Tu prends de la place pour que les autres n'aient pas à gérer. Tu es le rempart. Tu absorbes les chocs.",
-    glitch: "Tu peux confondre 'être fort' et 'être invulnérable'. Et l'invulnérabilité coupe la connexion avec les autres — et avec toi.",
-    reboot: [
-      "Remarque un moment où tu aurais pu demander de l'aide — et ne l'as pas fait.",
-      "Observe : quand tu passes en mode 'rempart', est-ce de la force ou de la peur déguisée ?",
-      "Pratique de laisser quelqu'un d'autre décider sur une chose non-essentielle.",
-      "Remarque ce que tu ressens quand tu n'as pas le contrôle. Reste avec ça 2 minutes.",
-      "Dis à quelqu'un de confiance une chose dans laquelle tu n'es pas sûr(e) de toi."
-    ]
-  }
-};
+  const profiles = {
+    analyse: {
+      name: "Eliot",
+      mode: "L'observateur",
+      emoji: "🔵",
+      color: "#6366f1",
+      img: "images/Eliot.png",
+      brainlag: "Ton cerveau tourne en boucle. Il analyse, décortique, cherche la logique — même quand il n'y en a pas. C'est ton système de protection : comprendre pour ne pas être surpris.",
+      hypothese: "\"Si je comprends tout, rien ne peut me blesser ou me dépasser.\"",
+      protection: "Tu prends de la distance. Tu observes avant d'agir. Tu collectes des informations pour te sentir en sécurité dans ta propre tête.",
+      glitch: "Tu dépenses une énergie énorme à penser. Et pendant ce temps, tu n'agis pas. Tu restes dans le mental pour éviter le contact avec ce qui pourrait te submerger.",
+      reboot: [
+        "Pose-toi cette question : 'Est-ce que j'ai besoin de comprendre davantage, ou est-ce que j'ai déjà assez d'infos pour agir ?'",
+        "Fixe-toi une limite mentale : 10 minutes d'analyse max, puis une action concrète — même petite.",
+        "Remarque quand tu utilises 'j'analyse' pour éviter de ressentir quelque chose d'inconfortable.",
+        "Pratique une chose par semaine qui ne se comprend pas — qui se vit juste.",
+        "Offre ton analyse à quelqu'un : partager ce que tu penses sort la connaissance de ta tête et la met en mouvement."
+      ]
+    },
+    controle: {
+      name: "Jiwooh",
+      mode: "L'architecte de sécurité",
+      emoji: "⚪",
+      color: "#94a3b8",
+      img: "images/Jiwooh.png",
+      brainlag: "Ton système surveille en permanence. Il anticipe les risques, vérifie les détails, construit des plans B pour les plans B. C'est ton armure : si tout est prévu, rien ne peut te surprendre.",
+      hypothese: "\"Si j'anticipe tout, je peux éviter que quelque chose de grave arrive.\"",
+      protection: "Tu planifies, tu vérifies, tu organises. Tu es celui ou celle sur qui on peut compter — parce que tu n'as pas le droit de rater.",
+      glitch: "Le contrôle est épuisant. Et il ne protège pas vraiment — il repousse juste l'anxiété. Plus tu contrôles, plus tu as peur de perdre le contrôle.",
+      reboot: [
+        "Identifie une chose aujourd'hui que tu pourrais laisser aller sans catastrophe.",
+        "Demande-toi : 'Est-ce que je planifie parce que c'est nécessaire, ou parce que ça me rassure ?'",
+        "Pratique de déléguer une tâche — même petite — sans vérifier le résultat.",
+        "Remarque ce que tu ressens quand tu n'as pas le contrôle. Reste avec ça 2 minutes.",
+        "Dis à quelqu'un de confiance une chose dans laquelle tu n'es pas sûr(e) de toi."
+      ]
+    },
+    performance: {
+      name: "Luna",
+      mode: "Le moteur en feu",
+      emoji: "🟡",
+      color: "#f59e0b",
+      img: "images/Luna.png",
+      brainlag: "Tu avances, tu produis, tu accomplis. Ton moteur tourne fort. Mais quelque part, tu cours après quelque chose que tu n'arrives pas à attraper : la preuve que tu es assez.",
+      hypothese: "\"Si je fais assez, j'aurai enfin ma place.\"",
+      protection: "Tu te valorises à travers ce que tu produis. Tu deviens indispensable. Tu montres ce que tu vaux — parce que sans ça, tu ne sais pas trop ce qui reste.",
+      glitch: "L'agitation remplace le repos. Tu peux poster 10 stories pour 3 likes et te sentir vide. Le cerveau associe 'réussite' à 'vide' parce qu'il n'est jamais rassasié.",
+      reboot: [
+        "Demande-toi : 'Qu'est-ce que je cherche vraiment quand je performe ?' (amour, sécurité, preuve d'existence)",
+        "Passe 24h sans regarder tes stats, parler de tes réussites ou comparer ton travail.",
+        "Fais quelque chose juste pour toi — que personne ne verra jamais.",
+        "Quand l'agitation monte, pose les pieds au sol et dis : 'Je suis déjà là.'",
+        "Liste 5 choses qui te font te sentir visible sans performance."
+      ]
+    },
+    rigueur: {
+      name: "Clara",
+      mode: "L'exigeante silencieuse",
+      emoji: "🟢",
+      color: "#10b981",
+      img: "images/Clara.png",
+      brainlag: "Tu vises l'excellence — pas par orgueil, mais parce que tu crois que si c'est parfait, tu seras enfin en sécurité. Le problème : parfait n'arrive jamais.",
+      hypothese: "\"Si c'est parfait, je ne peux pas être attaqué(e) ou rejeté(e).\"",
+      protection: "Tu vérifies, tu corriges, tu recommences. Tu retiens ce qui n'est 'pas encore prêt'. Tu es ton propre critique le plus sévère.",
+      glitch: "La perfection devient un frein. Tu veux être vu(e) — mais seulement si c'est excellent. Résultat : tu n'es souvent pas vu(e) du tout.",
+      reboot: [
+        "Partage quelque chose à 80% de 'parfait'. Observe la réaction réelle.",
+        "Demande-toi : 'Est-ce que je corrige pour améliorer, ou pour éviter d'être jugé(e) ?'",
+        "Fixe-toi une règle : une fois relu deux fois, c'est envoyé.",
+        "Remarque quand ton exigence s'applique aux autres — et ce que ça coûte à la relation.",
+        "Autorise-toi une chose imparfaite par jour. Intentionnellement."
+      ]
+    },
+    sensibilite: {
+      name: "Mar",
+      mode: "L'éponge émotionnelle",
+      emoji: "🔴",
+      color: "#ef4444",
+      img: "images/Mar.png",
+      brainlag: "Tu ressens tout — les tiens, ceux des autres, l'ambiance d'une pièce. C'est un don réel. Mais quand tu absorbes tout, tu ne sais plus ce qui vient de toi et ce qui vient des autres.",
+      hypothese: "\"Si je ressens tout, je ne rate rien d'important et je protège ceux que j'aime.\"",
+      protection: "Tu captes les signaux faibles. Tu t'adaptes. Tu prends soin. Tu deviens souvent le réceptacle émotionnel du groupe.",
+      glitch: "Tu te vides. Tu portes ce qui n'est pas à toi. Et quand tu essaies de ne plus ressentir, tu te coupes de toi-même.",
+      reboot: [
+        "Avant de réagir émotionnellement, demande-toi : 'Est-ce que cette émotion m'appartient ?'",
+        "Pratique un rituel de 'décharge' après les interactions intenses (marche, douche, silence).",
+        "Autorise-toi à ne pas répondre à chaque signal émotionnel autour de toi.",
+        "Remarque ce que tu ressens quand personne ne te demande rien.",
+        "Crée un espace qui n'appartient qu'à toi — une heure, une pièce, une activité."
+      ]
+    },
+    puissance: {
+      name: "Malik",
+      mode: "Le rempart",
+      emoji: "🟠",
+      color: "#f97316",
+      img: "images/Malik.png",
+      brainlag: "Tu avances fort. Tu tiens les autres. Tu décides, tu protèges, tu gardes le cap. Mais sous la force, il y a souvent une peur que tu ne montres à personne : celle de ne pas être à la hauteur.",
+      hypothese: "\"Si je reste fort(e), personne ne sera blessé — et je n'aurai pas à montrer mes limites.\"",
+      protection: "Tu prends de la place pour que les autres n'aient pas à gérer. Tu es le rempart. Tu absorbes les chocs.",
+      glitch: "Tu peux confondre 'être fort' et 'être invulnérable'. Et l'invulnérabilité coupe la connexion avec les autres — et avec toi.",
+      reboot: [
+        "Remarque un moment où tu aurais pu demander de l'aide — et ne l'as pas fait.",
+        "Observe : quand tu passes en mode 'rempart', est-ce de la force ou de la peur déguisée ?",
+        "Pratique de laisser quelqu'un d'autre décider sur une chose non-essentielle.",
+        "Remarque ce que tu ressens quand tu n'as pas le contrôle. Reste avec ça 2 minutes.",
+        "Dis à quelqu'un de confiance une chose dans laquelle tu n'es pas sûr(e) de toi."
+      ]
+    }
+  };
 
 /* ═══════════════════════════════════════════════
    5) COMBOS
@@ -1003,7 +1003,7 @@ html += `
         ">
           <div style="
             height:100%;
-            width:${(shadowScores[d.key] / TOTAL_Q) * 100}%;
+            width:${TOTAL_Q ? (shadowScores[d.key] / TOTAL_Q) * 100 : 0}%;
             background:${d.color};
             border-radius:3px;
             transition:width 0.6s ease;
@@ -1014,6 +1014,36 @@ html += `
   </div>
 
 `;
+  // --- Interprétation des dynamiques transversales ---
+const shadowEntries = Object.entries(shadowScores);
+const maxShadow = shadowEntries.sort((a,b) => b[1]-a[1])[0];
+
+let shadowInterpretation = "";
+
+if (maxShadow && maxShadow[1] > 0) {
+  if (maxShadow[0] === "enthousiasme") {
+    shadowInterpretation = "✨ Une énergie de stimulation influence tes réactions. Le mouvement et l’intensité comptent pour toi.";
+  }
+  if (maxShadow[0] === "harmonie") {
+    shadowInterpretation = "⚖️ Le besoin de lien joue un rôle important dans ta manière de gérer les tensions.";
+  }
+  if (maxShadow[0] === "relation") {
+    shadowInterpretation = "🤝 Le fait d’être utile ou présent pour les autres influence subtilement ton équilibre.";
+  }
+}
+
+if (shadowInterpretation) {
+  html += `
+    <p style="
+      margin-top:18px;
+      font-size:0.95rem;
+      color:#bbb;
+      line-height:1.6;
+    ">
+      ${shadowInterpretation}
+    </p>
+  `;
+}
   html += `
     <hr class="divider">
 
