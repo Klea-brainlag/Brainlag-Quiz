@@ -756,7 +756,7 @@ function renderQuiz() {
     block.innerHTML = `
       <p class="question-number">Question ${i + 1} / ${TOTAL_Q}</p>
       <p class="question-text">${q.text}</p>
-      ${q.multi ? `<p style="color:red;font-size:1rem;margin:8px 0 14px 0;font-weight:700;">DOUBLE ACTIF</p>` : ''}     <div class="options" id="opts-${i}"></div>
+     ${q.multi ? `<p style="color:#888;font-size:0.82rem;margin:8px 0 14px 0;">Choisis jusqu’à 2 réponses.</p>` : ''}    <div class="options" id="opts-${i}"></div>
     `;
     container.appendChild(block);
 
