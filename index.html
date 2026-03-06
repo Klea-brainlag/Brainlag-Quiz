@@ -411,27 +411,27 @@ const questions = [
     ]
   },
   {
-    text: "Quelqu'un te critique. Ta première réaction…",
-    options: [
-      { label: "Tu repasses la scène dans ta tête en boucle", profile: "analyse" },
-      { label: "Tu cherches ce qui a déclenché cette réaction", profile: "controle" },
-      { label: "Tu veux prouver le contraire par les actes", profile: "performance" },
-      { label: "Tu te reproches de ne pas avoir fait mieux", profile: "rigueur" },
-      { label: "Tu le vis intensément, ça reste longtemps", profile: "sensibilite" },
-      { label: "Tu réagis directement, sans filtre", profile: "puissance" }
-    ]
-  },
+  text: "Quand une émotion ou une tension te touche de plein fouet…",
+  options: [
+    { label: "Tu prends de la distance pour analyser et comprendre", profile: "analyse" },
+    { label: "Tu cherches ce que tu peux sécuriser ou anticiper", profile: "controle" },
+    { label: "Tu continues à avancer pour ne pas t'arrêter dessus", profile: "performance", shadow: "enthousiasme" },
+    { label: "Tu te demandes ce que tu aurais dû mieux faire", profile: "rigueur" },
+    { label: "Tu ressens tout très fort avant de savoir quoi faire", profile: "sensibilite", shadow: "relation" },
+    { label: "Tu gères seul(e), tu te blindes et tu montres peu", profile: "puissance" }
+  ]
+},
   {
-    text: "Quand tu te sens dépassé(e)…",
-    options: [
-      { label: "Tu entres dans le mental, tu analyses encore plus", profile: "analyse" },
-      { label: "Tu tentes de tout reprendre en main", profile: "controle" },
-      { label: "Tu accélères pour rattraper le retard", profile: "performance", shadow: "enthousiasme" },
-      { label: "Tu deviens plus rigide, plus exigeant(e)", profile: "rigueur" },
-      { label: "Tu te sens submergé(e) par les émotions", profile: "sensibilite" },
-      { label: "Tu durcis ta posture et tu imposes ta vision", profile: "puissance" }
-    ]
-  },
+  text: "Ce que tu redoutes le plus, au fond…",
+  options: [
+    { label: "D'être envahi(e) ou de perdre ton espace intérieur", profile: "analyse" },
+    { label: "Que quelque chose dérape sans que tu aies pu l'anticiper", profile: "controle", shadow: "harmonie" },
+    { label: "De ne pas compter ou de devenir invisible", profile: "performance" },
+    { label: "De décevoir ou de ne pas être à la hauteur", profile: "rigueur" },
+    { label: "De ne pas être compris(e) dans ta profondeur", profile: "sensibilite" },
+    { label: "De perdre ton autonomie ou d'être dominé(e)", profile: "puissance" }
+  ]
+},
   {
     text: "Ce que tu fais pour te sentir en sécurité…",
     options: [
@@ -829,7 +829,7 @@ function showResults() {
   const mix = (score2 >= 3 && combos[comboKey]) ? combos[comboKey] : null;
 
   window.currentDominant = p1.name;
-window.currentSecondary = score2 >= 1 ? p2.name : null;
+window.currentSecondary = score2 >= 2 ? p2.name : null;
 window.currentCombo = mix ? mix.title : null;
   
   const shadow = computeShadow(); // null ou { key,val,text }
@@ -1025,7 +1025,7 @@ if (maxShadow && maxShadow[1] > 0) {
     shadowInterpretation = "✨ Une énergie de stimulation influence tes réactions. Le mouvement et l’intensité comptent pour toi.";
   }
   if (maxShadow[0] === "harmonie") {
-    shadowInterpretation = "⚖️ Le besoin de lien joue un rôle important dans ta manière de gérer les tensions.";
+    shadowInterpretation = "⚖️ Le besoin d’harmonie influence ta manière de gérer les tensions. Tu peux chercher à lisser, apaiser ou éviter le conflit.";
   }
   if (maxShadow[0] === "relation") {
     shadowInterpretation = "🤝 Le fait d’être utile ou présent pour les autres influence subtilement ton équilibre.";
