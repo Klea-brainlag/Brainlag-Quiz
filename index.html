@@ -317,7 +317,7 @@
    1) ÉTAT
 ═══════════════════════════════════════════════ */
 
-const answers = {};           // on stocke maintenant l’objet "option" (pas juste le profile)
+const answers = {}; // pour les questions simples : objet ; pour les doubles : tableau d’objets
 const TOTAL_Q = 12;
 
 // Shuffle stable pendant la session
@@ -378,16 +378,17 @@ const questions = [
     ]
   },
   {
-    text: "Quand tu es stressé(e), ton réflexe automatique c'est…",
-    options: [
-      { label: "Réfléchir encore plus pour trouver la solution", profile: "analyse" },
-      { label: "Tout anticiper pour éviter les surprises", profile: "controle" },
-      { label: "Travailler plus pour ne pas être en retard", profile: "performance" },
-      { label: "Tout vérifier et corriger ce qui cloche", profile: "rigueur" },
-      { label: "Absorber l'ambiance émotionnelle autour de toi", profile: "sensibilite", shadow: "relation" },
-      { label: "Prendre le contrôle de la situation", profile: "puissance" }
-    ]
-  },
+  text: "Quand tu es stressé(e), ton réflexe automatique c'est…",
+  multi: true,
+  options: [
+    { label: "Réfléchir encore plus pour trouver la solution", profile: "analyse" },
+    { label: "Tout anticiper pour éviter les surprises", profile: "controle" },
+    { label: "Travailler plus pour ne pas être en retard", profile: "performance", shadow: "enthousiasme" },
+    { label: "Tout vérifier et corriger ce qui cloche", profile: "rigueur" },
+    { label: "Absorber l'ambiance émotionnelle autour de toi", profile: "sensibilite", shadow: "relation" },
+    { label: "Prendre le contrôle de la situation", profile: "puissance" }
+  ]
+},
   {
     text: "Ce qui t'épuise le plus en ce moment…",
     options: [
@@ -433,16 +434,17 @@ const questions = [
   ]
 },
   {
-    text: "Ce que tu fais pour te sentir en sécurité…",
-    options: [
-      { label: "Comprendre — tout, tout le temps", profile: "analyse" },
-      { label: "Anticiper et prévoir les risques", profile: "controle" },
-      { label: "Prouver ta valeur par ce que tu accomplis", profile: "performance" },
-      { label: "Maintenir l'ordre et la qualité autour de toi", profile: "rigueur" },
-      { label: "Rester connecté(e) à ce que tu ressens vraiment", profile: "sensibilite", shadow: "relation" },
-      { label: "Garder le contrôle de ce qui t'entoure", profile: "puissance" }
-    ]
-  },
+  text: "Ce que tu fais pour te sentir en sécurité…",
+  multi: true,
+  options: [
+    { label: "Comprendre — tout, tout le temps", profile: "analyse" },
+    { label: "Anticiper et prévoir les risques", profile: "controle" },
+    { label: "Prouver ta valeur par ce que tu accomplis", profile: "performance" },
+    { label: "Maintenir l'ordre et la qualité autour de toi", profile: "rigueur" },
+    { label: "Rester connecté(e) à ce que tu ressens vraiment", profile: "sensibilite", shadow: "relation" },
+    { label: "Garder le contrôle de ce qui t'entoure", profile: "puissance" }
+  ]
+},
   {
     text: "Ce que les autres remarquent souvent chez toi…",
     options: [
@@ -455,16 +457,17 @@ const questions = [
     ]
   },
   {
-    text: "Ce dont tu aurais besoin en ce moment mais que tu n'arrives pas à t'offrir…",
-    options: [
-      { label: "Du calme mental — arrêter de tout analyser", profile: "analyse" },
-      { label: "Lâcher prise sur ce que tu ne contrôles pas", profile: "controle", shadow: "harmonie" },
-      { label: "Exister sans avoir à tout le temps prouver", profile: "performance" },
-      { label: "Accepter l'imperfection sans te punir", profile: "rigueur" },
-      { label: "Moins absorber les émotions des autres", profile: "sensibilite" },
-      { label: "Montrer une limite sans perdre ta force", profile: "puissance" }
-    ]
-  },
+  text: "Ce dont tu aurais besoin en ce moment mais que tu n'arrives pas à t'offrir…",
+  multi: true,
+  options: [
+    { label: "Du calme mental — arrêter de tout analyser", profile: "analyse" },
+    { label: "Lâcher prise sur ce que tu ne contrôles pas", profile: "controle", shadow: "harmonie" },
+    { label: "Exister sans avoir à tout le temps prouver", profile: "performance" },
+    { label: "Accepter l'imperfection sans te punir", profile: "rigueur" },
+    { label: "Moins absorber les émotions des autres", profile: "sensibilite" },
+    { label: "Montrer une limite sans perdre ta force", profile: "puissance" }
+  ]
+},
   {
     text: "La phrase qui te ressemble le plus en ce moment…",
     options: [
@@ -742,7 +745,6 @@ function renderQuiz() {
   const container = document.getElementById('questionsContainer');
   container.innerHTML = '';
 
-  // Mélange questions 1 seule fois par session
   if (shuffledQuestions.length === 0) {
     shuffledQuestions = shuffleArray(questions);
   }
@@ -750,16 +752,17 @@ function renderQuiz() {
   shuffledQuestions.forEach((q, i) => {
     const block = document.createElement('div');
     block.className = 'question-block';
+
     block.innerHTML = `
       <p class="question-number">Question ${i + 1} / ${TOTAL_Q}</p>
       <p class="question-text">${q.text}</p>
+      ${q.multi ? `<p style="color:#888;font-size:0.82rem;margin:8px 0 14px 0;">Choisis jusqu’à 2 réponses.</p>` : ''}
       <div class="options" id="opts-${i}"></div>
     `;
     container.appendChild(block);
 
     const optsDiv = block.querySelector(`#opts-${i}`);
 
-    // Mélange réponses 1 seule fois par question (stable session)
     if (!q.shuffledOptions) {
       q.shuffledOptions = shuffleArray(q.options);
     }
@@ -767,8 +770,15 @@ function renderQuiz() {
     q.shuffledOptions.forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'option-btn';
+      btn.type = 'button';
       btn.textContent = opt.label;
-      btn.onclick = () => selectOption(i, opt, btn, optsDiv);
+
+      if (q.multi) {
+        btn.onclick = () => toggleMultiOption(i, opt, btn);
+      } else {
+        btn.onclick = () => selectOption(i, opt, btn, optsDiv);
+      }
+
       optsDiv.appendChild(btn);
     });
   });
@@ -786,7 +796,34 @@ function selectOption(qIndex, opt, btn, optsDiv) {
   updateProgress();
   checkSubmit();
 }
+function toggleMultiOption(qIndex, opt, btn) {
+  if (!Array.isArray(answers[qIndex])) {
+    answers[qIndex] = [];
+  }
 
+  const current = answers[qIndex];
+  const existingIndex = current.findIndex(o => o.label === opt.label && o.profile === opt.profile);
+
+  // Si déjà sélectionné -> on retire
+  if (existingIndex !== -1) {
+    current.splice(existingIndex, 1);
+    btn.classList.remove('selected');
+
+    if (current.length === 0) {
+      delete answers[qIndex];
+    }
+  } else {
+    // Max 2 réponses
+    if (current.length >= 2) {
+      return;
+    }
+    current.push(opt);
+    btn.classList.add('selected');
+  }
+
+  updateProgress();
+  checkSubmit();
+}
 function updateProgress() {
   const answered = Object.keys(answers).length;
   const pct = (answered / TOTAL_Q) * 100;
@@ -812,15 +849,19 @@ function showResults() {
   const scores = { analyse: 0, controle: 0, performance: 0, rigueur: 0, sensibilite: 0, puissance: 0 };
   shadowScores = { enthousiasme: 0, harmonie: 0, relation: 0 };
 
-  Object.values(answers).forEach(opt => {
-    scores[opt.profile]++;
-    if (opt.shadow) shadowScores[opt.shadow]++;
+  Object.values(answers).forEach(answer => {
+    const selectedOptions = Array.isArray(answer) ? answer : [answer];
+
+    selectedOptions.forEach(opt => {
+      scores[opt.profile]++;
+      if (opt.shadow) shadowScores[opt.shadow]++;
+    });
   });
 
   const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
   const [key1, score1] = sorted[0];
   const [key2, score2] = sorted[1];
-  const total = TOTAL_Q;
+  const totalScore = Object.values(scores).reduce((sum, v) => sum + v, 0);
 
   const p1 = profiles[key1];
   const p2 = profiles[key2];
@@ -829,10 +870,10 @@ function showResults() {
   const mix = (score2 >= 3 && combos[comboKey]) ? combos[comboKey] : null;
 
   window.currentDominant = p1.name;
-window.currentSecondary = score2 >= 2 ? p2.name : null;
-window.currentCombo = mix ? mix.title : null;
-  
-  const shadow = computeShadow(); // null ou { key,val,text }
+  window.currentSecondary = score2 >= 2 ? p2.name : null;
+  window.currentCombo = mix ? mix.title : null;
+
+  const shadow = computeShadow();
   const shadowNuanceForCombo = (shadow && mix) ? comboShadowNuances[shadow.key] : null;
 
   let html = `
@@ -870,24 +911,24 @@ window.currentCombo = mix ? mix.title : null;
       <p class="section-label">Comment tu te protèges</p>
       <p class="section-content">${p1.protection}</p>
 
-     <p class="section-label glitch">⚠ LE GLITCH</p>
+      <p class="section-label glitch">⚠ LE GLITCH</p>
       <p class="section-content">${p1.glitch}</p>
 
-   <p class="section-label bascule">🔧 PREMIÈRE BASCULE</p>
-<ul class="steps">
-  ${p1.reboot.slice(0,2).map(r => `<li>${r}</li>`).join('')}
-</ul>
+      <p class="section-label bascule">🔧 PREMIÈRE BASCULE</p>
+      <ul class="steps">
+        ${p1.reboot.slice(0,2).map(r => `<li>${r}</li>`).join('')}
+      </ul>
 
-<p class="section-label">🧠 À observer cette semaine</p>
-<ul class="steps">
-  ${p1.reboot.slice(2).map(r => `<li>${r}</li>`).join('')}
-</ul>
+      <p class="section-label">🧠 À observer cette semaine</p>
+      <ul class="steps">
+        ${p1.reboot.slice(2).map(r => `<li>${r}</li>`).join('')}
+      </ul>
 
-<p class="section-content" style="margin-top:14px; color:#aaa; font-size:0.85rem;">
-  Le protocole complet de transformation est disponible dans le Guide Reboot.
-</p>
+      <p class="section-content" style="margin-top:14px; color:#aaa; font-size:0.85rem;">
+        Le protocole complet de transformation est disponible dans le Guide Reboot.
+      </p>
 
-    <hr class="divider">
+      <hr class="divider">
   `;
 
   if (score2 >= 2) {
@@ -940,110 +981,107 @@ window.currentCombo = mix ? mix.title : null;
     `;
   }
 
-  // Tableau des scores
   html += `
     <p class="section-label">📊 Ton tableau de bord</p>
     ${Object.entries(scores).sort((a, b) => b[1] - a[1]).map(([key, val]) => `
       <div class="score-bar-wrap">
         <div class="score-bar-label">
           <span>${profiles[key].emoji} ${profiles[key].name}</span>
-          <span>${val} / ${total}</span>
+          <span>${val} / ${totalScore}</span>
         </div>
         <div class="score-bar">
-          <div class="score-bar-fill" style="width:${(val / total) * 100}%; background:${profiles[key].color}"></div>
+          <div class="score-bar-fill" style="width:${totalScore ? (val / totalScore) * 100 : 0}%; background:${profiles[key].color}"></div>
         </div>
       </div>
     `).join('')}
   `;
 
-// Paragraphe discret shadow (si significatif)
-if (shadow) {
+  if (shadow) {
+    html += `
+      <hr class="divider">
+      <p class="section-label">🔎 Dynamique secondaire</p>
+      <p class="section-content">
+        Ton système montre aussi ${shadow.text}.
+      </p>
+    `;
+  }
+
   html += `
-    <hr class="divider">
-    <p class="section-label">🔎 Dynamique secondaire</p>
-    <p class="section-content">
-      Ton système montre aussi ${shadow.text}.
-    </p>
-  `;
-}
+    <div style="margin-top:28px;">
+      <p style="
+        font-size:0.75rem;
+        letter-spacing:2px;
+        text-transform:uppercase;
+        color:#888;
+        margin-bottom:14px;
+      ">
+        Dynamiques transversales
+      </p>
 
-// Mini dynamiques 7 / 9 / 2 (toujours visibles, en discret)
-html += `
-  <div style="margin-top:28px;">
-    <p style="
-      font-size:0.75rem;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      color:#888;
-      margin-bottom:14px;
-    ">
-      Dynamiques transversales
-    </p>
-
-    ${[
-      { key: "enthousiasme", label: "✨ Enthousiasme", color: "#fbbf24" },
-      { key: "harmonie", label: "⚖️ Harmonie", color: "#60a5fa" },
-      { key: "relation", label: "🤝 Relation", color: "#f472b6" }
-    ].map(d => `
-      <div style="margin-bottom:14px;">
-        <div style="
-          display:flex;
-          justify-content:space-between;
-          font-size:0.85rem;
-          color:#ccc;
-          margin-bottom:6px;
-        ">
-          <span>${d.label}</span>
-          <span style="color:#999;">${shadowScores[d.key]}</span>
-        </div>
-        <div style="
-          height:6px;
-          background:#1f1f1f;
-          border-radius:3px;
-        ">
+      ${[
+        { key: "enthousiasme", label: "✨ Enthousiasme", color: "#fbbf24" },
+        { key: "harmonie", label: "⚖️ Harmonie", color: "#60a5fa" },
+        { key: "relation", label: "🤝 Relation", color: "#f472b6" }
+      ].map(d => `
+        <div style="margin-bottom:14px;">
           <div style="
-            height:100%;
-            width:${TOTAL_Q ? (shadowScores[d.key] / TOTAL_Q) * 100 : 0}%;
-            background:${d.color};
+            display:flex;
+            justify-content:space-between;
+            font-size:0.85rem;
+            color:#ccc;
+            margin-bottom:6px;
+          ">
+            <span>${d.label}</span>
+            <span style="color:#999;">${shadowScores[d.key]}</span>
+          </div>
+          <div style="
+            height:6px;
+            background:#1f1f1f;
             border-radius:3px;
-            transition:width 0.6s ease;
-          "></div>
+          ">
+            <div style="
+              height:100%;
+              width:${totalScore ? (shadowScores[d.key] / totalScore) * 100 : 0}%;
+              background:${d.color};
+              border-radius:3px;
+              transition:width 0.6s ease;
+            "></div>
+          </div>
         </div>
-      </div>
-    `).join('')}
-  </div>
-
-`;
-  // --- Interprétation des dynamiques transversales ---
-const shadowEntries = Object.entries(shadowScores);
-const maxShadow = shadowEntries.sort((a,b) => b[1]-a[1])[0];
-
-let shadowInterpretation = "";
-
-if (maxShadow && maxShadow[1] > 0) {
-  if (maxShadow[0] === "enthousiasme") {
-    shadowInterpretation = "✨ Une énergie de stimulation influence tes réactions. Le mouvement et l’intensité comptent pour toi.";
-  }
-  if (maxShadow[0] === "harmonie") {
-    shadowInterpretation = "⚖️ Le besoin d’harmonie influence ta manière de gérer les tensions. Tu peux chercher à lisser, apaiser ou éviter le conflit.";
-  }
-  if (maxShadow[0] === "relation") {
-    shadowInterpretation = "🤝 Le fait d’être utile ou présent pour les autres influence subtilement ton équilibre.";
-  }
-}
-
-if (shadowInterpretation) {
-  html += `
-    <p style="
-      margin-top:18px;
-      font-size:0.95rem;
-      color:#bbb;
-      line-height:1.6;
-    ">
-      ${shadowInterpretation}
-    </p>
+      `).join('')}
+    </div>
   `;
-}
+
+  const shadowEntries = Object.entries(shadowScores);
+  const maxShadow = shadowEntries.sort((a,b) => b[1]-a[1])[0];
+
+  let shadowInterpretation = "";
+
+  if (maxShadow && maxShadow[1] > 0) {
+    if (maxShadow[0] === "enthousiasme") {
+      shadowInterpretation = "✨ Une énergie de stimulation influence tes réactions. Le mouvement et l’intensité comptent pour toi.";
+    }
+    if (maxShadow[0] === "harmonie") {
+      shadowInterpretation = "⚖️ Le besoin d’harmonie influence ta manière de gérer les tensions. Tu peux chercher à lisser, apaiser ou éviter le conflit.";
+    }
+    if (maxShadow[0] === "relation") {
+      shadowInterpretation = "🤝 Le fait d’être utile ou présent pour les autres influence subtilement ton équilibre.";
+    }
+  }
+
+  if (shadowInterpretation) {
+    html += `
+      <p style="
+        margin-top:18px;
+        font-size:0.95rem;
+        color:#bbb;
+        line-height:1.6;
+      ">
+        ${shadowInterpretation}
+      </p>
+    `;
+  }
+
   html += `
     <hr class="divider">
 
@@ -1066,7 +1104,6 @@ if (shadowInterpretation) {
   resultSection.innerHTML = html;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
 /* ═══════════════════════════════════════════════
    8) END SCREEN
 ═══════════════════════════════════════════════ */
